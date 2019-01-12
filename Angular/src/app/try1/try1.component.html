@@ -1,0 +1,13 @@
+<h3>{{title}}</h3>
+
+<li id="ar" *ngFor="let list of listTitle">
+    <button (click)="check(list)" id="arin">{{list}}</button>
+</li>
+
+<h3>you selected:</h3>
+
+<ol>
+    <li *ngFor="let list of emptyArr">
+        {{list}}
+    </li>
+</ol>

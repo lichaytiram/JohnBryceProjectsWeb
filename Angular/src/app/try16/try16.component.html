@@ -1,0 +1,8 @@
+<input type="text" [(ngModel)]="color">
+
+<div [ngSwitch]="color">
+  <div *ngSwitchCase="'red'">this is red</div>
+  <div *ngSwitchCase="'blue'">this is blue</div>
+  <div *ngSwitchDefault>no one of them</div>
+
+</div>

@@ -1,0 +1,8 @@
+<p>Enter a char for check on the list</p>
+<input title="full list: [{{vegetables_list}}]" type="text" [(ngModel)]="char">
+<button (click)="check()">submit</button>
+
+<ul *ngIf="show">
+  <h4>The list on this char</h4>
+  <li *ngFor="let x of new_vegetables_list">{{x}}</li>
+</ul>

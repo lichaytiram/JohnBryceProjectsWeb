@@ -1,0 +1,9 @@
+<!-- <input title="{{str}}" type="text" [(ngModel)]="str"> -->
+<input title="{{str}}" type="text" #x (keyup)="set(x.value)">
+<button title="add {{str}} to your list" (click)="change()">add to list</button>
+<button (click)="constructor()">reset the list</button>
+
+<ul class="be">
+  <h4>list of all string</h4>
+  <li *ngFor="let x of list">{{x}}</li>
+</ul>

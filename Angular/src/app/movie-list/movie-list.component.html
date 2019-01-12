@@ -1,0 +1,37 @@
+<h1> choose from movie-list</h1>
+
+<ol>
+  <li id="lookb" *ngFor="let x of movie; let i = index" [attr.data-index]="i">
+    <span class="list-number">{{i+1}}</span>
+    <span (click)="inside(x.id)" class="list-content">
+      {{x.movie_name}}
+    </span>
+  </li>
+</ol>
+<div class="diamond-container">
+  <div (click)="clearAll()" id="cut-diamond">
+    <div class="diamond-item">
+      clear all
+    </div>
+  </div>
+</div>
+<div *ngIf="id!=null" id="{{id}}">
+
+  <h3>selected movie: {{movie[id].movie_name}}</h3>
+  <table border="1">
+
+    <tr>
+      <th>id</th>
+      <th>price</th>
+      <th>movie_date</th>
+    </tr>
+
+    <tr>
+      <td>{{movie[id].id}}</td>
+      <td>{{movie[id].price}}$</td>
+      <td>{{movie[id].movie_date}}</td>
+
+    </tr>
+
+  </table>
+</div>

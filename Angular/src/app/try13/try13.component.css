@@ -1,0 +1,9 @@
+.first_sort {
+    color: blueviolet;
+}
+
+.sort {
+    width: 250px;
+    background: grey;
+    border-radius: 100%;
+}

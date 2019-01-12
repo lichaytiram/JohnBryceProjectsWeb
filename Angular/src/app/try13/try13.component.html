@@ -1,0 +1,6 @@
+<ol>
+    <h2>----------Movie List--------</h2>
+    <li class="first_sort" *ngFor="let x of movie">
+        <button (click)="send(x)" class="sort">{{x.movie_name}}</button>
+    </li>
+</ol>

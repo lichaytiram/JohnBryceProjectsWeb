@@ -1,0 +1,26 @@
+<h3>choose a color for your table</h3>
+<select [(ngModel)]="color">
+  <option class="blue">blue</option>
+  <option class="orange">orange</option>
+  <option class="green">green</option>
+  <option class="pink">pink</option>
+</select>
+<!-- <button title="click to show all table" (click)="is_show()" class="show">show</button> -->
+
+<!-- <button (click)="color_change('red')" >click me</button> -->
+
+<!-- fix it -->
+
+<table *ngIf="show==true" class="{{color}}" [border]="1">
+  <tr>
+    <th>Id</th>
+    <th>first name</th>
+    <th>last name</th>
+  </tr>
+
+  <tr *ngFor="let list of list_of_person">
+    <td>{{list.id}}</td>
+    <td>{{list.first_name}}</td>
+    <td>{{list.last_name}}</td>
+  </tr>
+</table>

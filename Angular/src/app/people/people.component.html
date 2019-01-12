@@ -1,0 +1,40 @@
+<h1>Hello app</h1>
+<table [border]="tableBorder">
+
+  <tr>
+    <td>{{first_name1}}</td>
+    <td>{{last_name1}}</td>
+    <td><img src="{{avatar1}}" alt=""></td>
+  </tr>
+
+  <tr>
+    <td>{{first_name2}}</td>
+    <td>{{last_name2}}</td>
+    <td><img src="{{avatar2}}" alt=""></td>
+  </tr>
+  <tr>
+    <td>{{first_name3}}</td>
+    <td>{{last_name3}}</td>
+    <td><img src="{{avatar3}}" alt=""></td>
+  </tr>
+
+</table>
+
+<hr>
+
+<table [border]="1">
+  <tr>
+    <th>first_name</th>
+    <th>last_name</th>
+    <th>avatar</th>
+  </tr>
+
+  <tr *ngFor="let x of jn">
+    <td>{{x.first_name}} </td>
+    <td>{{x.last_name}} </td>
+    <td>
+      <img src="{{x.avatar}}" alt="">
+    </td>
+
+  </tr>
+</table>

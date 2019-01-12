@@ -1,0 +1,20 @@
+<!-- <p>Enter a number (1-10)<input [(ngModel)]="length" type="number"><button (click)="change()"> submit </button> </p> -->
+<p>Enter a number (1-10)</p>
+
+<input #t (keyup)="update(t.value)" (click)="update(t.value)" type="number"/>
+
+<button (click)="change()">submit </button> 
+
+<table border="1">
+  <tr>
+    <th>userId</th>
+    <th>id</th>
+    <th>title</th>
+    <th>completed</th>
+  </tr>
+  <tr *ngFor="let list of newtask3">
+    <td>{{list.userId}}</td>
+    <td>{{list.id}}</td>
+    <td>{{list.title}}</td>
+    <td>{{list.completed}}</td>
+</table>
