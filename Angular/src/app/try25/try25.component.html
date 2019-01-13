@@ -1,0 +1,10 @@
+<button (click)="show()">show</button>
+<ol *ngIf="temp">
+    <li>{{temp.id}}</li>
+    <li>{{temp.name}}</li>
+    <li>{{temp.tagline}}</li>
+    <li>{{temp.first_brewed}}</li>
+    <li>{{temp.description}}</li>
+    <li><img class="size" src="{{temp.image_url}}"></li>
+    <li>{{temp.abv}}</li>
+</ol>

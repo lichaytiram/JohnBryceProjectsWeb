@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule, Routes } from '@angular/router'
+
 
 import { AppComponent } from './app.component';
 import { PeopleComponent } from './people/people.component';
@@ -30,6 +32,13 @@ import { Try20Component } from './try20/try20.component';
 import { Try21Component } from './try21/try21.component';
 import { Try22Component } from './try22/try22.component';
 import { Try23Component } from './try23/try23.component';
+import { Try24Component } from './try24/try24.component';
+import { Try25Component } from './try25/try25.component';
+
+const appRoutes: Routes = [
+  { path: 'Try25Component', component: Try25Component },
+  { path: 'Try24Component', component: Try24Component },
+];
 
 @NgModule({
   declarations: [
@@ -59,12 +68,15 @@ import { Try23Component } from './try23/try23.component';
     Try20Component,
     Try21Component,
     Try22Component,
-    Try23Component
+    Try23Component,
+    Try24Component,
+    Try25Component
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes)
 
   ],
   providers: [],
