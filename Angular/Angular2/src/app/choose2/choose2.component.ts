@@ -9,7 +9,10 @@ import { InfoService } from '../info.service';
 export class Choose2Component {
 
   constructor(private instance: InfoService) { }
-
+  public buy: number = 0;
+  public bought(): void {
+    this.buy++;
+  }
 
 
 }

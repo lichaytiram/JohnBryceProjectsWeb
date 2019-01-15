@@ -1,4 +1,5 @@
 {{instance.inpute(1)}}
 <br>
-<a routerLink="buy">buy it</a>
+<a (click)="bought()" routerLink="buy">buy it</a>
 <router-outlet></router-outlet>
+<h4 *ngIf="buy!=0">{{buy}} people buy it already</h4>
