@@ -5,7 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
 const my_app: Routes = [
-  { path: 'app-insert', component: InsertComponent }
+  { path: 'app-insert', component: InsertComponent },
+  { path: 'app-show', component: ShowComponent }
 ]
 
 

@@ -16,5 +16,4 @@ export class InsertComponent {
   constructor(private instance: UsersService) { }
 
 
-
 }
