@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UsersService {
 
+  public id: number;
   public user: any = {
     selected: null
   }

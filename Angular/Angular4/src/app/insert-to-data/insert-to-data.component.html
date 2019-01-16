@@ -1,0 +1,8 @@
+<div *ngIf="check()">
+  <div *ngIf="user.selected">
+    <p>{{user.selected.data[instance.id].id}}</p>
+    <p>{{user.selected.data[instance.id].first_name}}</p>
+    <p>{{user.selected.data[instance.id].last_name}}</p>
+    <img src="{{user.selected.data[instance.id].avatar}}">
+  </div>
+</div>
