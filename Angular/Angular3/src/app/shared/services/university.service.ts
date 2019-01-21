@@ -15,7 +15,6 @@ export class UniversityService {
     this.get("israel");
   }
 
-
   public get(country: string): void {
     this.http.get(`http://universities.hipolabs.com/search?country=${country}`)
       .subscribe(
