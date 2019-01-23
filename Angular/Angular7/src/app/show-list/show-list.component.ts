@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class ShowListComponent {
 
-
+  public selectby: string;
 }
