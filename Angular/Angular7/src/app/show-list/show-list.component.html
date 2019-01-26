@@ -1,11 +1,13 @@
 <p>choose how to show the list</p>
-<select [(ngModel)]="select_by">
-    <option value="Date">date</option>
+<select (change)="change_it()" [(ngModel)]="select_by">
+    <option value="date">date</option>
     <option value="time">time</option>
     <option value="text">text</option>
 </select>
 
 
-<div>
-
-</div>
+<ul *ngFor="let x of chosen">
+    <li>{{x.date}}</li>
+    <li>{{x.time}}</li>
+    <li>{{x.text}}</li>
+</ul>
