@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Time } from '@angular/common';
-import { todo } from '../shared/models/todo.model';
+import { Todo } from '../shared/models/Todo.model';
 
 @Component({
   selector: 'app-add-list',
@@ -12,7 +12,7 @@ export class AddListComponent {
   public date: Date;
   public time: Time;
   public text: string;
-  public list: todo[] = [];
+  public list: Todo[] = JSON.parse(localStorage.getItem("todo_key"));
 
   public delete() {
     this.list = [];
@@ -20,8 +20,10 @@ export class AddListComponent {
   }
 
   public send() {
-    let todo_add: todo = new todo(this.date, this.time, this.text);
-    this.list.push(todo_add);
+    if (this.list == null)
+      this.list = [];
+    let add_todo: Todo = new Todo(this.date, this.time, this.text);
+    this.list.push(add_todo);
     this.set();
   }
 

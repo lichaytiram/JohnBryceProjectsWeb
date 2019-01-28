@@ -2,12 +2,13 @@
 <select (change)="change_it()" [(ngModel)]="select_by">
     <option value="date">date</option>
     <option value="time">time</option>
-    <option value="text">text</option>
+    <option value="text">name</option>
 </select>
 
 
-<ul *ngFor="let x of chosen">
+<ol *ngFor="let x of instance">
     <li>{{x.date}}</li>
     <li>{{x.time}}</li>
     <li>{{x.text}}</li>
-</ul>
+    <button (click)="delete(this.x)">delete this task</button>
+</ol>

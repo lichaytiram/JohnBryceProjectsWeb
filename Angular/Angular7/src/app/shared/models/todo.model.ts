@@ -1,6 +1,6 @@
 import { Time } from '@angular/common';
 
-export class todo {
+export class Todo {
 
     public date: Date;
     public time: Time;
