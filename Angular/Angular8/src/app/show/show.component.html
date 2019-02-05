@@ -1,0 +1,8 @@
+<div *ngIf="students">
+  <ol *ngFor="let s of students.selected">
+    <li>{{s.id}}</li>
+    <li>{{s.name}}</li>
+    <li>{{s.age}}</li>
+    <li>{{s.grade}}</li>
+  </ol>
+</div>
