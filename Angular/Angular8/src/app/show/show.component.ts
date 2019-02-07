@@ -8,11 +8,14 @@ import { StudentService } from '../Shared/services/student.service';
 })
 export class ShowComponent {
 
-  private students = null;
+  private object = this.instance.student_info;
+  private students = this.object;
 
   constructor(private instance: StudentService) {
-    this.students = instance.student_info;
+    instance.student_info.selected_one = "Bob";
   }
 
-
+  public send() {
+    this.instance.get_one();
+  }
 }

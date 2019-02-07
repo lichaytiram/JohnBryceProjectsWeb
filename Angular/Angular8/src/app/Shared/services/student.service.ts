@@ -8,7 +8,8 @@ import { RootObject } from '../models/Todo';
 export class StudentService {
 
   public student_info = {
-    selected: null
+    selected: null,
+    selected_one: null
   }
 
   constructor(private http: HttpClient) {
@@ -22,4 +23,13 @@ export class StudentService {
         problem => console.log(problem)
       );
   }
+
+  public get_one() {
+    this.http.get<RootObject>(`http://localhost:8081/Web/StudentServlet?name=${this.student_info.selected_one}`)
+      .subscribe(
+        result => this.student_info.selected_one = result,
+        problem => console.log(problem)
+      );
+  }
+
 }

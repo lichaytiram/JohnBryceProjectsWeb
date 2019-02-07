@@ -1,8 +1,29 @@
-<div *ngIf="students">
-  <ol *ngFor="let s of students.selected">
-    <li>{{s.id}}</li>
-    <li>{{s.name}}</li>
-    <li>{{s.age}}</li>
-    <li>{{s.grade}}</li>
-  </ol>
+<p>Students</p>
+
+<table border="1">
+  <tr>
+    <th>id</th>
+    <th>name</th>
+    <th>age</th>
+    <th>grade</th>
+  </tr>
+  <tr *ngFor="let s of students.selected">
+    <td>{{s.id}}</td>
+    <td>{{s.name}}</td>
+    <td>{{s.age}}</td>
+    <td>{{s.grade}}</td>
+  </tr>
+</table>
+
+<p>choose a one student</p>
+<div load="send()">
+  <select [(ngModel)]="object.selected_one">
+    <option *ngFor="let s of students.selected">{{s.name}}</option>
+  </select>
+</div>
+
+<button title=" (by selection)" (click)="send()">show one student</button>
+<div *ngIf="object.selected_one">
+  <h4 *ngIf="object.selected_one.name">The Student selected is: {{object.selected_one.name}} =>
+    [Id:{{object.selected_one.id}},Age:{{object.selected_one.age}},Grage:{{object.selected_one.grade}}]</h4>
 </div>
