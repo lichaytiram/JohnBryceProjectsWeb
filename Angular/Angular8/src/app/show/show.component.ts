@@ -8,8 +8,8 @@ import { StudentService } from '../Shared/services/student.service';
 })
 export class ShowComponent {
 
-  private object = this.instance.student_info;
-  private students = this.object;
+  public object = this.instance.student_info;
+  public students = this.object;
 
   constructor(private instance: StudentService) {
     instance.student_info.selected_one = "Bob";
