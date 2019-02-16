@@ -41,18 +41,8 @@ export class ServiceService {
 
   public post(value: string): void {
     this.json.name = value;
+
     this.http.post(this.url, JSON.stringify(this.json))
       .subscribe();
   }
-
-  // public post(value: string): Observable<any> {
-  //   this.json.name = value;
-  //   return this.http.post(this.url, JSON.stringify(this.json), {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json'
-  //     })
-  //   })
-  //     .pipe();
-  // }
-
 }
