@@ -15,9 +15,9 @@ export class ServiceService {
     selected: null
   }
 
-  public json = {
-    name: null
-  }
+  // public json = {
+  //   name: null
+  // }
 
   constructor(private http: HttpClient) {
     this.get();
@@ -40,9 +40,9 @@ export class ServiceService {
   }
 
   public post(value: string): void {
-    this.json.name = value;
+    // this.json.name = value;
 
-    this.http.post(this.url, JSON.stringify(this.json))
+    this.http.post(this.url + "?name=" + value, /*JSON.stringify(this.json)*/"")
       .subscribe();
   }
 }
