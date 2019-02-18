@@ -1,3 +1,3 @@
-<p>
-  my-basket works!
-</p>
+<ol *ngIf="list">
+  <li *ngFor="let x of list.selected"><button class="size" (click)="delete(x.key)">{{x.key}}</button></li>
+</ol>

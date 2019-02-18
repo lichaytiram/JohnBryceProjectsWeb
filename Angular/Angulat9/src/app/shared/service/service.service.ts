@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
@@ -32,7 +32,7 @@ export class ServiceService {
   }
 
   public get_basket(): void {
-    this.http.get<string[]>(this.url)
+    this.http.get<string[]>(this.url + "?get_basket=get")
       .subscribe(
         res => this.item_list.selected = res,
         err => console.log(err)
@@ -45,4 +45,17 @@ export class ServiceService {
     this.http.post(this.url + "?name=" + value, /*JSON.stringify(this.json)*/"")
       .subscribe();
   }
+
+  public post_basket(value: string): void {
+
+    this.http.post(this.url + "?name_basket=" + value, "")
+      .subscribe();
+  }
+
+  public delete_basket(value: string): void {
+    const params = new HttpParams().set('id', value);
+    this.http.delete<string>(this.url+"?delete="+value)
+      .subscribe();
+  }
+//, {params}
 }
