@@ -7,6 +7,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
+import { AdministratorComponent } from './administrator/administrator.component';
+import { CustomerComponent } from './customer/customer.component';
+import { CompanyComponent } from './company/company.component';
 
 const root: Routes = [
   { path: 'user', component: UserComponent },
@@ -18,7 +21,10 @@ const root: Routes = [
   declarations: [
     AppComponent,
     UserComponent,
-    RegisterComponent
+    RegisterComponent,
+    AdministratorComponent,
+    CustomerComponent,
+    CompanyComponent
   ],
   imports: [
     BrowserModule,
