@@ -9,8 +9,8 @@ import { User } from '../shared/models/User';
 })
 export class UserComponent {
 
-  private user_name: string;
-  private password: string;
+  private user_name: string = "username1";
+  private password: string = "123Xx";
 
   public submit(): void {
 

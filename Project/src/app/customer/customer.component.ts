@@ -10,6 +10,13 @@ export class CustomerComponent {
 
   constructor(private service: ServiceService) { }
 
+  public show() {
 
+    let token: number = <number><unknown>sessionStorage.getItem("token")
+
+    var check = this.service.getCustomer(5, token);
+    console.log(check);
+
+  }
 
 }
