@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ServiceService {
 
-  constructor(private http: HttpClient,private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   public login(user: User) {
 
@@ -19,7 +19,6 @@ export class ServiceService {
 
       res => {
 
-        // let router: Router= new Router();
         console.log("res: " + res.clientType)
         if (res.clientType == "Customer")
           this.router.navigate(["/customer"]);
