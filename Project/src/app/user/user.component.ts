@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ServiceService } from '../shared/services/service.service';
+import { User } from '../shared/models/User';
 
 @Component({
   selector: 'app-user',
@@ -13,7 +14,9 @@ export class UserComponent {
 
   public submit(): void {
 
-    this.service.login(this.user_name, this.password);
+    var user: User = new User(this.user_name, this.password);
+
+    this.service.login(user);
 
   }
 

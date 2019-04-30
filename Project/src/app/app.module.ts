@@ -14,6 +14,9 @@ import { CompanyComponent } from './company/company.component';
 const root: Routes = [
   { path: 'user', component: UserComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'customer', component: CustomerComponent },
+  { path: 'company', component: CompanyComponent },
+  { path: 'administrator', component: AdministratorComponent },
   { path: '', component: UserComponent }
 ]
 
