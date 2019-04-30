@@ -23,11 +23,13 @@ export class ServiceService {
         if (res.clientType == "Customer")
           this.router.navigate(["/customer"]);
 
-        if (res.clientType == "Company")
+        else if (res.clientType == "Company")
           this.router.navigate(["/company"]);
 
-        if (res.clientType == "Administrator")
+        else
           this.router.navigate(["/administrator"]);
+
+        sessionStorage.setItem("token", res.token + "");
 
       },
       err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
