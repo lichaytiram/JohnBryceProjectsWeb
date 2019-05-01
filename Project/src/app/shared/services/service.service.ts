@@ -39,7 +39,9 @@ export class ServiceService {
 
     )
   }
+
   // register
+
   public register(customer: Customer): void {
 
     let observable = this.http.post<number>("http://localhost:8080/customers/register", customer);
@@ -76,6 +78,10 @@ export class ServiceService {
     );
 
   }
+
+  // company
+
+  // administrator
 
 
 }

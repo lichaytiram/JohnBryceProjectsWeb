@@ -8,13 +8,18 @@ import { ServiceService } from '../shared/services/service.service';
 })
 export class CustomerComponent {
 
-  constructor(private service: ServiceService) { }
+  public token: number;
+
+  constructor(private service: ServiceService) {
+
+    this.token = <number><unknown>sessionStorage.getItem("token");
+
+  }
 
   public show() {
 
-    let token: number = <number><unknown>sessionStorage.getItem("token")
+    var check = this.service.getCustomer(5, this.token);
 
-    var check = this.service.getCustomer(5, token);
     console.log(check);
 
   }
