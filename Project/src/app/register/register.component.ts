@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ServiceService } from '../shared/services/service.service';
 import { Customer, User } from '../shared/models/Customer';
+import { UserService } from '../shared/services/User.service';
 
 @Component({
   selector: 'app-register',
@@ -33,6 +33,6 @@ export class RegisterComponent {
     this.service.register(customer);
   }
 
-  constructor(private service: ServiceService) { }
+  constructor(private service: UserService) { }
 
 }

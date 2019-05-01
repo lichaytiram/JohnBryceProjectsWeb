@@ -8,7 +8,8 @@ import { Customer } from '../models/Customer';
 @Injectable({
   providedIn: 'root'
 })
-export class ServiceService {
+export class UserService {
+
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -57,31 +58,5 @@ export class ServiceService {
     );
 
   }
-
-  // customer
-
-  public getCustomer(id: number, token: number) {
-    console.log(id);
-
-    let observable = this.http.get(`http://localhost:8080/customers/${id}?token=${token}`);
-
-    observable.subscribe(
-
-      res => {
-
-        console.log(res);
-        console.log(JSON.stringify(res));
-
-      },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
-
-    );
-
-  }
-
-  // company
-
-  // administrator
-
 
 }

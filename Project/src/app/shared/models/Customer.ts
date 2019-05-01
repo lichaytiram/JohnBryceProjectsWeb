@@ -7,12 +7,13 @@ export class User {
     companyId?: string = null;
 
 }
+
 export class Customer {
 
     firstName: string;
     lastName: string;
     phoneNumber: string;
     email: string;
-    user: User;
+    user?: User;
 
 }

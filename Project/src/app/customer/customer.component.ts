@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ServiceService } from '../shared/services/service.service';
+import { CustomerService } from '../shared/services/customer.service';
 
 @Component({
   selector: 'app-customer',
@@ -9,19 +9,23 @@ import { ServiceService } from '../shared/services/service.service';
 export class CustomerComponent {
 
   public token: number;
+  public instance = this.service.root;
 
-  constructor(private service: ServiceService) {
+  constructor(private service: CustomerService) {
 
     this.token = <number><unknown>sessionStorage.getItem("token");
 
   }
 
-  public show() {
+  public get_customer() {
 
-    var check = this.service.getCustomer(5, this.token);
+    this.service.getCustomer(5, this.token);
 
-    console.log(check);
+  }
 
+  public delete_customer() {
+
+    // this.service.deleteCustomer(this.token);
   }
 
 }

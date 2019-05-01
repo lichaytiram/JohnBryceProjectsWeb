@@ -1,6 +1,12 @@
-<p>
-  customer works!
-</p>
+<button (click)="get_customer()">show customer info</button>
 
+<div *ngIf="instance.customer">
+  <br>
+  firstName: {{instance.customer.firstName}} <br>
+  lastName: {{instance.customer.lastName}} <br>
+  phoneNumber: {{instance.customer.phoneNumber}} <br>
+  email: {{instance.customer.email}} <br>
 
-<button (click)="show()">show id</button>
+</div>
+
+<button (click)="delete_customer()">delete your account</button>

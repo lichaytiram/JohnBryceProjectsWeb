@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ServiceService } from '../shared/services/service.service';
 import { User } from '../shared/models/User';
+import { UserService } from '../shared/services/User.service';
 
 @Component({
   selector: 'app-user',
@@ -20,7 +20,7 @@ export class UserComponent {
 
   }
 
-  constructor(private service: ServiceService) { }
+  constructor(private service: UserService) { }
 
 
 }

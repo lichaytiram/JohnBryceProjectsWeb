@@ -15,9 +15,6 @@ export class ServiceService {
     selected: null
   }
 
-  // public json = {
-  //   name: null
-  // }
 
   constructor(private http: HttpClient) {
     this.get();
@@ -54,8 +51,8 @@ export class ServiceService {
 
   public delete_basket(value: string): void {
     const params = new HttpParams().set('id', value);
-    this.http.delete<string>(this.url+"?delete="+value)
+    this.http.delete<string>(this.url + "?delete=" + value)
       .subscribe();
   }
-//, {params}
+  //, {params}
 }

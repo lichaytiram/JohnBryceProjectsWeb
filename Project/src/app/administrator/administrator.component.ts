@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ServiceService } from '../shared/services/service.service';
+import { AdministratorService } from '../shared/services/administrator.service';
 
 @Component({
   selector: 'app-administrator',
@@ -8,6 +8,6 @@ import { ServiceService } from '../shared/services/service.service';
 })
 export class AdministratorComponent {
 
-  constructor(private service: ServiceService) { }
+  constructor(private service: AdministratorService) { }
 
 }

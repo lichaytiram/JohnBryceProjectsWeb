@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ServiceService } from '../shared/services/service.service';
+import { CompanyService } from '../shared/services/company.service';
 
 @Component({
   selector: 'app-company',
@@ -8,6 +8,6 @@ import { ServiceService } from '../shared/services/service.service';
 })
 export class CompanyComponent {
 
-  constructor(private service: ServiceService) { }
+  constructor(private service: CompanyService) { }
 
 }
