@@ -12,7 +12,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { CompanyComponent } from './company/company.component';
 
 const root: Routes = [
-  { path: 'user', component: UserComponent },
+  { path: 'login', component: UserComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'customer', component: CustomerComponent },
   { path: 'company', component: CompanyComponent },

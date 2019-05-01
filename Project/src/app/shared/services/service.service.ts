@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../models/User';
 import { UserDataClient } from '../models/UserDataClient';
 import { Router } from '@angular/router';
+import { Customer } from '../models/Customer';
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +40,19 @@ export class ServiceService {
     )
   }
   // register
-  public register(user_name: string, password: string): void {
+  public register(customer: Customer): void {
 
+    let observable = this.http.post<number>("http://localhost:8080/customers/register", customer);
+
+    observable.subscribe(
+      res => {
+        alert("your user has been created")
+        this.router.navigate(["/login"]);
+
+      },
+      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+
+    );
 
   }
 
