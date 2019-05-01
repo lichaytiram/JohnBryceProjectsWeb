@@ -29,20 +29,20 @@ export class CustomerService {
     );
 
   }
-  // public deleteCustomer(token: number): void {
+  public deleteCustomer(token: number): void {
 
-  //   let observable = this.http.delete(`http://localhost:8080/customers/0?token=${token}`);
+    let observable = this.http.delete(`http://localhost:8080/customers/0?token=${token}`);
 
-  //   observable.subscribe(
+    observable.subscribe(
 
-  //     res => {
+      () => {
 
-  //       console.log("res");
+        console.log("Your customer has been deleted")
 
-  //     },
-  //     err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      },
+      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
 
-  //   );
+    );
 
-  // }
+  }
 }

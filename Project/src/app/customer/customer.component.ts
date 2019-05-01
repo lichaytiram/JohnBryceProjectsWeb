@@ -25,7 +25,7 @@ export class CustomerComponent {
 
   public delete_customer() {
 
-    // this.service.deleteCustomer(this.token);
+    this.service.deleteCustomer(this.token);
   }
 
 }
