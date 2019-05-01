@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Customer } from '../models/Customer';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class CustomerService {
     customer: null
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   public getCustomer(id: number, token: number) {
 
@@ -37,7 +38,8 @@ export class CustomerService {
 
       () => {
 
-        console.log("Your customer has been deleted")
+        alert("Your customer has been deleted");
+        this.router.navigate(["/login"]);
 
       },
       err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
