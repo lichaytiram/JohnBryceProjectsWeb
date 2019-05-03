@@ -28,8 +28,6 @@ export class RegisterComponent {
     user.password = this.password;
     customer.user = user;
 
-
-
     this.service.register(customer);
   }
 

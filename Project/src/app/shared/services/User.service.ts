@@ -23,7 +23,6 @@ export class UserService {
 
       res => {
 
-        console.log("res: " + res.clientType)
         if (res.clientType == "Customer")
           this.router.navigate(["/customer"]);
 
