@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdministratorService } from '../shared/services/administrator.service';
 
 @Component({
@@ -6,8 +6,22 @@ import { AdministratorService } from '../shared/services/administrator.service';
   templateUrl: './administrator.component.html',
   styleUrls: ['./administrator.component.css']
 })
-export class AdministratorComponent {
+export class AdministratorComponent implements OnInit {
 
-  constructor(private service: AdministratorService) { }
+  public token: number;
+  public instance = this.service.root;
+
+  constructor(private service: AdministratorService) {
+
+    this.token = <number><unknown>sessionStorage.getItem("token");
+
+  }
+
+  ngOnInit(): void {
+
+    this.service.get_user_name(this.token);
+
+  }
+
 
 }

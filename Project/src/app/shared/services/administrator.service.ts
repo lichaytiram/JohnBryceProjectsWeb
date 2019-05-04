@@ -7,11 +7,30 @@ import { Router } from '@angular/router';
 })
 export class AdministratorService {
 
+  public my_name;
+
   public root = {
     administrator: null
   }
 
   constructor(private http: HttpClient, private router: Router) { }
 
+  public get_user_name(token: number): void {
+
+    let observable = this.http.get(`http://localhost:8080/users/name/0?token=${token}`);
+
+    observable.subscribe(
+
+      res => {
+
+        this.my_name = res;
+
+
+      },
+      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+
+    );
+
+  }
 
 }

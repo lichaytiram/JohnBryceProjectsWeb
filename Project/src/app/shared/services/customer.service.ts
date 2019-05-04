@@ -30,7 +30,7 @@ export class CustomerService {
 
   public get_customer_name(token: number): void {
 
-    let observable = this.http.get<string>(`http://localhost:8080/customers/name/0?token=${token}`);
+    let observable = this.http.get(`http://localhost:8080/customers/name/0?token=${token}`);
 
     observable.subscribe(
 

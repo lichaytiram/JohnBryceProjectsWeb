@@ -9,8 +9,8 @@ import { UserService } from '../shared/services/User.service';
 })
 export class UserComponent {
 
-  private user_name: string = "username1";
-  private password: string = "123Xx";
+  private user_name: string = "user3";
+  private password: string = "passwordP1";
 
   public submit(): void {
 
