@@ -10,6 +10,8 @@ import { Coupon } from '../models/Coupon';
 })
 export class CustomerService {
 
+  public my_name;
+
   public root = {
     customer: null,
     user: null,
@@ -23,6 +25,26 @@ export class CustomerService {
   }
 
   constructor(private http: HttpClient, private router: Router) { }
+
+
+
+  public get_customer_name(token: number): void {
+
+    let observable = this.http.get<string>(`http://localhost:8080/customers/name/0?token=${token}`);
+
+    observable.subscribe(
+
+      res => {
+
+        this.my_name = res;
+
+
+      },
+      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+
+    );
+
+  }
 
   public get_customer(token: number): void {
 
@@ -40,6 +62,7 @@ export class CustomerService {
     );
 
   }
+
   public get_user(token: number): void {
 
     let observable = this.http.get<User>(`http://localhost:8080/users/0?token=${token}`);
@@ -205,6 +228,23 @@ export class CustomerService {
 
         alert("Your customer has been deleted");
         this.router.navigate(["/login"]);
+
+      },
+      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+
+    );
+
+  }
+
+  public delete_purchase_by_id(purchase_id: number, token: number): void {
+
+    let observable = this.http.delete(`http://localhost:8080/purchases/${purchase_id}?token=${token}`);
+
+    observable.subscribe(
+
+      () => {
+
+        alert("Your purchase has been deleted");
 
       },
       err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)

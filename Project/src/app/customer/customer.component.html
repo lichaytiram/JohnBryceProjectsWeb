@@ -1,3 +1,6 @@
+<h2 class="my_name" *ngIf="service.my_name">wellcome back: {{service.my_name.name}}</h2>
+<hr>
+
 <button (click)="get_customer()">show customer info</button>
 <div *ngIf="instance.customer">
   <br>
@@ -34,7 +37,10 @@
     amount: {{purchase.amount}}
     <br>
     date: {{purchase.date}}
+    <br>
+    <button (click)="delete_purchase_by_id(purchase.id)">delete purchase</button>
   </div>
+
 
 </div>
 
@@ -151,6 +157,11 @@
         <br>
         image: {{coupon.image}}
 
+        <br>
+        amount: <input type="number" [(ngModel)]="amount">
+        <br>
+        <button (click)="purchase_coupon(coupon.id)">purchse coupon</button>
+
       </div>
 
     </div>
@@ -186,25 +197,12 @@
 
     </div>
 
-
-    <div>
-
-      <br>
-      <input type="text" [(ngModel)]="coupon_id"> coupon id
-      <br>
-      <input type="text" [(ngModel)]="amount"> amount
-      <br>
-
-      <button (click)="purchase_coupon()">purchse coupon</button>
-
-    </div>
-
     <button (click)="delete_customer()">delete your account</button>
 
     <div>
       <h4>choose coupon id to delete</h4>
       <br>
-      <input type="text" [(ngModel)]="coupon_id_purchase"> coupon id
+      <input type="number" [(ngModel)]="coupon_id_purchase"> coupon id
       <br>
       <button (click)="delete_purchase()">delete</button>
 
@@ -212,18 +210,24 @@
 
     <div>
 
-      <h4>plz fill all </h4>
-      <input type="text" [(ngModel)]="user_name"> user name
-      <br>
-      <input type="password" [(ngModel)]="password"> password
-      <br>
-      <input type="text" [(ngModel)]="first_name"> first name
-      <br>
-      <input type="text" [(ngModel)]="last_name"> last name
-      <br>
-      <input type="text" [(ngModel)]="phone_number"> phone number
-      <br>
-      <input type="email" [(ngModel)]="email"> email
-      <br>
-      <button (click)="update_customer()">update your customer</button>
+      <button (click)="update_customer_on()">update your customer</button>
+
+      <div *ngIf="update_on">
+
+        <h4>plz fill all </h4>
+        <input type="text" [(ngModel)]="user_name"> user name
+        <br>
+        <input type="password" [(ngModel)]="password"> password
+        <br>
+        <input type="text" [(ngModel)]="first_name"> first name
+        <br>
+        <input type="text" [(ngModel)]="last_name"> last name
+        <br>
+        <input type="text" [(ngModel)]="phone_number"> phone number
+        <br>
+        <input type="email" [(ngModel)]="email"> email
+        <br>
+        <button (click)="update_customer()">update your customer</button>
+      </div>
+
     </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../shared/services/customer.service';
 import { Customer, User } from '../shared/models/Customer';
 import { Purchase } from '../shared/models/Purchase';
@@ -8,8 +8,9 @@ import { Purchase } from '../shared/models/Purchase';
   templateUrl: './customer.component.html',
   styleUrls: ['./customer.component.css']
 })
-export class CustomerComponent {
+export class CustomerComponent implements OnInit {
 
+  private update_on: boolean;
   private user_name: string;
   private password: string;
   private first_name: string;
@@ -17,7 +18,7 @@ export class CustomerComponent {
   private phone_number: string;
   private email: string;
 
-  private coupon_id: number;
+  // amount of purchase
   private amount: number;
 
   private max_price: number;
@@ -37,6 +38,14 @@ export class CustomerComponent {
     this.token = <number><unknown>sessionStorage.getItem("token");
 
   }
+
+  ngOnInit(): void {
+
+    this.service.get_customer_name(this.token);
+
+
+  }
+
 
   public get_customer() {
 
@@ -92,10 +101,11 @@ export class CustomerComponent {
 
 
 
-  public purchase_coupon() {
+  public purchase_coupon(coupon_id: number) {
 
     let purchse: Purchase = new Purchase();
-    purchse.couponId = this.coupon_id;
+    purchse.couponId = coupon_id;
+
     purchse.amount = this.amount;
 
     this.service.purchase_coupon(purchse, this.token);
@@ -107,10 +117,15 @@ export class CustomerComponent {
     this.service.delete_customer(this.token);
   }
 
+  public delete_purchase_by_id(purchase_id: number) {
+
+    this.service.delete_purchase_by_id(purchase_id, this.token);
+
+  }
+
   public delete_purchase() {
 
     this.service.delete_purchase(this.coupon_id_purchase, this.token);
-
 
   }
 
@@ -127,6 +142,14 @@ export class CustomerComponent {
     customer.user = user;
 
     this.service.update_customer(customer, this.token);
+
+    this.update_on = false;
+
+
+  }
+
+  public update_customer_on() {
+    this.update_on = true;
   }
 
 }
