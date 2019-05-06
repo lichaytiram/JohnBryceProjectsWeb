@@ -1,5 +1,42 @@
-<input type="text" [(ngModel)]="user_name" title="enter an user name">
+<!-- <input type="text" [(ngModel)]="user_name" title="enter an user name">
 <input type="password" [(ngModel)]="password" title="enter a password">
 <br>
 <button (click)="submit()">Submit</button>
-<button><a routerLink="/register">Register</a></button>
+<button><a routerLink="/register">Register</a></button> -->
+
+
+<div class="form-modal">
+
+    <div class="form-toggle">
+        <button id="login-toggle" (click)="toggleLogin()">log in</button>
+        <button id="signup-toggle" (click)="toggleSignup()">sign up</button>
+    </div>
+
+    <div id="login-form">
+
+        <input type="text" placeholder="Enter email or username" [(ngModel)]="user_name" />
+        <input type="password" placeholder="Enter password" [(ngModel)]="password" />
+        <button type="button" class="btn login" (click)="submit()">login</button>
+        <p><a href="javascript:void(0)">Forgotten account</a></p>
+        <hr />
+
+    </div>
+
+    <div id="signup-form">
+
+        <input type="text" placeholder="Choose username" [(ngModel)]="user_name">
+        <input type="password" placeholder="Choose password" [(ngModel)]="password">
+        <input type="text" placeholder="Choose first name" [(ngModel)]="first_name">
+        <input type="text" placeholder="Choose last name" [(ngModel)]="last_name">
+        <input type="text" placeholder="Choose phone number" [(ngModel)]="phone_number">
+        <input type="email" placeholder="Choose email" [(ngModel)]="email">
+
+        <button type="button" class="btn signup" (click)="register()">create account</button>
+        <p>Clicking <strong>create account</strong> means that you are agree to our <a href="javascript:void(0);">terms
+                of
+                services</a>.</p>
+        <hr>
+
+    </div>
+
+</div>

@@ -29,6 +29,7 @@ export class RegisterComponent {
     customer.user = user;
 
     this.service.register(customer);
+
   }
 
   constructor(private service: UserService) { }

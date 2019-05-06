@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/User';
+import { LoginUser } from '../models/LoginUser';
 import { UserDataClient } from '../models/UserDataClient';
 import { Router } from '@angular/router';
 import { Customer } from '../models/Customer';
@@ -15,7 +15,7 @@ export class UserService {
 
   // login
 
-  public login(user: User) {
+  public login(user: LoginUser) {
 
     let observable = this.http.post<UserDataClient>("http://localhost:8080/users/login", user);
 
