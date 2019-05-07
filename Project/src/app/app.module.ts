@@ -6,14 +6,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
-import { RegisterComponent } from './register/register.component';
 import { AdministratorComponent } from './administrator/administrator.component';
 import { CustomerComponent } from './customer/customer.component';
 import { CompanyComponent } from './company/company.component';
 
 const root: Routes = [
   { path: 'login', component: UserComponent },
-  { path: 'register', component: RegisterComponent },
   { path: 'customer', component: CustomerComponent },
   { path: 'company', component: CompanyComponent },
   { path: 'administrator', component: AdministratorComponent },
@@ -24,7 +22,6 @@ const root: Routes = [
   declarations: [
     AppComponent,
     UserComponent,
-    RegisterComponent,
     AdministratorComponent,
     CustomerComponent,
     CompanyComponent

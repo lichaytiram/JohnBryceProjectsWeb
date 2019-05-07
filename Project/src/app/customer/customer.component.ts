@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../shared/services/customer.service';
 import { Customer, User } from '../shared/models/Customer';
 import { Purchase } from '../shared/models/Purchase';
+import { UserService } from '../shared/services/User.service';
 
 @Component({
   selector: 'app-customer',
@@ -30,60 +31,61 @@ export class CustomerComponent implements OnInit {
   private one_coupon: number;
 
   public token: number;
+  public id: number;
   public instance = this.service.root;
 
 
-  constructor(private service: CustomerService) {
+  constructor(private service: CustomerService, private user_service: UserService) {
 
     this.token = <number><unknown>sessionStorage.getItem("token");
+    this.id = <number><unknown>sessionStorage.getItem("id");
 
   }
 
   ngOnInit(): void {
 
-    this.service.get_customer_name(this.token);
-
+    this.service.get_customer_name(this.id, this.token);
 
   }
 
 
   public get_customer() {
 
-    this.service.get_customer(this.token);
+    this.service.get_customer(this.id, this.token);
 
   }
   public get_user() {
 
-    this.service.get_user(this.token);
+    this.service.get_user(this.id, this.token);
 
   }
 
   public get_amount() {
 
-    this.service.get_amount(this.token);
+    this.service.get_amount(this.id, this.token);
 
   }
 
   public get_customer_purchase() {
 
-    this.service.get_customer_purchase(this.token);
+    this.service.get_customer_purchase(this.id, this.token);
   }
 
   public get_customer_coupons_by_customer_id() {
 
-    this.service.get_customer_coupons_by_customer_id(this.token);
+    this.service.get_customer_coupons_by_customer_id(this.id, this.token);
 
   }
 
   public get_customer_coupons_by_category() {
 
-    this.service.get_customer_coupons_by_category(this.category, this.token);
+    this.service.get_customer_coupons_by_category(this.id, this.category, this.token);
 
   }
 
   public get_customer_coupons_by_max_price() {
 
-    this.service.get_customer_coupons_by_max_price(this.max_price, this.token);
+    this.service.get_customer_coupons_by_max_price(this.id, this.max_price, this.token);
 
   }
 
@@ -105,7 +107,7 @@ export class CustomerComponent implements OnInit {
 
     let purchse: Purchase = new Purchase();
     purchse.couponId = coupon_id;
-
+    purchse.customerId = this.id;
     purchse.amount = this.amount;
 
     this.service.purchase_coupon(purchse, this.token);
@@ -114,7 +116,7 @@ export class CustomerComponent implements OnInit {
 
   public delete_customer() {
 
-    this.service.delete_customer(this.token);
+    this.service.delete_customer(this.id, this.token);
   }
 
   public delete_purchase_by_id(purchase_id: number) {
@@ -125,18 +127,20 @@ export class CustomerComponent implements OnInit {
 
   public delete_purchase() {
 
-    this.service.delete_purchase(this.coupon_id_purchase, this.token);
+    this.service.delete_purchase(this.id, this.coupon_id_purchase, this.token);
 
   }
 
   public update_customer() {
 
     let customer: Customer = new Customer();
+    customer.id = this.id;
     customer.firstName = this.first_name;
     customer.lastName = this.last_name;
     customer.phoneNumber = this.phone_number;
     customer.email = this.email;
     let user: User = new User();
+    user.id = this.id;
     user.userName = this.user_name;
     user.password = this.password;
     customer.user = user;
@@ -148,7 +152,7 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  public update_customer_on() {
+  public update_customer_switch() {
     this.update_on = true;
   }
 

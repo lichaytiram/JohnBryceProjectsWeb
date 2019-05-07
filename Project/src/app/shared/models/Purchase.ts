@@ -1,6 +1,6 @@
 export class Purchase {
 
-    id?: number;
+    id: number;
     customerId?: number;
     couponId: number;
     amount: number;

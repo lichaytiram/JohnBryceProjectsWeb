@@ -10,7 +10,8 @@ import { Coupon } from '../models/Coupon';
 })
 export class CustomerService {
 
-  public my_name;
+  public my_name: string;
+  public id: number;
 
   public root = {
     customer: null,
@@ -28,9 +29,9 @@ export class CustomerService {
 
 
 
-  public get_customer_name(token: number): void {
+  public get_customer_name(customer_id: number, token: number): void {
 
-    let observable = this.http.get(`http://localhost:8080/customers/name/0?token=${token}`);
+    let observable = this.http.get<string>(`http://localhost:8080/customers/name/${customer_id}?token=${token}`);
 
     observable.subscribe(
 
@@ -46,9 +47,9 @@ export class CustomerService {
 
   }
 
-  public get_customer(token: number): void {
+  public get_customer(customer_id: number, token: number): void {
 
-    let observable = this.http.get<Customer>(`http://localhost:8080/customers/0?token=${token}`);
+    let observable = this.http.get<Customer>(`http://localhost:8080/customers/${customer_id}?token=${token}`);
 
     observable.subscribe(
 
@@ -63,9 +64,9 @@ export class CustomerService {
 
   }
 
-  public get_user(token: number): void {
+  public get_user(customer_id: number, token: number): void {
 
-    let observable = this.http.get<User>(`http://localhost:8080/users/0?token=${token}`);
+    let observable = this.http.get<User>(`http://localhost:8080/users/${customer_id}?token=${token}`);
 
     observable.subscribe(
 
@@ -80,9 +81,9 @@ export class CustomerService {
 
   }
 
-  public get_amount(token: number): void {
+  public get_amount(customer_id: number, token: number): void {
 
-    let observable = this.http.get<number>(`http://localhost:8080/purchases/customer/amount?customerId=0&token=${token}`);
+    let observable = this.http.get<number>(`http://localhost:8080/purchases/customer/amount?customerId=${customer_id}&token=${token}`);
 
     observable.subscribe(
 
@@ -97,9 +98,9 @@ export class CustomerService {
 
   }
 
-  public get_customer_purchase(token: number): void {
+  public get_customer_purchase(customer_id: number, token: number): void {
 
-    let observable = this.http.get<Purchase[]>(`http://localhost:8080/purchases/customer?customerId=0&token=${token}`);
+    let observable = this.http.get<Purchase[]>(`http://localhost:8080/purchases/customer?customerId=${customer_id}&token=${token}`);
 
     observable.subscribe(
 
@@ -114,9 +115,9 @@ export class CustomerService {
 
   }
 
-  public get_customer_coupons_by_customer_id(token: number): void {
+  public get_customer_coupons_by_customer_id(customer_id: number, token: number): void {
 
-    let observable = this.http.get<Coupon[]>(`http://localhost:8080/coupons/customer?customerId=0&token=${token}`);
+    let observable = this.http.get<Coupon[]>(`http://localhost:8080/coupons/customer?customerId=${customer_id}&token=${token}`);
 
     observable.subscribe(
 
@@ -131,9 +132,9 @@ export class CustomerService {
 
   }
 
-  public get_customer_coupons_by_category(category: string, token: number): void {
+  public get_customer_coupons_by_category(customer_id: number, category: string, token: number): void {
 
-    let observable = this.http.get<Coupon[]>(`http://localhost:8080/coupons/customer/category?customerId=0&category=${category}&token=${token}`);
+    let observable = this.http.get<Coupon[]>(`http://localhost:8080/coupons/customer/category?customerId=${customer_id}&category=${category}&token=${token}`);
 
     observable.subscribe(
 
@@ -148,9 +149,9 @@ export class CustomerService {
 
   }
 
-  public get_customer_coupons_by_max_price(max_price: number, token: number): void {
+  public get_customer_coupons_by_max_price(customer_id: number, max_price: number, token: number): void {
 
-    let observable = this.http.get<Coupon[]>(`http://localhost:8080/coupons/customer/price?customerId=0&maxPrice=${max_price}&token=${token}`);
+    let observable = this.http.get<Coupon[]>(`http://localhost:8080/coupons/customer/price?customerId=${customer_id}&maxPrice=${max_price}&token=${token}`);
 
     observable.subscribe(
 
@@ -218,9 +219,9 @@ export class CustomerService {
 
 
 
-  public delete_customer(token: number): void {
+  public delete_customer(customer_id: number, token: number): void {
 
-    let observable = this.http.delete(`http://localhost:8080/customers/0?token=${token}`);
+    let observable = this.http.delete(`http://localhost:8080/customers/${customer_id}?token=${token}`);
 
     observable.subscribe(
 
@@ -253,9 +254,9 @@ export class CustomerService {
 
   }
 
-  public delete_purchase(coupon_id: number, token: number): void {
+  public delete_purchase(customer_id: number, coupon_id: number, token: number): void {
 
-    let observable = this.http.delete(`http://localhost:8080/purchases/delete?customerId=0&couponId=${coupon_id}&token=${token}`);
+    let observable = this.http.delete(`http://localhost:8080/purchases/delete?customerId=${customer_id}&couponId=${coupon_id}&token=${token}`);
 
     observable.subscribe(
 

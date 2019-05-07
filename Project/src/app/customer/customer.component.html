@@ -1,4 +1,4 @@
-<h2 class="my_name" *ngIf="service.my_name">wellcome back: {{service.my_name.name}}</h2>
+<h2 class="my_name" *ngIf="service.my_name">wellcome back: <strong>{{service.my_name.name}}</strong></h2>
 <hr>
 
 <button (click)="get_customer()">show customer info</button>
@@ -210,7 +210,7 @@
 
     <div>
 
-      <button (click)="update_customer_on()">update your customer</button>
+      <button (click)="update_customer_switch()">update your customer</button>
 
       <div *ngIf="update_on">
 

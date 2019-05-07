@@ -10,7 +10,6 @@ import { Customer } from '../models/Customer';
 })
 export class UserService {
 
-
   constructor(private http: HttpClient, private router: Router) { }
 
   // login
@@ -33,6 +32,7 @@ export class UserService {
           this.router.navigate(["/administrator"]);
 
         sessionStorage.setItem("token", res.token + "");
+        sessionStorage.setItem("id", res.id + "");
 
       },
       err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
@@ -48,9 +48,7 @@ export class UserService {
 
     observable.subscribe(
       res => {
-        alert("your user has been created")
-        this.router.navigate(["/login"]);
-
+        alert("your user has been created");
       },
       err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
 
