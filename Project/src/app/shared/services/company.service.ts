@@ -27,7 +27,7 @@ export class CompanyService {
 
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 

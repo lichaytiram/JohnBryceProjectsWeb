@@ -45,6 +45,7 @@ export class CustomerComponent implements OnInit {
   ngOnInit(): void {
 
     this.service.get_customer_name(this.id, this.token);
+    this.service.get_amount(this.id, this.token);
 
   }
 
@@ -60,15 +61,10 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  public get_amount() {
-
-    this.service.get_amount(this.id, this.token);
-
-  }
-
   public get_customer_purchase() {
 
     this.service.get_customer_purchase(this.id, this.token);
+
   }
 
   public get_customer_coupons_by_customer_id() {
@@ -111,6 +107,7 @@ export class CustomerComponent implements OnInit {
     purchse.amount = this.amount;
 
     this.service.purchase_coupon(purchse, this.token);
+    this.service.get_all_coupon(this.token);
 
   }
 
@@ -148,7 +145,6 @@ export class CustomerComponent implements OnInit {
     this.service.update_customer(customer, this.token);
 
     this.update_on = false;
-
 
   }
 

@@ -7,7 +7,7 @@
 
     <div id="login-form">
 
-        <input type="text" placeholder="Enter email or username" [(ngModel)]="user_name" />
+        <input type="text" placeholder="Enter username" [(ngModel)]="user_name" />
         <input type="password" placeholder="Enter password" [(ngModel)]="password" />
         <button type="button" class="btn login" (click)="submit()">login</button>
         <p><a href="javascript:void(0)">Forgotten account</a></p>
@@ -19,6 +19,7 @@
 
         <input type="text" placeholder="Choose username" [(ngModel)]="user_name">
         <input type="password" placeholder="Choose password" [(ngModel)]="password">
+        <input type="password" placeholder="Choose again your password" [(ngModel)]="password_confirm">
         <input type="text" placeholder="Choose first name" [(ngModel)]="first_name">
         <input type="text" placeholder="Choose last name" [(ngModel)]="last_name">
         <input type="text" placeholder="Choose phone number" [(ngModel)]="phone_number">

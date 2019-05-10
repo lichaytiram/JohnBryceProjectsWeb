@@ -41,7 +41,7 @@ export class CustomerService {
 
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 
@@ -58,7 +58,7 @@ export class CustomerService {
         this.root.customer = res;
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 
@@ -75,7 +75,7 @@ export class CustomerService {
         this.root.user = res;
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 
@@ -92,7 +92,7 @@ export class CustomerService {
         this.root.amount = res;
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 
@@ -109,7 +109,7 @@ export class CustomerService {
         this.root.purchases = res;
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 
@@ -126,7 +126,7 @@ export class CustomerService {
         this.root.coupon = res;
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 
@@ -143,7 +143,7 @@ export class CustomerService {
         this.root.category = res;
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 
@@ -160,7 +160,7 @@ export class CustomerService {
         this.root.max_price = res;
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 
@@ -177,7 +177,7 @@ export class CustomerService {
         this.root.all_coupons = res;
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 
@@ -194,7 +194,7 @@ export class CustomerService {
         this.root.one_coupon = res;
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 
@@ -211,7 +211,7 @@ export class CustomerService {
         alert("Your purchase has been done");
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 
@@ -231,7 +231,7 @@ export class CustomerService {
         this.router.navigate(["/login"]);
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 
@@ -248,7 +248,7 @@ export class CustomerService {
         alert("Your purchase has been deleted");
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 
@@ -265,7 +265,7 @@ export class CustomerService {
         alert("Your purchase has been deleted");
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 
@@ -282,7 +282,7 @@ export class CustomerService {
         alert("Your customer has been updated")
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 

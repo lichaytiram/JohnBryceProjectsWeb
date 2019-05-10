@@ -14,7 +14,7 @@ export class UserService {
 
   // login
 
-  public login(user: LoginUser) {
+  public login(user: LoginUser) :void{
 
     let observable = this.http.post<UserDataClient>("http://localhost:8080/users/login", user);
 
@@ -25,8 +25,10 @@ export class UserService {
         if (res.clientType == "Customer")
           this.router.navigate(["/customer"]);
 
-        else if (res.clientType == "Company")
+        else if (res.clientType == "Company") {
           this.router.navigate(["/company"]);
+          sessionStorage.setItem("company", res.company + "");
+        }
 
         else
           this.router.navigate(["/administrator"]);
@@ -35,7 +37,7 @@ export class UserService {
         sessionStorage.setItem("id", res.id + "");
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     )
   }
@@ -50,7 +52,7 @@ export class UserService {
       res => {
         alert("your user has been created");
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ", Message: " + err.message)
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
     );
 

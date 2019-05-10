@@ -10,8 +10,9 @@ import { Customer, User } from '../shared/models/Customer';
 })
 export class UserComponent {
 
-  private user_name: string = "username1";
-  private password: string = "123Xx";
+  private user_name: string;
+  private password: string;
+  private password_confirm: string;
   private first_name: string;
   private last_name: string;
   private phone_number: string;
@@ -37,7 +38,10 @@ export class UserComponent {
     user.password = this.password;
     customer.user = user;
 
-    this.service.register(customer);
+    if (this.password == this.password_confirm)
+      this.service.register(customer);
+    else
+      alert("Your password isn't even, please try again!");
 
   }
 

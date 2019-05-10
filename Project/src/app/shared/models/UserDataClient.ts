@@ -1,8 +1,9 @@
 export class UserDataClient {
     public constructor(
-        public id: number,
-        public clientType: string,
         public token: number,
+        public clientType: string,
+        public id: number,
+        public company?: number,
     ) { }
 
 }
