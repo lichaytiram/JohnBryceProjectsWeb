@@ -10,8 +10,8 @@ import { Customer, User } from '../shared/models/Customer';
 })
 export class UserComponent {
 
-  private user_name: string;
-  private password: string;
+  private user_name: string = null;
+  private password: string = null;
   private password_confirm: string;
   private first_name: string;
   private last_name: string;

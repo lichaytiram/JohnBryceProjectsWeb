@@ -1,14 +1,3 @@
-
-export class User {
-
-    id?: number;
-    userName: string;
-    password: string;
-    type: string = "Customer";
-    companyId?: string = null;
-
-}
-
 export class Customer {
 
     id?: number;
@@ -17,5 +6,15 @@ export class Customer {
     phoneNumber: string;
     email: string;
     user?: User;
+
+}
+
+export class User {
+
+    id: number;
+    userName: string;
+    password: string;
+    type: string;
+    companyId: string;
 
 }

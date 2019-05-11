@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../shared/services/customer.service';
-import { Customer, User } from '../shared/models/Customer';
+import { User } from '../shared/models/User';
+import { Customer } from '../shared/models/Customer';
 import { Purchase } from '../shared/models/Purchase';
-import { UserService } from '../shared/services/User.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customer',
@@ -26,16 +27,11 @@ export class CustomerComponent implements OnInit {
 
   private category: string;
 
-  private coupon_id_purchase: number;
-
-  private one_coupon: number;
-
   public token: number;
   public id: number;
   public instance = this.service.root;
 
-
-  constructor(private service: CustomerService, private user_service: UserService) {
+  constructor(private service: CustomerService, private router: Router) {
 
     this.token = <number><unknown>sessionStorage.getItem("token");
     this.id = <number><unknown>sessionStorage.getItem("id");
@@ -49,6 +45,12 @@ export class CustomerComponent implements OnInit {
 
   }
 
+  public log_out() {
+    alert("You are log out!\nWe are waiting for next visit");
+    sessionStorage.clear();
+    this.router.navigate(["/login"]);
+
+  }
 
   public get_customer() {
 
@@ -75,13 +77,19 @@ export class CustomerComponent implements OnInit {
 
   public get_customer_coupons_by_category() {
 
-    this.service.get_customer_coupons_by_category(this.id, this.category, this.token);
+    if (this.category == null)
+      alert("Enter category plz");
+    else
+      this.service.get_customer_coupons_by_category(this.id, this.category, this.token);
 
   }
 
   public get_customer_coupons_by_max_price() {
 
-    this.service.get_customer_coupons_by_max_price(this.id, this.max_price, this.token);
+    if (this.max_price == null)
+      alert("Enter max price plz");
+    else
+      this.service.get_customer_coupons_by_max_price(this.id, this.max_price, this.token);
 
   }
 
@@ -90,14 +98,6 @@ export class CustomerComponent implements OnInit {
     this.service.get_all_coupon(this.token);
 
   }
-
-  public get_coupon() {
-
-    this.service.get_coupon(this.one_coupon, this.token);
-
-  }
-
-
 
   public purchase_coupon(coupon_id: number) {
 
@@ -122,11 +122,6 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  public delete_purchase() {
-
-    this.service.delete_purchase(this.id, this.coupon_id_purchase, this.token);
-
-  }
 
   public update_customer() {
 

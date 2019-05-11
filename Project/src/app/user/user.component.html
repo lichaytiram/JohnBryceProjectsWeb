@@ -1,4 +1,5 @@
-<div class="form-modal">
+<router-outlet #outlet="outlet"></router-outlet>
+<div class="form-modal" *ngIf="outlet.isActivated == false">
 
     <div class="form-toggle">
         <button id="login-toggle" (click)="toggleLogin()">log in</button>

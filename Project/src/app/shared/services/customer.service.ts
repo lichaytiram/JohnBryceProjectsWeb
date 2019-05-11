@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Customer, User } from '../models/Customer';
+import { User } from '../models/User';
+import { Customer } from '../models/Customer';
 import { Router } from '@angular/router';
 import { Purchase } from '../models/Purchase';
 import { Coupon } from '../models/Coupon';
@@ -21,13 +22,11 @@ export class CustomerService {
     coupon: null,
     max_price: null,
     category: null,
-    all_coupons: null,
-    one_coupon: null
+    all_coupons: null
+    // one_coupon: null
   }
 
   constructor(private http: HttpClient, private router: Router) { }
-
-
 
   public get_customer_name(customer_id: number, token: number): void {
 
@@ -183,22 +182,22 @@ export class CustomerService {
 
   }
 
-  public get_coupon(coupon_id: number, token: number): void {
+  // public get_coupon(coupon_id: number, token: number): void {
 
-    let observable = this.http.get<Coupon>(`http://localhost:8080/coupons/${coupon_id}?token=${token}`);
+  //   let observable = this.http.get<Coupon>(`http://localhost:8080/coupons/${coupon_id}?token=${token}`);
 
-    observable.subscribe(
+  //   observable.subscribe(
 
-      res => {
+  //     res => {
 
-        this.root.one_coupon = res;
+  //       this.root.one_coupon = res;
 
-      },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+  //     },
+  //     err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
-    );
+  //   );
 
-  }
+  // }
 
   public purchase_coupon(purchase: Purchase, token: number): void {
 
@@ -254,22 +253,22 @@ export class CustomerService {
 
   }
 
-  public delete_purchase(customer_id: number, coupon_id: number, token: number): void {
+  // public delete_purchase(customer_id: number, coupon_id: number, token: number): void {
 
-    let observable = this.http.delete(`http://localhost:8080/purchases/delete?customerId=${customer_id}&couponId=${coupon_id}&token=${token}`);
+  //   let observable = this.http.delete(`http://localhost:8080/purchases/delete?customerId=${customer_id}&couponId=${coupon_id}&token=${token}`);
 
-    observable.subscribe(
+  //   observable.subscribe(
 
-      () => {
+  //     () => {
 
-        alert("Your purchase has been deleted");
+  //       alert("Your purchase has been deleted");
 
-      },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+  //     },
+  //     err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
-    );
+  //   );
 
-  }
+  // }
 
   public update_customer(customer: Customer, token: number): void {
 

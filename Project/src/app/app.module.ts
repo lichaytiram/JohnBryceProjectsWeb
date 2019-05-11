@@ -11,11 +11,15 @@ import { CustomerComponent } from './customer/customer.component';
 import { CompanyComponent } from './company/company.component';
 
 const root: Routes = [
-  { path: 'login', component: UserComponent },
-  { path: 'customer', component: CustomerComponent },
-  { path: 'company', component: CompanyComponent },
-  { path: 'administrator', component: AdministratorComponent },
-  { path: '', component: UserComponent }
+  {
+    path: 'login', component: UserComponent, children: [
+      { path: 'customer', component: CustomerComponent },
+      { path: 'company', component: CompanyComponent },
+      { path: 'administrator', component: AdministratorComponent },
+    ]
+  },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ]
 
 @NgModule({

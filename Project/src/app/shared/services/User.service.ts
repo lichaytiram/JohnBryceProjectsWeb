@@ -14,7 +14,7 @@ export class UserService {
 
   // login
 
-  public login(user: LoginUser) :void{
+  public login(user: LoginUser): void {
 
     let observable = this.http.post<UserDataClient>("http://localhost:8080/users/login", user);
 
@@ -23,15 +23,15 @@ export class UserService {
       res => {
 
         if (res.clientType == "Customer")
-          this.router.navigate(["/customer"]);
+          this.router.navigate(["login/customer"]);
 
         else if (res.clientType == "Company") {
-          this.router.navigate(["/company"]);
-          sessionStorage.setItem("company", res.company + "");
+          sessionStorage.setItem("company", res.companyId + "");
+          this.router.navigate(["login/company"]);
         }
 
         else
-          this.router.navigate(["/administrator"]);
+          this.router.navigate(["login/administrator"]);
 
         sessionStorage.setItem("token", res.token + "");
         sessionStorage.setItem("id", res.id + "");

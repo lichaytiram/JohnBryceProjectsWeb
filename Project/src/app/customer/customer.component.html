@@ -8,6 +8,12 @@
   </p>
 </div>
 
+<div>
+
+  <button (click)="log_out()" class="angle">log out</button>
+
+</div>
+
 <div class="center">
   <button (click)="get_customer()">show customer info</button>
   <div *ngIf="instance.customer">
@@ -31,16 +37,21 @@
   <button (click)="get_customer_purchase()">get all purchases</button>
   <div *ngIf="instance.purchases">
 
-    <div *ngFor="let purchase of instance.purchases">
-      <br>
-      coupon id: {{purchase.couponId}}
-      <br>
-      amount: {{purchase.amount}}
-      <br>
-      date: {{purchase.date}}
-      <br>
-      <button (click)="delete_purchase_by_id(purchase.id)">delete purchase</button>
-    </div>
+
+    <table border="1" align="center">
+      <tr>
+        <th>coupon id</th>
+        <th>amount</th>
+        <th>date</th>
+        <th>delete purchase</th>
+      </tr>
+      <tr *ngFor="let purchase of instance.purchases">
+        <td>{{purchase.couponId}}</td>
+        <td>{{purchase.amount}}</td>
+        <td>{{purchase.date}}</td>
+        <td><button (click)="delete_purchase_by_id(purchase.id)" class="angle">delete</button></td>
+      </tr>
+    </table>
 
 
   </div>
@@ -49,23 +60,27 @@
   <button (click)="get_customer_coupons_by_customer_id()">get my coupons</button>
   <div *ngIf="instance.coupon">
 
-    <div *ngFor="let coupon of instance.coupon">
-      <br>
-      company id: {{coupon.companyId}}
-      <br>
-      category: {{coupon.category}}
-      <br>
-      title: {{coupon.title}}
-      <br>
-      description: {{coupon.description}}
-      <br>
-      amount: {{coupon.amount}}
-      <br>
-      price: {{coupon.price}}
-      <br>
-      image: {{coupon.image}}
+    <table border="1" align="center">
+      <tr>
+        <th>title</th>
+        <th>description</th>
+        <th>category</th>
+        <th>amount</th>
+        <th>price</th>
+        <th>image</th>
+        <th>delete purchase</th>
+      </tr>
 
-    </div>
+      <tr *ngFor="let coupon of instance.coupon">
+        <td>{{coupon.title}}</td>
+        <td>{{coupon.description}}</td>
+        <td>{{coupon.category}}</td>
+        <td>{{coupon.amount}}</td>
+        <td>{{coupon.price}}</td>
+        <td>{{coupon.image}}</td>
+        <td><button (click)="delete_purchase_by_id(coupon.id)" class="angle">delete</button></td>
+      </tr>
+    </table>
 
   </div>
   <div>
@@ -85,23 +100,25 @@
     <button (click)="get_customer_coupons_by_category()">choose by category</button>
     <div *ngIf="instance.category">
 
-      <div *ngFor="let coupon of instance.category">
-        <br>
-        company id: {{coupon.companyId}}
-        <br>
-        category: {{coupon.category}}
-        <br>
-        title: {{coupon.title}}
-        <br>
-        description: {{coupon.description}}
-        <br>
-        amount: {{coupon.amount}}
-        <br>
-        price: {{coupon.price}}
-        <br>
-        image: {{coupon.image}}
+      <table border="1" align="center">
+        <tr>
+          <th>title</th>
+          <th>description</th>
+          <th>category</th>
+          <th>amount</th>
+          <th>price</th>
+          <th>image</th>
+        </tr>
 
-      </div>
+        <tr *ngFor="let coupon of instance.category">
+          <td>{{coupon.title}}</td>
+          <td>{{coupon.description}}</td>
+          <td>{{coupon.category}}</td>
+          <td>{{coupon.amount}}</td>
+          <td>{{coupon.price}}</td>
+          <td>{{coupon.image}}</td>
+        </tr>
+      </table>
 
     </div>
 
@@ -111,38 +128,7 @@
       <button (click)="get_customer_coupons_by_max_price()">get all coupons by max price</button>
       <div *ngIf="instance.max_price">
 
-        <div *ngFor="let coupon of instance.max_price">
-          <br>
-          company id: {{coupon.companyId}}
-          <br>
-          category: {{coupon.category}}
-          <br>
-          title: {{coupon.title}}
-          <br>
-          description: {{coupon.description}}
-          <br>
-          amount: {{coupon.amount}}
-          <br>
-          price: {{coupon.price}}
-          <br>
-          image: {{coupon.image}}
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div>
-
-      <button (click)="get_all_coupon()">show all coupons</button>
-
-      <div *ngIf="instance.all_coupons" class="center">
-
-        <!-- <div *ngFor="let coupon of instance.all_coupons"> -->
-
-        <table border="1">
-
+        <table border="1" align="center">
           <tr>
             <th>title</th>
             <th>description</th>
@@ -150,85 +136,83 @@
             <th>amount</th>
             <th>price</th>
             <th>image</th>
-            <th>purchase</th>
           </tr>
 
-          <tr *ngFor="let coupon of instance.all_coupons">
+          <tr *ngFor="let coupon of instance.max_price">
             <td>{{coupon.title}}</td>
             <td>{{coupon.description}}</td>
             <td>{{coupon.category}}</td>
             <td>{{coupon.amount}}</td>
             <td>{{coupon.price}}</td>
             <td>{{coupon.image}}</td>
-            <button (click)="purchase_coupon(coupon.id)" class="angle">purchse coupon</button>
           </tr>
-
         </table>
-        <p>amount: <input type="number" [(ngModel)]="amount"></p>
+
 
       </div>
-
-      <div>
-        <input type="number" [(ngModel)]="one_coupon">
-        <button (click)="get_coupon()">show coupon by id</button>
-
-        <div *ngIf="instance.one_coupon">
-
-          <br>
-          coupon id: {{instance.one_coupon.id}}
-          <br>
-          company id: {{instance.one_coupon.companyId}}
-          <br>
-          category: {{instance.one_coupon.category}}
-          <br>
-          title: {{instance.one_coupon.title}}
-          <br>
-          description: {{instance.one_coupon.description}}
-          <br>
-          amount: {{instance.one_coupon.amount}}
-          <br>
-          price: {{instance.one_coupon.price}}
-          <br>
-          image: {{instance.one_coupon.image}}
-
-        </div>
-
-      </div>
-
-
-      <div>
-        <h4>choose coupon id to delete</h4>
-        <br>
-        <input type="number" [(ngModel)]="coupon_id_purchase"> coupon id
-        <br>
-        <button (click)="delete_purchase()">delete</button>
-
-      </div>
-
-      <div>
-
-        <button (click)="update_customer_switch()">update your customer</button>
-
-        <div *ngIf="update_on">
-
-          <h4>plz fill all </h4>
-          <input type="text" [(ngModel)]="user_name"> user name
-          <br>
-          <input type="password" [(ngModel)]="password"> password
-          <br>
-          <input type="text" [(ngModel)]="first_name"> first name
-          <br>
-          <input type="text" [(ngModel)]="last_name"> last name
-          <br>
-          <input type="text" [(ngModel)]="phone_number"> phone number
-          <br>
-          <input type="email" [(ngModel)]="email"> email
-          <br>
-          <button (click)="update_customer()">update your customer</button>
-        </div>
-
-      </div>
-
-      <button style="background-color:red" (click)="delete_customer()">delete your account</button>
 
     </div>
+
+  </div>
+
+  <div>
+
+    <button (click)="get_all_coupon()">show all coupons</button>
+
+    <div *ngIf="instance.all_coupons" class="center">
+
+
+      <table border="1" align="center">
+
+        <tr>
+          <th>title</th>
+          <th>description</th>
+          <th>category</th>
+          <th>amount</th>
+          <th>price</th>
+          <th>image</th>
+          <th>purchase</th>
+        </tr>
+
+        <tr *ngFor="let coupon of instance.all_coupons">
+          <td>{{coupon.title}}</td>
+          <td>{{coupon.description}}</td>
+          <td>{{coupon.category}}</td>
+          <td>{{coupon.amount}}</td>
+          <td>{{coupon.price}}</td>
+          <td>{{coupon.image}}</td>
+          <td> <button (click)="purchase_coupon(coupon.id)" class="angle">purchse coupon</button></td>
+        </tr>
+
+      </table>
+      <p>amount: <input type="number" [(ngModel)]="amount"></p>
+
+    </div>
+
+    <div>
+
+      <button (click)="update_customer_switch()">update your customer</button>
+
+      <div *ngIf="update_on">
+
+        <h4>plz fill all </h4>
+        <input type="text" [(ngModel)]="user_name"> user name
+        <br>
+        <input type="password" [(ngModel)]="password"> password
+        <br>
+        <input type="text" [(ngModel)]="first_name"> first name
+        <br>
+        <input type="text" [(ngModel)]="last_name"> last name
+        <br>
+        <input type="text" [(ngModel)]="phone_number"> phone number
+        <br>
+        <input type="email" [(ngModel)]="email"> email
+        <br>
+        <button (click)="update_customer()">update your customer</button>
+      </div>
+
+    </div>
+
+    <button style="background-color:red" (click)="delete_customer()">delete your account</button>
+
+  </div>

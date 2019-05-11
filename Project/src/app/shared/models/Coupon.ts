@@ -1,12 +1,12 @@
-export interface Coupon {
+export class Coupon {
 
     id?: number;
     companyId: number;
-    category: string;
     title: string;
     description: string;
-    startDate: string;
-    endDate: string;
+    category: string;
+    startDate: Date;
+    endDate: Date;
     amount: number;
     price: number;
     image: string;
