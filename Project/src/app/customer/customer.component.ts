@@ -39,43 +39,48 @@ export class CustomerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.service.get_customer_name(this.id, this.token);
-    this.service.get_amount(this.id, this.token);
-
-  }
-
-  public log_out() {
-    alert("You are log out!\nWe are waiting for next visit");
-    sessionStorage.clear();
-    this.router.navigate(["/login"]);
+    if (this.token == null)
+      this.router.navigate(["/login"]);
+      
+    else {
+      this.service.get_customer_name(this.id, this.token);
+      this.service.get_amount(this.id, this.token);
+    }
 
   }
 
-  public get_customer() {
+
+
+  public log_out(): void {
+
+    this.service.log_out(this.token);
+
+  }
+
+  public get_customer(): void {
 
     this.service.get_customer(this.id, this.token);
 
   }
-  public get_user() {
+  public get_user(): void {
 
     this.service.get_user(this.id, this.token);
 
   }
 
-  public get_customer_purchase() {
+  public get_customer_purchase(): void {
 
     this.service.get_customer_purchase(this.id, this.token);
 
   }
 
-  public get_customer_coupons_by_customer_id() {
+  public get_customer_coupons_by_customer_id(): void {
 
     this.service.get_customer_coupons_by_customer_id(this.id, this.token);
 
   }
 
-  public get_customer_coupons_by_category() {
+  public get_customer_coupons_by_category(): void {
 
     if (this.category == null)
       alert("Enter category plz");
@@ -84,7 +89,7 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  public get_customer_coupons_by_max_price() {
+  public get_customer_coupons_by_max_price(): void {
 
     if (this.max_price == null)
       alert("Enter max price plz");
@@ -93,13 +98,13 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  public get_all_coupon() {
+  public get_all_coupon(): void {
 
     this.service.get_all_coupon(this.token);
 
   }
 
-  public purchase_coupon(coupon_id: number) {
+  public purchase_coupon(coupon_id: number): void {
 
     let purchse: Purchase = new Purchase();
     purchse.couponId = coupon_id;
@@ -111,19 +116,20 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  public delete_customer() {
+  public delete_customer(): void {
 
     this.service.delete_customer(this.id, this.token);
+
   }
 
-  public delete_purchase_by_id(purchase_id: number) {
+  public delete_purchase_by_id(purchase_id: number): void {
 
     this.service.delete_purchase_by_id(purchase_id, this.token);
 
   }
 
 
-  public update_customer() {
+  public update_customer(): void {
 
     let customer: Customer = new Customer();
     customer.id = this.id;
@@ -143,8 +149,10 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  public update_customer_switch() {
+  public update_customer_switch(): void {
+
     this.update_on = true;
+
   }
 
 }

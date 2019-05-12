@@ -43,16 +43,20 @@ export class CompanyComponent implements OnInit {
 
   }
 
+
   ngOnInit(): void {
 
-    this.service.get_user_name(this.id, this.token);
+    if (this.token == null)
+      this.router.navigate(["/login"]);
+
+    else
+      this.service.get_user_name(this.id, this.token);
 
   }
 
   public log_out(): void {
-    alert("You are log out!\nWe are waiting for next visit");
-    sessionStorage.clear();
-    this.router.navigate(["/login"]);
+
+    this.service.log_out(this.token);
 
   }
 

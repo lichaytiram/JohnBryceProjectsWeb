@@ -11,6 +11,7 @@ import { User } from '../models/User';
 export class CompanyService {
 
   public my_name: string;
+  public is_logged: boolean;
 
   public root = {
     company: null,
@@ -31,6 +32,42 @@ export class CompanyService {
       res => {
 
         this.my_name = res;
+
+      },
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+    );
+
+  }
+
+  public log_out(token: number): void {
+
+    let observable = this.http.get(`http://localhost:8080/users/logout?token=${token}`);
+
+    observable.subscribe(
+
+      () => {
+
+        alert("You are log out!\nWe are waiting for next visit");
+        sessionStorage.clear();
+        this.router.navigate(["/login"]);
+
+      },
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+    );
+
+  }
+
+  public is_valid_token(token: number): void {
+
+    let observable = this.http.get<boolean>(`http://localhost:8080/users/valid?token=${token}`);
+
+    observable.subscribe(
+
+      res => {
+
+        this.is_logged = res;
 
       },
       err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
