@@ -10,7 +10,7 @@ import { User } from '../models/User';
 })
 export class CompanyService {
 
-  public my_name:string;
+  public my_name: string;
 
   public root = {
     company: null,
@@ -181,7 +181,7 @@ export class CompanyService {
 
       () => {
 
-        alert("Your user name has been updated");
+        alert("Your user has been updated");
 
       },
       err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)

@@ -112,7 +112,22 @@ export class AdministratorService {
 
   }
 
+  public update_user(user: User, token: number): void {
 
+    let observable = this.http.put(`http://localhost:8080/users?token=${token}`, user);
+
+    observable.subscribe(
+
+      () => {
+
+        alert("Your user has been updated");
+
+      },
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+    );
+
+  }
 
   public update_company(company: Company, token: number): void {
 

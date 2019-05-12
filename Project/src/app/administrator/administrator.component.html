@@ -41,6 +41,15 @@
 
     <div>
 
+        <button (click)="update_user()">update user</button><br>
+        Enter id <input type="number" [(ngModel)]="user_id"><br>
+        Enter user name <input type="text" [(ngModel)]="user_name"><br>
+        Enter password <input type="text" [(ngModel)]="password"><br>
+
+    </div>
+
+    <div>
+
         <button (click)="get_all_companies()">get all companies</button>
 
         <div *ngIf="instance.all_companies">

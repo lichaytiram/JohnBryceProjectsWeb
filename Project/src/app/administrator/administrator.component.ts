@@ -23,6 +23,9 @@ export class AdministratorComponent implements OnInit {
   private type: string = null;
   private company_id_user: string = null;
 
+  //update user
+  private user_id: number;
+
   public token: number;
   public id: number;
   public instance = this.service.root;
@@ -73,6 +76,17 @@ export class AdministratorComponent implements OnInit {
   public delete_my_user() {
 
     this.service.delete_my_user(this.id, this.token);
+
+  }
+
+  public update_user() {
+
+    let user: User = new User();
+    user.id = this.user_id;
+    user.userName = this.user_name;
+    user.password = this.password;
+
+    this.service.update_user(user, this.token);
 
   }
 
