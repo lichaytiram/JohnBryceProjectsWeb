@@ -34,11 +34,13 @@ export class AdministratorComponent implements OnInit {
 
     this.token = <number><unknown>sessionStorage.getItem("token");
     this.id = <number><unknown>sessionStorage.getItem("id");
-    this.service.is_valid_token(this.token);
 
   }
 
   ngOnInit(): void {
+
+    console.log(this.token);
+    this.service.is_valid_token(this.token);
 
     if (!this.service.is_logged)
       this.router.navigate(["/login"]);
