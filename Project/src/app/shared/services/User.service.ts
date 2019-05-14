@@ -21,6 +21,7 @@ export class UserService {
     observable.subscribe(
 
       res => {
+        sessionStorage.setItem("token", res.token + "");
 
         if (res.clientType == "Customer")
           this.router.navigate(["login/customer"]);
@@ -33,7 +34,6 @@ export class UserService {
         else
           this.router.navigate(["login/administrator"]);
 
-        sessionStorage.setItem("token", res.token + "");
         sessionStorage.setItem("id", res.id + "");
 
       },

@@ -32,15 +32,24 @@ export class AdministratorComponent implements OnInit {
 
   constructor(private service: AdministratorService, private router: Router) {
 
+    console.log("inside cons");
+
+
     this.token = <number><unknown>sessionStorage.getItem("token");
     this.id = <number><unknown>sessionStorage.getItem("id");
+
+    console.log("1: " + this.service.is_logged + " ,token: " + this.token);
+    if (this.token)
+      this.service.is_valid_token(this.token);
+    else
+      alert("Don't try scam us! , pls login.");
+
+    console.log("2: " + this.service.is_logged + " ,token: " + this.token);
 
   }
 
   ngOnInit(): void {
 
-    console.log(this.token);
-    this.service.is_valid_token(this.token);
 
     if (!this.service.is_logged)
       this.router.navigate(["/login"]);
@@ -48,8 +57,8 @@ export class AdministratorComponent implements OnInit {
     else
       this.service.get_user_name(this.id, this.token);
 
-
   }
+
 
   public log_out(): void {
 

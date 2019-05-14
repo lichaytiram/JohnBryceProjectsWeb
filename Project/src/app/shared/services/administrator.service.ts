@@ -5,6 +5,7 @@ import { Company } from '../models/Company';
 import { User } from '../models/User';
 import { Customer } from '../models/Customer';
 import { Purchase } from '../models/Purchase';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -70,11 +71,12 @@ export class AdministratorService {
 
       res => {
 
+        console.log(token + " " + res);
         this.is_logged = res;
 
       },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
-
+      err =>
+        alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
     );
 
   }
