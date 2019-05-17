@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { UserService } from '../shared/services/User.service';
 import { LoginUser } from '../shared/models/LoginUser';
-import { Customer, User } from '../shared/models/Customer';
+import { Customer } from '../shared/models/Customer';
+import { User } from '../shared/models/User';
+import { UserService } from '../shared/services/user.service';
+import { CustomerService } from '../shared/services/customer.service';
 
 @Component({
   selector: 'app-user',
@@ -10,42 +12,45 @@ import { Customer, User } from '../shared/models/Customer';
 })
 export class UserComponent {
 
-  private user_name: string = null;
-  private password: string = null;
-  private password_confirm: string;
-  private first_name: string;
-  private last_name: string;
-  private phone_number: string;
-  private email: string;
+  private _userName: string = null;
+  private _password: string = null;
+  private _passwordConfirm: string;
+  private _firstName: string;
+  private _lastName: string;
+  private _phoneNumber: string;
+  private _email: string;
+
+  constructor(private userService: UserService, private customerService: CustomerService) { }
 
   public submit(): void {
 
-    let user: LoginUser = new LoginUser(this.user_name, this.password);
+    let user: LoginUser = new LoginUser(this._userName, this._password);
 
-    this.service.login(user);
+    this.userService.login(user);
 
   }
 
   public register(): void {
 
     let customer: Customer = new Customer();
-    customer.firstName = this.first_name;
-    customer.lastName = this.last_name;
-    customer.phoneNumber = this.phone_number;
-    customer.email = this.email;
     let user: User = new User();
-    user.userName = this.user_name;
-    user.password = this.password;
+
+    customer.firstName = this._firstName;
+    customer.lastName = this._lastName;
+    customer.phoneNumber = this._phoneNumber;
+    customer.email = this._email;
+    user.userName = this._userName;
+    user.password = this._password;
+    user.type = "Customer";
     customer.user = user;
 
-    if (this.password == this.password_confirm)
-      this.service.register(customer);
+    if (this._password == this._passwordConfirm)
+      this.customerService.createCustomer(customer);
+
     else
       alert("Your password isn't even, please try again!");
 
   }
-
-  constructor(private service: UserService) { }
 
   public toggleSignup() {
 
@@ -68,6 +73,5 @@ export class UserComponent {
     document.getElementById("login-form").style.display = "block";
 
   }
-
 
 }

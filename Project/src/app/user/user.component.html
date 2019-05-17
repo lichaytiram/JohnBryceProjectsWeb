@@ -8,8 +8,8 @@
 
     <div id="login-form">
 
-        <input type="text" placeholder="Enter username" [(ngModel)]="user_name" />
-        <input type="password" placeholder="Enter password" [(ngModel)]="password" />
+        <input type="text" placeholder="Enter username" [(ngModel)]="_userName" />
+        <input type="password" placeholder="Enter password" [(ngModel)]="_password" />
         <button type="button" class="btn login" (click)="submit()">login</button>
         <p><a href="javascript:void(0)">Forgotten account</a></p>
         <hr />
@@ -18,13 +18,13 @@
 
     <div id="signup-form">
 
-        <input type="text" placeholder="Choose username" [(ngModel)]="user_name">
-        <input type="password" placeholder="Choose password" [(ngModel)]="password">
-        <input type="password" placeholder="Choose again your password" [(ngModel)]="password_confirm">
-        <input type="text" placeholder="Choose first name" [(ngModel)]="first_name">
-        <input type="text" placeholder="Choose last name" [(ngModel)]="last_name">
-        <input type="text" placeholder="Choose phone number" [(ngModel)]="phone_number">
-        <input type="email" placeholder="Choose email" [(ngModel)]="email">
+        <input type="text" placeholder="Choose username" [(ngModel)]="_userName">
+        <input type="password" placeholder="Choose password" [(ngModel)]="_password">
+        <input type="password" placeholder="Choose again your password" [(ngModel)]="_passwordConfirm">
+        <input type="text" placeholder="Choose first name" [(ngModel)]="_firstName">
+        <input type="text" placeholder="Choose last name" [(ngModel)]="_lastName">
+        <input type="text" placeholder="Choose phone number" [(ngModel)]="_phoneNumber">
+        <input type="email" placeholder="Choose email" [(ngModel)]="_email">
 
         <button type="button" class="btn signup" (click)="register()">create account</button>
         <p>Clicking <strong>create account</strong> means that you are agree to our <a href="javascript:void(0);">terms

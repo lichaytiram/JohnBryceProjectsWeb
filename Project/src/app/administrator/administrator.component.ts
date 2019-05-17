@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AdministratorService } from '../shared/services/administrator.service';
-import { Router } from '@angular/router';
 import { Company } from '../shared/models/Company';
 import { User } from '../shared/models/User';
+import { UserService } from '../shared/services/user.service';
+import { CompanyService } from '../shared/services/company.service';
+import { CustomerService } from '../shared/services/customer.service';
+import { PurchaseService } from '../shared/services/purshase.service';
 
 @Component({
   selector: 'app-administrator',
@@ -28,97 +30,42 @@ export class AdministratorComponent implements OnInit {
 
   public token: number;
   public id: number;
-  public instance = this.service.root;
+  public userServiceInstance = this.userService.root;
+  public companyServiceInstance = this.companyService.root;
+  public customerServiceInstance = this.customerService.root;
+  public purchaseServiceInstance = this.purchaseService.root;
 
-  constructor(private service: AdministratorService, private router: Router) {
-
-    console.log("inside cons");
-
+  constructor(private userService: UserService, private companyService: CompanyService, private customerService: CustomerService, private purchaseService: PurchaseService) {
 
     this.token = <number><unknown>sessionStorage.getItem("token");
     this.id = <number><unknown>sessionStorage.getItem("id");
-
-    console.log("1: " + this.service.is_logged + " ,token: " + this.token);
-    if (this.token)
-      this.service.is_valid_token(this.token);
-    else
-      alert("Don't try scam us! , pls login.");
-
-    console.log("2: " + this.service.is_logged + " ,token: " + this.token);
 
   }
 
   ngOnInit(): void {
 
-
-    if (!this.service.is_logged)
-      this.router.navigate(["/login"]);
-
-    else
-      this.service.get_user_name(this.id, this.token);
+    this.userService.getUserName(this.id, this.token);
 
   }
 
+  public logOut(): void {
 
-  public log_out(): void {
-
-    this.service.log_out(this.token);
+    this.userService.logOut(this.token);
 
   }
 
-  public create_company(): void {
+  public createCompany(): void {
 
     let company: Company = new Company();
     company.name = this.company_name;
     company.phoneNumber = this.phone_number;
     company.email = this.email;
 
-    this.service.create_company(company, this.token);
+    this.companyService.createCompany(company, this.token);
 
   }
 
-  public delete_company(company_id: number) {
-
-    this.service.delete_company(company_id, this.token);
-
-  }
-
-  public delete_user(user_id: number) {
-
-    this.service.delete_user(user_id, this.token);
-
-  }
-
-  public delete_my_user() {
-
-    this.service.delete_my_user(this.id, this.token);
-
-  }
-
-  public update_user() {
-
-    let user: User = new User();
-    user.id = this.user_id;
-    user.userName = this.user_name;
-    user.password = this.password;
-
-    this.service.update_user(user, this.token);
-
-  }
-
-  public update_company() {
-
-    let company: Company = new Company();
-    company.id = this.company_id;
-    company.name = this.company_name;
-    company.phoneNumber = this.phone_number;
-    company.email = this.email;
-
-    this.service.update_company(company, this.token);
-
-  }
-
-  public create_user() {
+  public createUser() {
 
     let user: User = new User();
     user.userName = this.user_name;
@@ -126,43 +73,82 @@ export class AdministratorComponent implements OnInit {
     user.type = this.type;
     user.companyId = this.company_id_user;
 
-    this.service.create_user(user, this.token);
+    this.userService.createUser(user, this.token);
 
   }
 
-  public get_all_companies() {
+  public updateUser() {
 
-    this.service.get_all_companies(this.token);
+    let user: User = new User();
+    user.id = this.user_id;
+    user.userName = this.user_name;
+    user.password = this.password;
 
-  }
-
-  public get_all_customers() {
-
-    this.service.get_all_customers(this.token);
-
-  }
-
-  public get_all_purchases() {
-
-    this.service.get_all_purchases(this.token);
+    this.userService.updateUser(user, this.token);
 
   }
 
-  public get_all_users() {
+  public updateCompany() {
 
-    this.service.get_all_users(this.token);
+    let company: Company = new Company();
+    company.id = this.company_id;
+    company.name = this.company_name;
+    company.phoneNumber = this.phone_number;
+    company.email = this.email;
+
+    this.companyService.updateCompany(company, this.token);
 
   }
 
+  public deleteMyUser() {
 
-  private available_delete(type: string, id: number): boolean {
+    this.userService.deleteMyUser(this.id, this.token);
+
+  }
+
+  public deleteUser(user_id: number) {
+
+    this.userService.deleteUser(user_id, this.token);
+
+  }
+
+  public deleteCompany(company_id: number) {
+
+    this.companyService.deleteCompany(company_id, this.token);
+
+  }
+
+  public getAllCompanies() {
+
+    this.companyService.getAllCompanies(this.token);
+
+  }
+
+  public getAllCustomers() {
+
+    this.customerService.getAllCustomers(this.token);
+
+  }
+
+  public getAllPurchases() {
+
+    this.purchaseService.getAllPurchases(this.token);
+
+  }
+
+  public getAllUsers() {
+
+    this.userService.getAllUsers(this.token);
+
+  }
+
+  // user by html
+  public availableDelete(type: string, id: number): boolean {
 
     if (type == "Customer" || id == this.id)
       return false;
     return true;
 
   }
-
-
 
 }

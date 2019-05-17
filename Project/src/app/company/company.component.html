@@ -1,24 +1,24 @@
-<h2 class="my_name" *ngIf="service.my_name">wellcome back: {{service.my_name.name}}</h2>
+<h2 class="my_name" *ngIf="userService.myName">wellcome back: {{userService.myName.name}}</h2>
 <hr>
 <div>
-    <button (click)="log_out()" class="angle">log out</button>
+    <button (click)="logOut()" class="angle">log out</button>
 </div>
 
 <div class="center">
 
-    <button (click)="get_company()">show company info</button>
-    <div *ngIf="instance.company">
-        id: {{instance.company.id}} <br>
-        name: {{instance.company.name}} <br>
-        phoneNumber: {{instance.company.phoneNumber}} <br>
-        email: {{instance.company.email}}<br>
+    <button (click)="getCompany()">show company info</button>
+    <div *ngIf="companyServiceInstance.company">
+        id: {{companyServiceInstance.company.id}} <br>
+        name: {{companyServiceInstance.company.name}} <br>
+        phoneNumber: {{companyServiceInstance.company.phoneNumber}} <br>
+        email: {{companyServiceInstance.company.email}}<br>
     </div>
 
-    <button (click)="get_user()">show user info</button>
-    <div *ngIf="instance.user">
-        user name: {{instance.user.userName}} <br>
-        password: {{instance.user.password}} <br>
-        companyId: {{instance.user.companyId}} <br>
+    <button (click)="getUser()">show user info</button>
+    <div *ngIf="userServiceInstance.user">
+        user name: {{userServiceInstance.user.userName}} <br>
+        password: {{userServiceInstance.user.password}} <br>
+        companyId: {{userServiceInstance.user.companyId}} <br>
     </div>
 
     <div>
@@ -34,21 +34,21 @@
         </select><br>
         Enter title <input type="text" [(ngModel)]="title"><br>
         Enter description <input type="text" [(ngModel)]="description"><br>
-        Enter start_date <input type="date" [(ngModel)]="start_date"><br>
-        Enter end_date <input type="date" [(ngModel)]="end_date"><br>
+        Enter start date <input type="date" [(ngModel)]="start_date"><br>
+        Enter end date <input type="date" [(ngModel)]="end_date"><br>
         Enter amount<input type="number" [(ngModel)]="amount"><br>
         Enter price <input type="number" [(ngModel)]="price"><br>
         Enter image <input type="text" [(ngModel)]="image"><br>
 
-        <button (click)="create_coupon()">create coupon</button>
+        <button (click)="createCoupon()">create coupon</button>
 
     </div>
 
     <div>
 
-        <button (click)="get_company_coupons_by_company_id()">get all coupons</button>
+        <button (click)="getCompanyCouponsByCompanyId()">get all coupons</button>
 
-        <div *ngIf="instance.coupons_by_id">
+        <div *ngIf="couponServiceInstance.getCompanyCouponsByCompanyId">
 
             <table border="1" align="center">
 
@@ -65,7 +65,7 @@
                     <th>delete coupon</th>
                 </tr>
 
-                <tr *ngFor="let coupon of instance.coupons_by_id">
+                <tr *ngFor="let coupon of couponServiceInstance.getCompanyCouponsByCompanyId">
                     <td>{{coupon.id}}</td>
                     <td>{{coupon.title}}</td>
                     <td>{{coupon.description}}</td>
@@ -75,7 +75,7 @@
                     <td>{{coupon.amount}}</td>
                     <td>{{coupon.price}}</td>
                     <td>{{coupon.image}}</td>
-                    <td><button (click)="delete_coupon(coupon.id)" class="angle">delete</button></td>
+                    <td><button (click)="deleteCoupon(coupon.id)" class="angle">delete</button></td>
                 </tr>
 
             </table>
@@ -95,9 +95,9 @@
             <option value="Comics">Comics</option>
             <option value="Paintball">Paintball</option>
         </select><br>
-        <button (click)="get_company_coupons_by_category()">get coupons by category</button>
+        <button (click)="getCompanyCouponsByCategory()">get coupons by category</button>
 
-        <div *ngIf="instance.coupons_by_category">
+        <div *ngIf="couponServiceInstance.getCompanyCouponsByCategory">
 
             <table border="1" align="center">
 
@@ -114,7 +114,7 @@
                     <th>delete coupon</th>
                 </tr>
 
-                <tr *ngFor="let coupon of instance.coupons_by_category">
+                <tr *ngFor="let coupon of couponServiceInstance.getCompanyCouponsByCategory">
                     <td>{{coupon.id}}</td>
                     <td>{{coupon.title}}</td>
                     <td>{{coupon.description}}</td>
@@ -124,7 +124,7 @@
                     <td>{{coupon.amount}}</td>
                     <td>{{coupon.price}}</td>
                     <td>{{coupon.image}}</td>
-                    <td><button (click)="delete_coupon(coupon.id)" class="angle">delete</button></td>
+                    <td><button (click)="deleteCoupon(coupon.id)" class="angle">delete</button></td>
                 </tr>
 
             </table>
@@ -136,9 +136,9 @@
     <div>
 
         <input type="number" [(ngModel)]="max_price">
-        <button (click)="get_company_coupons_by_max_price()">get coupons by max price</button>
+        <button (click)="getCompanyCouponsByMaxPrice()">get coupons by max price</button>
 
-        <div *ngIf="instance.coupons_by_max_price">
+        <div *ngIf="couponServiceInstance.getCompanyCouponsByMaxPrice">
 
             <table border="1" align="center">
 
@@ -155,7 +155,7 @@
                     <th>delete coupon</th>
                 </tr>
 
-                <tr *ngFor="let coupon of instance.coupons_by_max_price">
+                <tr *ngFor="let coupon of couponServiceInstance.getCompanyCouponsByMaxPrice">
                     <td>{{coupon.id}}</td>
                     <td>{{coupon.title}}</td>
                     <td>{{coupon.description}}</td>
@@ -165,7 +165,7 @@
                     <td>{{coupon.amount}}</td>
                     <td>{{coupon.price}}</td>
                     <td>{{coupon.image}}</td>
-                    <td><button (click)="delete_coupon(coupon.id)" class="angle">delete</button></td>
+                    <td><button (click)="deleteCoupon(coupon.id)" class="angle">delete</button></td>
                 </tr>
 
             </table>
@@ -176,7 +176,7 @@
 
     <div>
 
-        <button (click)="update_coupon()">update coupon</button><br>
+        <button (click)="updateCoupon()">update coupon</button><br>
         Enter id <input type="number" [(ngModel)]="coupon_id"><br>
         Enter category <select [(ngModel)]="category">
             <option value="Food">Food</option>
@@ -189,8 +189,8 @@
         </select><br>
         Enter title <input type="text" [(ngModel)]="title"><br>
         Enter description <input type="text" [(ngModel)]="description"><br>
-        Enter start_date <input type="date" [(ngModel)]="start_date"><br>
-        Enter end_date <input type="date" [(ngModel)]="end_date"><br>
+        Enter start date <input type="date" [(ngModel)]="start_date"><br>
+        Enter end date <input type="date" [(ngModel)]="end_date"><br>
         Enter amount<input type="number" [(ngModel)]="amount"><br>
         Enter price <input type="number" [(ngModel)]="price"><br>
         Enter image <input type="text" [(ngModel)]="image"><br>
@@ -199,7 +199,7 @@
 
     <div>
 
-        <button (click)="update_user()">update your user</button><br>
+        <button (click)="updateUser()">update your user</button><br>
         Enter user name <input type="text" [(ngModel)]="user_name"><br>
         Enter password<input type="text" [(ngModel)]="password"><br>
 
@@ -207,7 +207,7 @@
 
     <div>
 
-        <button (click)="delete_user()" class="delete">delete your account</button>
+        <button (click)="deleteMyUser()" class="delete">delete your account</button>
 
     </div>
 

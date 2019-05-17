@@ -1,7 +1,7 @@
-<h2 class="my_name" *ngIf="service.my_name">wellcome back: {{service.my_name.name}}</h2>
+<h2 class="my_name" *ngIf="userService.myName">wellcome back: {{userService.myName.name}}</h2>
 <hr>
 <div>
-    <button (click)="log_out()" class="angle">log out</button>
+    <button (click)="logOut()" class="angle">log out</button>
 </div>
 
 
@@ -9,7 +9,7 @@
 
     <div>
 
-        <button (click)="create_company()">create company</button><br>
+        <button (click)="createCompany()">create company</button><br>
         Enter company name <input type="text" [(ngModel)]="company_name"><br>
         Enter phone number <input type="text" [(ngModel)]="phone_number"><br>
         Enter email <input type="text" [(ngModel)]="email"><br>
@@ -18,7 +18,7 @@
 
     <div>
 
-        <button (click)="update_company()">update company</button><br>
+        <button (click)="updateCompany()">update company</button><br>
         Enter company id <input type="number" [(ngModel)]="company_id"> <br>
         Enter company name <input type="text" [(ngModel)]="company_name"><br>
         Enter phone number <input type="text" [(ngModel)]="phone_number"><br>
@@ -28,7 +28,7 @@
 
     <div>
 
-        <button (click)="create_user()">create user</button><br>
+        <button (click)="createUser()">create user</button><br>
         Enter user name <input type="text" [(ngModel)]="user_name"><br>
         Enter password <input type="text" [(ngModel)]="password"><br>
         Enter company id <input type="number" [(ngModel)]="company_id_user"><br>
@@ -41,7 +41,7 @@
 
     <div>
 
-        <button (click)="update_user()">update user</button><br>
+        <button (click)="updateUser()">update user</button><br>
         Enter id <input type="number" [(ngModel)]="user_id"><br>
         Enter user name <input type="text" [(ngModel)]="user_name"><br>
         Enter password <input type="text" [(ngModel)]="password"><br>
@@ -50,9 +50,9 @@
 
     <div>
 
-        <button (click)="get_all_companies()">get all companies</button>
+        <button (click)="getAllCompanies()">get all companies</button>
 
-        <div *ngIf="instance.all_companies">
+        <div *ngIf="companyServiceInstance.allCompanies">
             <table border="1" align="center">
 
                 <tr>
@@ -62,12 +62,12 @@
                     <th>email</th>
                     <th>delete company</th>
                 </tr>
-                <tr *ngFor="let company of instance.all_companies">
+                <tr *ngFor="let company of companyServiceInstance.allCompanies">
                     <td>{{company.id}}</td>
                     <td>{{company.name}}</td>
                     <td>{{company.phoneNumber}}</td>
                     <td>{{company.email}}</td>
-                    <td><button (click)="delete_company(company.id)" class="angle">delete</button></td>
+                    <td><button (click)="deleteCompany(company.id)" class="angle">delete</button></td>
                 </tr>
 
             </table>
@@ -78,9 +78,9 @@
 
     <div>
 
-        <button (click)="get_all_customers()">get all customers</button>
+        <button (click)="getAllCustomers()">get all customers</button>
 
-        <div *ngIf="instance.all_customers">
+        <div *ngIf="customerServiceInstance.allCustomers">
             <table border="1" align="center">
 
                 <tr>
@@ -90,7 +90,7 @@
                     <th>phone number</th>
                     <th>email</th>
                 </tr>
-                <tr *ngFor="let customer of instance.all_customers">
+                <tr *ngFor="let customer of customerServiceInstance.allCustomers">
                     <td>{{customer.id}}</td>
                     <td>{{customer.firstName}}</td>
                     <td>{{customer.lastName}}</td>
@@ -106,9 +106,9 @@
 
     <div>
 
-        <button (click)="get_all_purchases()">get all purchases</button>
+        <button (click)="getAllPurchases()">get all purchases</button>
 
-        <div *ngIf="instance.all_purchases">
+        <div *ngIf="purchaseServiceInstance.allPurchases">
             <table border="1" align="center">
 
                 <tr>
@@ -118,7 +118,7 @@
                     <th>amount</th>
                     <th>date</th>
                 </tr>
-                <tr *ngFor="let purchase of instance.all_purchases">
+                <tr *ngFor="let purchase of purchaseServiceInstance.allPurchases">
                     <td>{{purchase.id}}</td>
                     <td>{{purchase.customerId}}</td>
                     <td>{{purchase.couponId}}</td>
@@ -134,9 +134,9 @@
 
     <div>
 
-        <button (click)="get_all_users()">get all users</button>
+        <button (click)="getAllUsers()">get all users</button>
 
-        <div *ngIf="instance.all_users">
+        <div *ngIf="userServiceInstance.allUsers">
             <table border="1" align="center">
 
                 <tr>
@@ -147,13 +147,13 @@
                     <th>company id</th>
                     <th>delete user</th>
                 </tr>
-                <tr *ngFor="let user of instance.all_users">
+                <tr *ngFor="let user of userServiceInstance.allUsers">
                     <td>{{user.id}}</td>
                     <td>{{user.userName}}</td>
                     <td>{{user.password}}</td>
                     <td>{{user.type}}</td>
                     <td>{{user.companyId}}</td>
-                    <td><button *ngIf="available_delete(user.type,user.id)" (click)="delete_user(user.id)"
+                    <td><button *ngIf="availableDelete(user.type,user.id)" (click)="deleteUser(user.id)"
                             class="angle">delete</button>
                     </td>
                 </tr>
@@ -164,7 +164,7 @@
 
     </div>
 
-    <button style="background-color:red" (click)="delete_my_user()">delete your account</button>
+    <button style="background-color:red" (click)="deleteMyUser()">delete your account</button>
 
 
 </div>

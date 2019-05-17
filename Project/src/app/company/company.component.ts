@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CompanyService } from '../shared/services/company.service';
-import { UserService } from '../shared/services/User.service';
-import { Router } from '@angular/router';
 import { Coupon } from '../shared/models/Coupon';
 import { User } from '../shared/models/User';
+import { UserService } from '../shared/services/user.service';
+import { CompanyService } from '../shared/services/company.service';
+import { CouponService } from '../shared/services/coupon.service';
 
 @Component({
   selector: 'app-company',
@@ -15,7 +15,9 @@ export class CompanyComponent implements OnInit {
   public token: number;
   public id: number;
   public companyId: number;
-  public instance = this.service.root;
+  public userServiceInstance = this.userService.root;
+  public companyServiceInstance = this.companyService.root;
+  public couponServiceInstance = this.couponService.root;
 
   //create coupon && update
   private coupon_id: number = null;
@@ -35,7 +37,7 @@ export class CompanyComponent implements OnInit {
   private user_name: string = null;
   private password: string = null;
 
-  constructor(private service: CompanyService, private user_service: UserService, private router: Router) {
+  constructor(private userService: UserService, private companyService: CompanyService, private couponService: CouponService) {
 
     this.token = <number><unknown>sessionStorage.getItem("token");
     this.id = <number><unknown>sessionStorage.getItem("id");
@@ -46,33 +48,17 @@ export class CompanyComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.token == null)
-      this.router.navigate(["/login"]);
-
-    else
-      this.service.get_user_name(this.id, this.token);
+    this.userService.getUserName(this.id, this.token);
 
   }
 
-  public log_out(): void {
+  public logOut(): void {
 
-    this.service.log_out(this.token);
-
-  }
-
-  public get_company(): void {
-
-    this.service.get_company(this.companyId, this.token);
+    this.userService.logOut(this.token);
 
   }
 
-  public get_user(): void {
-
-    this.service.get_user(this.id, this.token);
-
-  }
-
-  public create_coupon(): void {
+  public createCoupon(): void {
 
     let coupon: Coupon = new Coupon();
     coupon.companyId = this.companyId;
@@ -85,40 +71,11 @@ export class CompanyComponent implements OnInit {
     coupon.price = this.price;
     coupon.image = this.image;
 
-    this.service.create_coupon(coupon, this.token);
+    this.couponService.createCoupon(coupon, this.token);
 
   }
 
-  public get_company_coupons_by_company_id(): void {
-
-    this.service.get_company_coupons_by_company_id(this.companyId, this.token);
-
-  }
-
-  public get_company_coupons_by_category(): void {
-
-    if (this.category == null)
-      alert("Enter category plz");
-    else
-      this.service.get_company_coupons_by_category(this.companyId, this.category, this.token);
-
-  }
-
-  public get_company_coupons_by_max_price(): void {
-
-    if (this.max_price == null)
-      alert("Enter max price plz");
-    else this.service.get_company_coupons_by_max_price(this.companyId, this.max_price, this.token);
-
-  }
-
-  public delete_coupon(coupon_id: number): void {
-
-    this.service.delete_coupon(coupon_id, this.companyId, this.token);
-
-  }
-
-  public update_coupon(): void {
+  public updateCoupon(): void {
 
     let coupon: Coupon = new Coupon();
     coupon.id = this.coupon_id;
@@ -132,24 +89,66 @@ export class CompanyComponent implements OnInit {
     coupon.price = this.price;
     coupon.image = this.image;
 
-    this.service.update_coupon(coupon, this.token);
+    this.couponService.updateCoupon(coupon, this.token);
 
   }
 
-  public update_user(): void {
+  public updateUser(): void {
 
     let user: User = new User();
     user.id = this.id;
     user.userName = this.user_name;
     user.password = this.password;
 
-    this.service.update_user(user, this.token);
+    this.userService.updateUser(user, this.token);
 
   }
 
-  public delete_user(): void {
+  public deleteCoupon(coupon_id: number): void {
 
-    this.service.delete_user(this.id, this.token);
+    this.couponService.deleteCoupon(coupon_id, this.companyId, this.token);
+
+  }
+
+  public deleteMyUser(): void {
+
+    this.userService.deleteMyUser(this.id, this.token);
+
+  }
+
+  public getCompany(): void {
+
+    this.companyService.getCompany(this.companyId, this.token);
+
+  }
+
+  public getUser(): void {
+
+    this.userService.getUser(this.id, this.token);
+
+  }
+
+
+  public getCompanyCouponsByCompanyId(): void {
+
+    this.couponService.getCompanyCouponsByCompanyId(this.companyId, this.token);
+
+  }
+
+  public getCompanyCouponsByCategory(): void {
+
+    if (this.category == null)
+      alert("Enter category plz");
+    else
+      this.couponService.getCompanyCouponsByCategory(this.companyId, this.category, this.token);
+
+  }
+
+  public getCompanyCouponsByMaxPrice(): void {
+
+    if (this.max_price == null)
+      alert("Enter max price plz");
+    else this.couponService.getCompanyCouponsByMaxPrice(this.companyId, this.max_price, this.token);
 
   }
 
