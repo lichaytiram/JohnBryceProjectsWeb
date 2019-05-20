@@ -10,7 +10,7 @@
     <div *ngIf="companyServiceInstance.company">
         id: {{companyServiceInstance.company.id}} <br>
         name: {{companyServiceInstance.company.name}} <br>
-        phoneNumber: {{companyServiceInstance.company.phoneNumber}} <br>
+        phone number: {{companyServiceInstance.company.phoneNumber}} <br>
         email: {{companyServiceInstance.company.email}}<br>
     </div>
 
@@ -34,8 +34,8 @@
         </select><br>
         Enter title <input type="text" [(ngModel)]="title"><br>
         Enter description <input type="text" [(ngModel)]="description"><br>
-        Enter start date <input type="date" [(ngModel)]="start_date"><br>
-        Enter end date <input type="date" [(ngModel)]="end_date"><br>
+        Enter start date <input type="date" [(ngModel)]="startDate"><br>
+        Enter end date <input type="date" [(ngModel)]="endDate"><br>
         Enter amount<input type="number" [(ngModel)]="amount"><br>
         Enter price <input type="number" [(ngModel)]="price"><br>
         Enter image <input type="text" [(ngModel)]="image"><br>
@@ -57,8 +57,8 @@
                     <th>title</th>
                     <th>description</th>
                     <th>category</th>
-                    <th>startDate</th>
-                    <th>endDate</th>
+                    <th>start date</th>
+                    <th>end date</th>
                     <th>amount</th>
                     <th>price</th>
                     <th>image</th>
@@ -135,7 +135,7 @@
 
     <div>
 
-        <input type="number" [(ngModel)]="max_price">
+        <input type="number" [(ngModel)]="maxPrice">
         <button (click)="getCompanyCouponsByMaxPrice()">get coupons by max price</button>
 
         <div *ngIf="couponServiceInstance.getCompanyCouponsByMaxPrice">
@@ -147,8 +147,8 @@
                     <th>title</th>
                     <th>description</th>
                     <th>category</th>
-                    <th>startDate</th>
-                    <th>endDate</th>
+                    <th>start date</th>
+                    <th>end date</th>
                     <th>amount</th>
                     <th>price</th>
                     <th>image</th>
@@ -177,7 +177,7 @@
     <div>
 
         <button (click)="updateCoupon()">update coupon</button><br>
-        Enter id <input type="number" [(ngModel)]="coupon_id"><br>
+        Enter id <input type="number" [(ngModel)]="couponId"><br>
         Enter category <select [(ngModel)]="category">
             <option value="Food">Food</option>
             <option value="Electricity">Electricity</option>
@@ -189,8 +189,8 @@
         </select><br>
         Enter title <input type="text" [(ngModel)]="title"><br>
         Enter description <input type="text" [(ngModel)]="description"><br>
-        Enter start date <input type="date" [(ngModel)]="start_date"><br>
-        Enter end date <input type="date" [(ngModel)]="end_date"><br>
+        Enter start date <input type="date" [(ngModel)]="startDate"><br>
+        Enter end date <input type="date" [(ngModel)]="endDate"><br>
         Enter amount<input type="number" [(ngModel)]="amount"><br>
         Enter price <input type="number" [(ngModel)]="price"><br>
         Enter image <input type="text" [(ngModel)]="image"><br>
@@ -200,7 +200,7 @@
     <div>
 
         <button (click)="updateUser()">update your user</button><br>
-        Enter user name <input type="text" [(ngModel)]="user_name"><br>
+        Enter user name <input type="text" [(ngModel)]="userName"><br>
         Enter password<input type="text" [(ngModel)]="password"><br>
 
     </div>

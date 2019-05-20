@@ -10,8 +10,8 @@
     <div>
 
         <button (click)="createCompany()">create company</button><br>
-        Enter company name <input type="text" [(ngModel)]="company_name"><br>
-        Enter phone number <input type="text" [(ngModel)]="phone_number"><br>
+        Enter company name <input type="text" [(ngModel)]="companyName"><br>
+        Enter phone number <input type="text" [(ngModel)]="phoneNumber"><br>
         Enter email <input type="text" [(ngModel)]="email"><br>
 
     </div>
@@ -19,9 +19,9 @@
     <div>
 
         <button (click)="updateCompany()">update company</button><br>
-        Enter company id <input type="number" [(ngModel)]="company_id"> <br>
-        Enter company name <input type="text" [(ngModel)]="company_name"><br>
-        Enter phone number <input type="text" [(ngModel)]="phone_number"><br>
+        Enter company id <input type="number" [(ngModel)]="companyId"> <br>
+        Enter company name <input type="text" [(ngModel)]="companyName"><br>
+        Enter phone number <input type="text" [(ngModel)]="phoneNumber"><br>
         Enter email <input type="text" [(ngModel)]="email"><br>
 
     </div>
@@ -29,9 +29,9 @@
     <div>
 
         <button (click)="createUser()">create user</button><br>
-        Enter user name <input type="text" [(ngModel)]="user_name"><br>
+        Enter user name <input type="text" [(ngModel)]="userName"><br>
         Enter password <input type="text" [(ngModel)]="password"><br>
-        Enter company id <input type="number" [(ngModel)]="company_id_user"><br>
+        Enter company id <input type="number" [(ngModel)]="companyIdUser"><br>
         Enter type <select [(ngModel)]="type"><br>
             <option value="Company">Company</option>
             <option value="Administrator">Administrator</option>
@@ -42,8 +42,8 @@
     <div>
 
         <button (click)="updateUser()">update user</button><br>
-        Enter id <input type="number" [(ngModel)]="user_id"><br>
-        Enter user name <input type="text" [(ngModel)]="user_name"><br>
+        Enter id <input type="number" [(ngModel)]="userId"><br>
+        Enter user name <input type="text" [(ngModel)]="userName"><br>
         Enter password <input type="text" [(ngModel)]="password"><br>
 
     </div>

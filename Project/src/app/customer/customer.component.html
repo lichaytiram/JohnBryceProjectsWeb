@@ -122,7 +122,7 @@
 
     <div>
       <br>
-      <input type="number" [(ngModel)]="max_price">
+      <input type="number" [(ngModel)]="maxPrice">
       <button (click)="getCustomerCouponsByMaxPrice()">get all coupons by max price</button>
       <div *ngIf="couponServiceInstance.getCustomerCouponsByMaxPrice">
 
@@ -189,20 +189,18 @@
 
     <div>
 
-      <button (click)="updateCustomerSwitch()">update your customer</button>
-
-      <div *ngIf="update_on">
+      <div>
 
         <h4>plz fill all </h4>
-        <input type="text" [(ngModel)]="user_name"> user name
+        <input type="text" [(ngModel)]="userName"> user name
         <br>
         <input type="password" [(ngModel)]="password"> password
         <br>
-        <input type="text" [(ngModel)]="first_name"> first name
+        <input type="text" [(ngModel)]="firstName"> first name
         <br>
-        <input type="text" [(ngModel)]="last_name"> last name
+        <input type="text" [(ngModel)]="lastName"> last name
         <br>
-        <input type="text" [(ngModel)]="phone_number"> phone number
+        <input type="text" [(ngModel)]="phoneNumber"> phone number
         <br>
         <input type="email" [(ngModel)]="email"> email
         <br>

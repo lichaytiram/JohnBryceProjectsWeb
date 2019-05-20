@@ -20,21 +20,21 @@ export class CompanyComponent implements OnInit {
   public couponServiceInstance = this.couponService.root;
 
   //create coupon && update
-  private coupon_id: number = null;
+  private couponId: number = null;
   private category: string = null;
   private title: string = null;
   private description: string = null;
-  private start_date: Date = null;
-  private end_date: Date = null;
+  private startDate: Date = null;
+  private endDate: Date = null;
   private amount: number = null;
   private price: number = null;
   private image: string = null;
 
-  private max_price: number = null;
+  private maxPrice: number = null;
 
 
   //update user
-  private user_name: string = null;
+  private userName: string = null;
   private password: string = null;
 
   constructor(private userService: UserService, private companyService: CompanyService, private couponService: CouponService) {
@@ -65,8 +65,8 @@ export class CompanyComponent implements OnInit {
     coupon.title = this.title;
     coupon.description = this.description;
     coupon.category = this.category;
-    coupon.startDate = this.start_date;
-    coupon.endDate = this.end_date;
+    coupon.startDate = this.startDate;
+    coupon.endDate = this.endDate;
     coupon.amount = this.amount;
     coupon.price = this.price;
     coupon.image = this.image;
@@ -78,13 +78,13 @@ export class CompanyComponent implements OnInit {
   public updateCoupon(): void {
 
     let coupon: Coupon = new Coupon();
-    coupon.id = this.coupon_id;
+    coupon.id = this.couponId;
     coupon.companyId = this.companyId;
     coupon.title = this.title;
     coupon.description = this.description;
     coupon.category = this.category;
-    coupon.startDate = this.start_date;
-    coupon.endDate = this.end_date;
+    coupon.startDate = this.startDate;
+    coupon.endDate = this.endDate;
     coupon.amount = this.amount;
     coupon.price = this.price;
     coupon.image = this.image;
@@ -97,16 +97,16 @@ export class CompanyComponent implements OnInit {
 
     let user: User = new User();
     user.id = this.id;
-    user.userName = this.user_name;
+    user.userName = this.userName;
     user.password = this.password;
 
     this.userService.updateUser(user, this.token);
 
   }
 
-  public deleteCoupon(coupon_id: number): void {
+  public deleteCoupon(couponId: number): void {
 
-    this.couponService.deleteCoupon(coupon_id, this.companyId, this.token);
+    this.couponService.deleteCoupon(couponId, this.companyId, this.token);
 
   }
 
@@ -128,7 +128,6 @@ export class CompanyComponent implements OnInit {
 
   }
 
-
   public getCompanyCouponsByCompanyId(): void {
 
     this.couponService.getCompanyCouponsByCompanyId(this.companyId, this.token);
@@ -146,9 +145,9 @@ export class CompanyComponent implements OnInit {
 
   public getCompanyCouponsByMaxPrice(): void {
 
-    if (this.max_price == null)
+    if (this.maxPrice == null)
       alert("Enter max price plz");
-    else this.couponService.getCompanyCouponsByMaxPrice(this.companyId, this.max_price, this.token);
+    else this.couponService.getCompanyCouponsByMaxPrice(this.companyId, this.maxPrice, this.token);
 
   }
 

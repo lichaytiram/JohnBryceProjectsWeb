@@ -13,20 +13,20 @@ import { PurchaseService } from '../shared/services/purshase.service';
 })
 export class AdministratorComponent implements OnInit {
 
-  private company_name: string = null;
-  private phone_number: string = null;
+  private companyName: string = null;
+  private phoneNumber: string = null;
   private email: string = null;
 
-  private company_id: number;
+  private companyId: number;
 
   //create user
-  private user_name: string = null;
+  private userName: string = null;
   private password: string = null;
   private type: string = null;
-  private company_id_user: string = null;
+  private companyIdUser: string = null;
 
   //update user
-  private user_id: number;
+  private userId: number;
 
   public token: number;
   public id: number;
@@ -57,8 +57,8 @@ export class AdministratorComponent implements OnInit {
   public createCompany(): void {
 
     let company: Company = new Company();
-    company.name = this.company_name;
-    company.phoneNumber = this.phone_number;
+    company.name = this.companyName;
+    company.phoneNumber = this.phoneNumber;
     company.email = this.email;
 
     this.companyService.createCompany(company, this.token);
@@ -68,10 +68,10 @@ export class AdministratorComponent implements OnInit {
   public createUser() {
 
     let user: User = new User();
-    user.userName = this.user_name;
+    user.userName = this.userName;
     user.password = this.password;
     user.type = this.type;
-    user.companyId = this.company_id_user;
+    user.companyId = this.companyIdUser;
 
     this.userService.createUser(user, this.token);
 
@@ -80,8 +80,8 @@ export class AdministratorComponent implements OnInit {
   public updateUser() {
 
     let user: User = new User();
-    user.id = this.user_id;
-    user.userName = this.user_name;
+    user.id = this.userId;
+    user.userName = this.userName;
     user.password = this.password;
 
     this.userService.updateUser(user, this.token);
@@ -91,9 +91,9 @@ export class AdministratorComponent implements OnInit {
   public updateCompany() {
 
     let company: Company = new Company();
-    company.id = this.company_id;
-    company.name = this.company_name;
-    company.phoneNumber = this.phone_number;
+    company.id = this.companyId;
+    company.name = this.companyName;
+    company.phoneNumber = this.phoneNumber;
     company.email = this.email;
 
     this.companyService.updateCompany(company, this.token);
@@ -106,15 +106,15 @@ export class AdministratorComponent implements OnInit {
 
   }
 
-  public deleteUser(user_id: number) {
+  public deleteUser(userId: number) {
 
-    this.userService.deleteUser(user_id, this.token);
+    this.userService.deleteUser(userId, this.token);
 
   }
 
-  public deleteCompany(company_id: number) {
+  public deleteCompany(companyId: number) {
 
-    this.companyService.deleteCompany(company_id, this.token);
+    this.companyService.deleteCompany(companyId, this.token);
 
   }
 

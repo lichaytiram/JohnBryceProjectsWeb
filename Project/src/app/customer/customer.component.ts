@@ -14,18 +14,17 @@ import { CouponService } from '../shared/services/coupon.service';
 })
 export class CustomerComponent implements OnInit {
 
-  private update_on: boolean;
-  private user_name: string;
+  private userName: string;
   private password: string;
-  private first_name: string;
-  private last_name: string;
-  private phone_number: string;
+  private firstName: string;
+  private lastName: string;
+  private phoneNumber: string;
   private email: string;
 
   // amount of purchase
   private amount: number;
 
-  private max_price: number;
+  private maxPrice: number;
 
   private category: string;
 
@@ -56,10 +55,10 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  public purchaseCoupon(coupon_id: number): void {
+  public purchaseCoupon(couponId: number): void {
 
     let purchse: Purchase = new Purchase();
-    purchse.couponId = coupon_id;
+    purchse.couponId = couponId;
     purchse.customerId = this.id;
     purchse.amount = this.amount;
 
@@ -76,25 +75,17 @@ export class CustomerComponent implements OnInit {
     let user: User = new User();
 
     customer.id = this.id;
-    customer.firstName = this.first_name;
-    customer.lastName = this.last_name;
-    customer.phoneNumber = this.phone_number;
+    customer.firstName = this.firstName;
+    customer.lastName = this.lastName;
+    customer.phoneNumber = this.phoneNumber;
     customer.email = this.email;
     user.id = this.id;
-    user.userName = this.user_name;
+    user.userName = this.userName;
     user.password = this.password;
     user.type = "Customer";
     customer.user = user;
 
     this.customerService.updateCustomer(customer, this.token);
-
-    this.update_on = false;
-
-  }
-
-  public updateCustomerSwitch(): void {
-
-    this.update_on = true;
 
   }
 
@@ -104,9 +95,9 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  public deletePurchaseById(purchase_id: number): void {
+  public deletePurchaseById(purchaseId: number): void {
 
-    this.purchaseService.deletePurchaseById(purchase_id, this.token);
+    this.purchaseService.deletePurchaseById(purchaseId, this.token);
 
   }
 
@@ -146,11 +137,11 @@ export class CustomerComponent implements OnInit {
 
   public getCustomerCouponsByMaxPrice(): void {
 
-    if (this.max_price == null)
+    if (this.maxPrice == null)
       alert("Enter max price plz");
 
     else
-      this.couponService.getCustomerCouponsByMaxPrice(this.id, this.max_price, this.token);
+      this.couponService.getCustomerCouponsByMaxPrice(this.id, this.maxPrice, this.token);
 
   }
 
