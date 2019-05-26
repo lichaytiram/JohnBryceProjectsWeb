@@ -1,108 +1,48 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { Customer } from '../models/Customer';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
 
-  public myName: string = null;
+  constructor(private http: HttpClient) { }
 
-  public root = {
-    customer: null,
-    allCustomers: null
-  }
+  public createCustomer(customer: Customer): Observable<any> {
 
-  constructor(private http: HttpClient, private router: Router) { }
-
-
-  public createCustomer(customer: Customer): void {
-
-    let observable = this.http.post("http://localhost:8080/customers/unsecured", customer);
-
-    observable.subscribe(
-
-      () => alert("your user has been created"),
-
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
-
-    );
+    return this.http.post("http://localhost:8080/customers/unsecured", customer);
 
   }
 
-  public updateCustomer(customer: Customer, token: number): void {
+  public updateCustomer(customer: Customer, token: number): Observable<any> {
 
-    let observable = this.http.put(`http://localhost:8080/customers?token=${token}`, customer);
-
-    observable.subscribe(
-
-      () => alert("Your customer has been updated"),
-
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
-
-    );
+    return this.http.put(`http://localhost:8080/customers?token=${token}`, customer);
 
   }
 
-  public deleteCustomer(customerId: number, token: number): void {
+  public deleteCustomer(customerId: number, token: number): Observable<any> {
 
-    let observable = this.http.delete(`http://localhost:8080/customers/${customerId}?token=${token}`);
-
-    observable.subscribe(
-
-      () => {
-
-        alert("Your customer has been deleted");
-        this.router.navigate(["/login"]);
-
-      },
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
-
-    );
+    return this.http.delete(`http://localhost:8080/customers/${customerId}?token=${token}`);
 
   }
 
-  public getCustomerName(customerId: number, token: number): void {
+  public getCustomerName(customerId: number, token: number): Observable<string> {
 
-    let observable = this.http.get<string>(`http://localhost:8080/customers/name/${customerId}?token=${token}`);
-
-    observable.subscribe(
-
-      res => this.myName = res,
-
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
-
-    );
+    return this.http.get<string>(`http://localhost:8080/customers/name/${customerId}?token=${token}`);
 
   }
 
-  public getCustomer(customerId: number, token: number): void {
+  public getCustomer(customerId: number, token: number): Observable<Customer> {
 
-    let observable = this.http.get<Customer>(`http://localhost:8080/customers/${customerId}?token=${token}`);
-
-    observable.subscribe(
-
-      res => this.root.customer = res,
-
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
-
-    );
+    return this.http.get<Customer>(`http://localhost:8080/customers/${customerId}?token=${token}`);
 
   }
 
-  public getAllCustomers(token: number): void {
+  public getAllCustomers(token: number): Observable<Customer[]> {
 
-    let observable = this.http.get<Customer[]>(`http://localhost:8080/customers?token=${token}`);
-
-    observable.subscribe(
-
-      res => this.root.allCustomers = res,
-
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
-
-    );
+    return this.http.get<Customer[]>(`http://localhost:8080/customers?token=${token}`);
 
   }
 

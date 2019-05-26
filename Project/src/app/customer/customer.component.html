@@ -1,10 +1,10 @@
-<h2 class="my_name" *ngIf="customerService.myName">wellcome back: <strong>{{customerService.myName.name}}</strong></h2>
+<h2 class="my_name" *ngIf="myName">wellcome back: <strong>{{myName.name}}</strong></h2>
 <hr>
 
-<div *ngIf="purchaseServiceInstance.amount" class="amount">
+<div *ngIf="amountCoupons" class="amount">
   <br>
   <p>
-    amount: <span class="dot"> {{purchaseServiceInstance.amount}}</span>
+    amount: <span class="dot"> {{amountCoupons}}</span>
   </p>
 </div>
 
@@ -16,25 +16,25 @@
 
 <div class="center">
   <button (click)="getCustomer()">show customer info</button>
-  <div *ngIf="customerServiceInstance.customer">
+  <div *ngIf="customer">
     <br>
-    firstName: {{customerServiceInstance.customer.firstName}} <br>
-    lastName: {{customerServiceInstance.customer.lastName}} <br>
-    phoneNumber: {{customerServiceInstance.customer.phoneNumber}} <br>
-    email: {{customerServiceInstance.customer.email}} <br>
+    firstName: {{customer.firstName}} <br>
+    lastName: {{customer.lastName}} <br>
+    phoneNumber: {{customer.phoneNumber}} <br>
+    email: {{customer.email}} <br>
 
   </div>
-  <button (click)="getUser()">show user info</button>
 
-  <div *ngIf="userServiceInstance.user">
+  <button (click)="getUser()">show user info</button>
+  <div *ngIf="user">
     <br>
-    user name: {{userServiceInstance.user.userName}} <br>
-    password: {{userServiceInstance.user.password}} <br>
+    user name: {{user.userName}} <br>
+    password: {{user.password}} <br>
 
   </div>
 
   <button (click)="getCustomerPurchase()">get all purchases</button>
-  <div *ngIf="purchaseServiceInstance.customerPurchases">
+  <div *ngIf="customerPurchases">
 
     <table border="1" align="center">
       <tr>
@@ -43,18 +43,19 @@
         <th>date</th>
         <th>delete purchase</th>
       </tr>
-      <tr *ngFor="let purchase of purchaseServiceInstance.customerPurchases">
+      <tr *ngFor="let purchase of customerPurchases">
         <td>{{purchase.couponId}}</td>
         <td>{{purchase.amount}}</td>
         <td>{{purchase.date}}</td>
-        <td><button (click)="deletePurchaseById(purchase.id)" class="angle">delete</button></td>
+        <td><button (click)="deletePurchaseById(purchase.id,purchase.amount,'purchase')" class="angle">delete</button>
+        </td>
       </tr>
     </table>
 
   </div>
 
   <button (click)="getCustomerCouponsByCustomerId()">get my coupons</button>
-  <div *ngIf="couponServiceInstance.getCustomerCouponsByCustomerId">
+  <div *ngIf="customerCouponsByCustomerId">
 
     <table border="1" align="center">
       <tr>
@@ -67,14 +68,14 @@
         <th>delete purchase</th>
       </tr>
 
-      <tr *ngFor="let coupon of couponServiceInstance.getCustomerCouponsByCustomerId">
+      <tr *ngFor="let coupon of customerCouponsByCustomerId">
         <td>{{coupon.title}}</td>
         <td>{{coupon.description}}</td>
         <td>{{coupon.category}}</td>
         <td>{{coupon.amount}}</td>
         <td>{{coupon.price}}</td>
         <td>{{coupon.image}}</td>
-        <td><button (click)="deletePurchaseById(coupon.id)" class="angle">delete</button></td>
+        <td><button (click)="deletePurchaseById(coupon.id,coupon.amount,'id')" class="angle">delete</button></td>
       </tr>
     </table>
 
@@ -94,7 +95,7 @@
 
     </select>
     <button (click)="getCustomerCouponsByCategory()">choose by category</button>
-    <div *ngIf="couponServiceInstance.getCustomerCouponsByCategory">
+    <div *ngIf="customerCouponsByCategory">
 
       <table border="1" align="center">
         <tr>
@@ -107,14 +108,15 @@
           <th>delete purchase</th>
         </tr>
 
-        <tr *ngFor="let coupon of couponServiceInstance.getCustomerCouponsByCategory">
+        <tr *ngFor="let coupon of customerCouponsByCategory">
           <td>{{coupon.title}}</td>
           <td>{{coupon.description}}</td>
           <td>{{coupon.category}}</td>
           <td>{{coupon.amount}}</td>
           <td>{{coupon.price}}</td>
           <td>{{coupon.image}}</td>
-          <td><button (click)="deletePurchaseById(coupon.id)" class="angle">delete</button></td>
+          <td><button (click)="deletePurchaseById(coupon.id,coupon.amount,'category')" class="angle">delete</button>
+          </td>
         </tr>
       </table>
 
@@ -124,7 +126,7 @@
       <br>
       <input type="number" [(ngModel)]="maxPrice">
       <button (click)="getCustomerCouponsByMaxPrice()">get all coupons by max price</button>
-      <div *ngIf="couponServiceInstance.getCustomerCouponsByMaxPrice">
+      <div *ngIf="customerCouponsByMaxPrice">
 
         <table border="1" align="center">
           <tr>
@@ -137,14 +139,15 @@
             <th>delete purchase</th>
           </tr>
 
-          <tr *ngFor="let coupon of couponServiceInstance.getCustomerCouponsByMaxPrice">
+          <tr *ngFor="let coupon of customerCouponsByMaxPrice">
             <td>{{coupon.title}}</td>
             <td>{{coupon.description}}</td>
             <td>{{coupon.category}}</td>
             <td>{{coupon.amount}}</td>
             <td>{{coupon.price}}</td>
             <td>{{coupon.image}}</td>
-            <td><button (click)="deletePurchaseById(coupon.id)" class="angle">delete</button></td>
+            <td><button (click)="deletePurchaseById(coupon.id,coupon.amount,'maxPrice')" class="angle">delete</button>
+            </td>
           </tr>
         </table>
 
@@ -158,7 +161,7 @@
 
     <button (click)="getAllCoupon()">show all coupons</button>
 
-    <div *ngIf="couponServiceInstance.allCoupons" class="center">
+    <div *ngIf="allCoupons" class="center">
 
       <table border="1" align="center">
 
@@ -172,7 +175,7 @@
           <th>purchase</th>
         </tr>
 
-        <tr *ngFor="let coupon of couponServiceInstance.allCoupons">
+        <tr *ngFor="let coupon of allCoupons">
           <td>{{coupon.title}}</td>
           <td>{{coupon.description}}</td>
           <td>{{coupon.category}}</td>

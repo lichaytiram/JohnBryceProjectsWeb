@@ -6,6 +6,8 @@ import { CustomerService } from '../shared/services/customer.service';
 import { UserService } from '../shared/services/user.service';
 import { PurchaseService } from '../shared/services/purshase.service';
 import { CouponService } from '../shared/services/coupon.service';
+import { Router } from '@angular/router';
+import { Coupon } from '../shared/models/Coupon';
 
 @Component({
   selector: 'app-customer',
@@ -13,6 +15,10 @@ import { CouponService } from '../shared/services/coupon.service';
   styleUrls: ['./customer.component.css']
 })
 export class CustomerComponent implements OnInit {
+
+  public myName: string;
+  public token: number;
+  public id: number;
 
   private userName: string;
   private password: string;
@@ -28,14 +34,17 @@ export class CustomerComponent implements OnInit {
 
   private category: string;
 
-  public token: number;
-  public id: number;
-  public customerServiceInstance = this.customerService.root;
-  public userServiceInstance = this.userService.root;
-  public purchaseServiceInstance = this.purchaseService.root;
-  public couponServiceInstance = this.couponService.root;
+  // objects
+  public user: User;
+  public customer: Customer;
+  public amountCoupons: number;
+  public customerPurchases: Purchase[];
+  public customerCouponsByCustomerId: Coupon[];
+  public customerCouponsByCategory: Coupon[];
+  public customerCouponsByMaxPrice: Coupon[];
+  public allCoupons: Coupon[];
 
-  constructor(private customerService: CustomerService, private userService: UserService, private purchaseService: PurchaseService, private couponService: CouponService) {
+  constructor(private customerService: CustomerService, private userService: UserService, private purchaseService: PurchaseService, private couponService: CouponService, private router: Router) {
 
     this.token = <number><unknown>sessionStorage.getItem("token");
     this.id = <number><unknown>sessionStorage.getItem("id");
@@ -44,28 +53,95 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.customerService.getCustomerName(this.id, this.token);
-    this.purchaseService.getAmount(this.id, this.token);
+    this.customerService.getCustomerName(this.id, this.token).subscribe
+
+      (
+
+        res => this.myName = res,
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
+
+    this.purchaseService.getAmount(this.id, this.token).subscribe
+
+      (
+
+        res => this.amountCoupons = res,
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
   public logOut(): void {
 
-    this.userService.logOut(this.token);
+    this.userService.logOut(this.token).subscribe
+
+      (
+
+        () => {
+
+          alert("You are log out!\nWe are waiting for next visit");
+          sessionStorage.clear();
+          this.router.navigate(["/login"]);
+
+        },
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
   public purchaseCoupon(couponId: number): void {
 
+    // add updates 2 thinks
     let purchse: Purchase = new Purchase();
     purchse.couponId = couponId;
     purchse.customerId = this.id;
     purchse.amount = this.amount;
 
-    this.purchaseService.purchaseCoupon(purchse, this.token);
-    this.couponService.getAllCoupon(this.token);
-    this.purchaseService.getAmount(this.id, this.token);
-    // check if i bout coupon this refresh list
+    this.purchaseService.purchaseCoupon(purchse, this.token).subscribe
+
+      (
+
+        () => {
+
+          this.amountCoupons += purchse.amount;
+
+          // binary search
+          let min: number = 0;
+          let max: number = this.allCoupons.length - 1;
+          let mid: number = Math.floor((max + min) / 2);
+
+          if (this.allCoupons[max].id == couponId) {
+
+            this.allCoupons[max].amount -= purchse.amount;
+
+          } else {
+            while (min < max) {
+              if (this.allCoupons[mid].id == couponId) {
+                this.allCoupons[mid].amount -= purchse.amount;
+                break;
+              }
+              else if (this.allCoupons[mid].id > couponId)
+                max = mid;
+
+              else
+                min = mid;
+              mid = Math.floor((max + min) / 2);
+
+            }
+          }
+
+          alert("Your purchase has been done");
+        },
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
@@ -85,43 +161,118 @@ export class CustomerComponent implements OnInit {
     user.type = "Customer";
     customer.user = user;
 
-    this.customerService.updateCustomer(customer, this.token);
+    this.customerService.updateCustomer(customer, this.token).subscribe
+
+      (
+
+        () => alert("Your customer has been updated"),
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
   public deleteCustomer(): void {
 
-    this.customerService.deleteCustomer(this.id, this.token);
+    this.customerService.deleteCustomer(this.id, this.token).subscribe
+
+      (
+
+        () => {
+
+          alert("Your customer has been deleted");
+          this.router.navigate(["/login"]);
+
+        },
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
-  public deletePurchaseById(purchaseId: number): void {
+  public deletePurchaseById(purchaseId: number, amount: number, type: string): void {
 
-    this.purchaseService.deletePurchaseById(purchaseId, this.token);
+    this.purchaseService.deletePurchaseById(purchaseId, this.token).subscribe
+
+      (
+
+        () => {
+
+          alert("Your purchase has been deleted")
+          this.amountCoupons -= amount;
+          console.log(type);
+
+          if (type == "id")
+            this.updateCouponsArray(this.customerCouponsByCustomerId, purchaseId);
+          else if (type == "category")
+            this.updateCouponsArray(this.customerCouponsByCategory, purchaseId);
+          else if (type == "maxPrice")
+            this.updateCouponsArray(this.customerCouponsByMaxPrice, purchaseId);
+          else
+            this.updatePurchasesArray(this.customerPurchases, purchaseId);
+
+        },
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
   public getCustomer(): void {
 
-    this.customerService.getCustomer(this.id, this.token);
+    this.customerService.getCustomer(this.id, this.token).subscribe
+
+      (
+
+        res => this.customer = res,
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
   public getUser(): void {
 
-    this.userService.getUser(this.id, this.token);
+    this.userService.getUser(this.id, this.token).subscribe
+
+      (
+
+        res => this.user = res,
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
   public getCustomerPurchase(): void {
 
-    this.purchaseService.getCustomerPurchase(this.id, this.token);
+    this.purchaseService.getCustomerPurchase(this.id, this.token).subscribe
+
+      (
+
+        res => this.customerPurchases = res,
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
   public getCustomerCouponsByCustomerId(): void {
 
-    this.couponService.getCustomerCouponsByCustomerId(this.id, this.token);
+    this.couponService.getCustomerCouponsByCustomerId(this.id, this.token).subscribe
+
+      (
+
+        res => this.customerCouponsByCustomerId = res,
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
@@ -130,8 +281,18 @@ export class CustomerComponent implements OnInit {
     if (this.category == null)
       alert("Enter category plz");
 
-    else
-      this.couponService.getCustomerCouponsByCategory(this.id, this.category, this.token);
+    else {
+
+      this.couponService.getCustomerCouponsByCategory(this.id, this.category, this.token).subscribe
+
+        (
+
+          res => this.customerCouponsByCategory = res,
+
+          err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+        );
+    }
 
   }
 
@@ -140,15 +301,95 @@ export class CustomerComponent implements OnInit {
     if (this.maxPrice == null)
       alert("Enter max price plz");
 
-    else
-      this.couponService.getCustomerCouponsByMaxPrice(this.id, this.maxPrice, this.token);
+    else {
+
+      this.couponService.getCustomerCouponsByMaxPrice(this.id, this.maxPrice, this.token).subscribe
+
+        (
+
+          res => this.customerCouponsByMaxPrice = res,
+
+          err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+        );
+
+    }
 
   }
 
   public getAllCoupon(): void {
 
-    this.couponService.getAllCoupon(this.token);
+    this.couponService.getAllCoupon(this.token).subscribe
+
+      (
+
+        res => this.allCoupons = res,
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
+
+  private updateCouponsArray(array: Coupon[], couponId: number): void {
+
+    // binary search
+    let min: number = 0;
+    let max: number = array.length - 1;
+    let mid: number = Math.floor((max + min) / 2);
+
+    if (array[max].id == couponId) {
+
+      array.splice(max, 1);
+
+    } else {
+      while (min < max) {
+        if (array[mid].id == couponId) {
+          array.splice(mid, 1);
+          break;
+        }
+        else if (array[mid].id > couponId)
+          max = mid;
+
+        else
+          min = mid;
+        mid = Math.floor((max + min) / 2);
+
+      }
+
+    }
+
+  }
+
+  private updatePurchasesArray(array: Purchase[], couponId: number): void {
+
+    // binary search
+    let min: number = 0;
+    let max: number = array.length - 1;
+    let mid: number = Math.floor((max + min) / 2);
+
+    if (array[max].id == couponId) {
+
+      array.splice(max, 1);
+
+    } else {
+      while (min < max) {
+        if (array[mid].id == couponId) {
+          array.splice(mid, 1);
+          break;
+        }
+        else if (array[mid].id > couponId)
+          max = mid;
+
+        else
+          min = mid;
+        mid = Math.floor((max + min) / 2);
+
+      }
+
+    }
+
+  }
+
 
 }

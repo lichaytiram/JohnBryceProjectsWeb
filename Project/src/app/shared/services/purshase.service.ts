@@ -1,87 +1,42 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Purchase } from '../models/Purchase';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PurchaseService {
 
-  public root = {
-    amount: null,
-    customerPurchases: null,
-    allPurchases: null
-  }
-
   constructor(private http: HttpClient) { }
 
-  public purchaseCoupon(purchase: Purchase, token: number): void {
+  public purchaseCoupon(purchase: Purchase, token: number): Observable<any> {
 
-    let observable = this.http.post(`http://localhost:8080/purchases?token=${token}`, purchase);
-
-    observable.subscribe(
-
-      () => alert("Your purchase has been done"),
-
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
-
-    );
+    return this.http.post(`http://localhost:8080/purchases?token=${token}`, purchase);
 
   }
 
-  public deletePurchaseById(purchaseId: number, token: number): void {
+  public deletePurchaseById(purchaseId: number, token: number): Observable<any> {
 
-    let observable = this.http.delete(`http://localhost:8080/purchases/${purchaseId}?token=${token}`);
-
-    observable.subscribe(
-
-      () => alert("Your purchase has been deleted"),
-
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
-
-    );
+    return this.http.delete(`http://localhost:8080/purchases/${purchaseId}?token=${token}`);
 
   }
 
-  public getAmount(customerId: number, token: number): void {
+  public getAmount(customerId: number, token: number): Observable<number> {
 
-    let observable = this.http.get<number>(`http://localhost:8080/purchases/amount?customerId=${customerId}&token=${token}`);
-
-    observable.subscribe(
-
-      res => this.root.amount = res,
-
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
-
-    );
+    return this.http.get<number>(`http://localhost:8080/purchases/amount?customerId=${customerId}&token=${token}`);
 
   }
 
-  public getCustomerPurchase(customerId: number, token: number): void {
+  public getCustomerPurchase(customerId: number, token: number): Observable<Purchase[]> {
 
-    let observable = this.http.get<Purchase[]>(`http://localhost:8080/purchases/customer?customerId=${customerId}&token=${token}`);
-
-    observable.subscribe(
-
-      res => this.root.customerPurchases = res,
-
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
-
-    );
+    return this.http.get<Purchase[]>(`http://localhost:8080/purchases/customer?customerId=${customerId}&token=${token}`);
 
   }
 
-  public getAllPurchases(token: number): void {
+  public getAllPurchases(token: number): Observable<Purchase[]> {
 
-    let observable = this.http.get<Purchase[]>(`http://localhost:8080/purchases?token=${token}`);
-
-    observable.subscribe(
-
-      res => this.root.allPurchases = res,
-
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
-
-    );
+    return this.http.get<Purchase[]>(`http://localhost:8080/purchases?token=${token}`);
 
   }
 

@@ -1,4 +1,4 @@
-<h2 class="my_name" *ngIf="userService.myName">wellcome back: {{userService.myName.name}}</h2>
+<h2 class="my_name" *ngIf="myName">wellcome back: {{myName.name}}</h2>
 <hr>
 <div>
     <button (click)="logOut()" class="angle">log out</button>
@@ -52,7 +52,7 @@
 
         <button (click)="getAllCompanies()">get all companies</button>
 
-        <div *ngIf="companyServiceInstance.allCompanies">
+        <div *ngIf="allCompanies">
             <table border="1" align="center">
 
                 <tr>
@@ -62,7 +62,7 @@
                     <th>email</th>
                     <th>delete company</th>
                 </tr>
-                <tr *ngFor="let company of companyServiceInstance.allCompanies">
+                <tr *ngFor="let company of allCompanies">
                     <td>{{company.id}}</td>
                     <td>{{company.name}}</td>
                     <td>{{company.phoneNumber}}</td>
@@ -80,7 +80,7 @@
 
         <button (click)="getAllCustomers()">get all customers</button>
 
-        <div *ngIf="customerServiceInstance.allCustomers">
+        <div *ngIf="allCustomers">
             <table border="1" align="center">
 
                 <tr>
@@ -90,7 +90,7 @@
                     <th>phone number</th>
                     <th>email</th>
                 </tr>
-                <tr *ngFor="let customer of customerServiceInstance.allCustomers">
+                <tr *ngFor="let customer of allCustomers">
                     <td>{{customer.id}}</td>
                     <td>{{customer.firstName}}</td>
                     <td>{{customer.lastName}}</td>
@@ -108,7 +108,7 @@
 
         <button (click)="getAllPurchases()">get all purchases</button>
 
-        <div *ngIf="purchaseServiceInstance.allPurchases">
+        <div *ngIf="allPurchases">
             <table border="1" align="center">
 
                 <tr>
@@ -118,7 +118,7 @@
                     <th>amount</th>
                     <th>date</th>
                 </tr>
-                <tr *ngFor="let purchase of purchaseServiceInstance.allPurchases">
+                <tr *ngFor="let purchase of allPurchases">
                     <td>{{purchase.id}}</td>
                     <td>{{purchase.customerId}}</td>
                     <td>{{purchase.couponId}}</td>
@@ -136,7 +136,7 @@
 
         <button (click)="getAllUsers()">get all users</button>
 
-        <div *ngIf="userServiceInstance.allUsers">
+        <div *ngIf="allUsers">
             <table border="1" align="center">
 
                 <tr>
@@ -147,13 +147,13 @@
                     <th>company id</th>
                     <th>delete user</th>
                 </tr>
-                <tr *ngFor="let user of userServiceInstance.allUsers">
+                <tr *ngFor="let user of allUsers">
                     <td>{{user.id}}</td>
                     <td>{{user.userName}}</td>
                     <td>{{user.password}}</td>
                     <td>{{user.type}}</td>
                     <td>{{user.companyId}}</td>
-                    <td><button *ngIf="availableDelete(user.type,user.id)" (click)="deleteUser(user.id)"
+                    <td><button *ngIf="availableToDelete(user.type,user.id)" (click)="deleteUser(user.id)"
                             class="angle">delete</button>
                     </td>
                 </tr>

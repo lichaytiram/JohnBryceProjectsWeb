@@ -5,6 +5,9 @@ import { UserService } from '../shared/services/user.service';
 import { CompanyService } from '../shared/services/company.service';
 import { CustomerService } from '../shared/services/customer.service';
 import { PurchaseService } from '../shared/services/purshase.service';
+import { Router } from '@angular/router';
+import { Customer } from '../shared/models/Customer';
+import { Purchase } from '../shared/models/Purchase';
 
 @Component({
   selector: 'app-administrator',
@@ -12,6 +15,10 @@ import { PurchaseService } from '../shared/services/purshase.service';
   styleUrls: ['./administrator.component.css']
 })
 export class AdministratorComponent implements OnInit {
+
+  public myName: string;
+  public token: number;
+  public id: number;
 
   private companyName: string = null;
   private phoneNumber: string = null;
@@ -28,14 +35,14 @@ export class AdministratorComponent implements OnInit {
   //update user
   private userId: number;
 
-  public token: number;
-  public id: number;
-  public userServiceInstance = this.userService.root;
-  public companyServiceInstance = this.companyService.root;
-  public customerServiceInstance = this.customerService.root;
-  public purchaseServiceInstance = this.purchaseService.root;
+  // objects
+  public user: User; // no used yet
+  public allUsers: User[];
+  public allCustomers: Customer[];
+  public allPurchases: Purchase[];
+  public allCompanies: Company[];
 
-  constructor(private userService: UserService, private companyService: CompanyService, private customerService: CustomerService, private purchaseService: PurchaseService) {
+  constructor(private userService: UserService, private companyService: CompanyService, private customerService: CustomerService, private purchaseService: PurchaseService, private router: Router) {
 
     this.token = <number><unknown>sessionStorage.getItem("token");
     this.id = <number><unknown>sessionStorage.getItem("id");
@@ -44,13 +51,33 @@ export class AdministratorComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.userService.getUserName(this.id, this.token);
+    this.userService.getUserName(this.id, this.token).subscribe(
+
+      res => this.myName = res,
+
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+    );
 
   }
 
   public logOut(): void {
 
-    this.userService.logOut(this.token);
+    this.userService.logOut(this.token).subscribe
+
+      (
+
+        () => {
+
+          alert("You are log out!\nWe are waiting for next visit");
+          sessionStorage.clear();
+          this.router.navigate(["/login"]);
+
+        },
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
@@ -61,11 +88,19 @@ export class AdministratorComponent implements OnInit {
     company.phoneNumber = this.phoneNumber;
     company.email = this.email;
 
-    this.companyService.createCompany(company, this.token);
+    this.companyService.createCompany(company, this.token).subscribe
+
+      (
+
+        () => alert("company has been created"),
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
-  public createUser() {
+  public createUser(): void {
 
     let user: User = new User();
     user.userName = this.userName;
@@ -73,22 +108,38 @@ export class AdministratorComponent implements OnInit {
     user.type = this.type;
     user.companyId = this.companyIdUser;
 
-    this.userService.createUser(user, this.token);
+    this.userService.createUser(user, this.token).subscribe
+
+      (
+
+        () => alert("user has been created"),
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
-  public updateUser() {
+  public updateUser(): void {
 
     let user: User = new User();
     user.id = this.userId;
     user.userName = this.userName;
     user.password = this.password;
 
-    this.userService.updateUser(user, this.token);
+    this.userService.updateUser(user, this.token).subscribe
+
+      (
+
+        () => alert("Your user has been updated"),
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
-  public updateCompany() {
+  public updateCompany(): void {
 
     let company: Company = new Company();
     company.id = this.companyId;
@@ -96,57 +147,196 @@ export class AdministratorComponent implements OnInit {
     company.phoneNumber = this.phoneNumber;
     company.email = this.email;
 
-    this.companyService.updateCompany(company, this.token);
+    this.companyService.updateCompany(company, this.token).subscribe
+
+      (
+
+        () => alert("company has been updated"),
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
-  public deleteMyUser() {
+  public deleteMyUser(): void {
 
-    this.userService.deleteMyUser(this.id, this.token);
+    this.userService.deleteMyUser(this.id, this.token).subscribe
 
-  }
+      (
 
-  public deleteUser(userId: number) {
+        () => {
 
-    this.userService.deleteUser(userId, this.token);
+          alert("Your user has been deleted");
+          this.router.navigate(["/login"]);
 
-  }
+        },
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
 
-  public deleteCompany(companyId: number) {
-
-    this.companyService.deleteCompany(companyId, this.token);
-
-  }
-
-  public getAllCompanies() {
-
-    this.companyService.getAllCompanies(this.token);
+      );
 
   }
 
-  public getAllCustomers() {
+  public deleteUser(userId: number): void {
 
-    this.customerService.getAllCustomers(this.token);
+    this.userService.deleteUser(userId, this.token).subscribe
+
+      (
+
+        () => {
+
+          alert("user has been deleted");
+          this.updateUserArray(this.allUsers, userId);
+
+        },
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
-  public getAllPurchases() {
+  public deleteCompany(companyId: number): void {
 
-    this.purchaseService.getAllPurchases(this.token);
+    this.companyService.deleteCompany(companyId, this.token).subscribe
+
+      (
+
+        () => {
+
+          alert("company has been deleted")
+          this.updateCompanyArray(this.allCompanies, companyId);
+
+        },
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
-  public getAllUsers() {
+  public getAllCompanies(): void {
 
-    this.userService.getAllUsers(this.token);
+    this.companyService.getAllCompanies(this.token).subscribe
+
+      (
+
+        res => this.allCompanies = res,
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
+
+  }
+
+  public getAllCustomers(): void {
+
+    this.customerService.getAllCustomers(this.token).subscribe
+
+      (
+
+        res => this.allCustomers = res,
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
+
+  }
+
+  public getAllPurchases(): void {
+
+    this.purchaseService.getAllPurchases(this.token).subscribe
+
+      (
+
+        res => this.allPurchases = res,
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
+
+  }
+
+  public getAllUsers(): void {
+
+    this.userService.getAllUsers(this.token).subscribe
+
+      (
+
+        res => this.allUsers = res,
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
+
+  }
+
+  private updateUserArray(array: User[], couponId: number): void {
+
+    // binary search
+    let min: number = 0;
+    let max: number = array.length - 1;
+    let mid: number = Math.floor((max + min) / 2);
+
+    if (array[max].id == couponId) {
+
+      array.splice(max, 1);
+
+    } else {
+      while (min < max) {
+        if (array[mid].id == couponId) {
+          array.splice(mid, 1);
+          break;
+        }
+        else if (array[mid].id > couponId)
+          max = mid;
+
+        else
+          min = mid;
+        mid = Math.floor((max + min) / 2);
+
+      }
+
+    }
+
+  }
+
+  private updateCompanyArray(array: Company[], couponId: number): void {
+
+    // binary search
+    let min: number = 0;
+    let max: number = array.length - 1;
+    let mid: number = Math.floor((max + min) / 2);
+
+    if (array[max].id == couponId) {
+
+      array.splice(max, 1);
+
+    } else {
+      while (min < max) {
+        if (array[mid].id == couponId) {
+          array.splice(mid, 1);
+          break;
+        }
+        else if (array[mid].id > couponId)
+          max = mid;
+
+        else
+          min = mid;
+        mid = Math.floor((max + min) / 2);
+
+      }
+
+    }
 
   }
 
   // user by html
-  public availableDelete(type: string, id: number): boolean {
+  public availableToDelete(type: string, id: number): boolean {
 
     if (type == "Customer" || id == this.id)
       return false;
+
     return true;
 
   }

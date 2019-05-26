@@ -4,6 +4,8 @@ import { User } from '../shared/models/User';
 import { UserService } from '../shared/services/user.service';
 import { CompanyService } from '../shared/services/company.service';
 import { CouponService } from '../shared/services/coupon.service';
+import { Router } from '@angular/router';
+import { Company } from '../shared/models/Company';
 
 @Component({
   selector: 'app-company',
@@ -12,12 +14,10 @@ import { CouponService } from '../shared/services/coupon.service';
 })
 export class CompanyComponent implements OnInit {
 
+  public myName: string;
   public token: number;
   public id: number;
   public companyId: number;
-  public userServiceInstance = this.userService.root;
-  public companyServiceInstance = this.companyService.root;
-  public couponServiceInstance = this.couponService.root;
 
   //create coupon && update
   private couponId: number = null;
@@ -37,7 +37,14 @@ export class CompanyComponent implements OnInit {
   private userName: string = null;
   private password: string = null;
 
-  constructor(private userService: UserService, private companyService: CompanyService, private couponService: CouponService) {
+  // objects
+  public user: User;
+  public company: Company;
+  public companyCouponsByCompanyId: Coupon[];
+  public companyCouponsByCategory: Coupon[];
+  public companyCouponsByMaxPrice: Coupon[];
+
+  constructor(private userService: UserService, private companyService: CompanyService, private couponService: CouponService, private router: Router) {
 
     this.token = <number><unknown>sessionStorage.getItem("token");
     this.id = <number><unknown>sessionStorage.getItem("id");
@@ -45,16 +52,35 @@ export class CompanyComponent implements OnInit {
 
   }
 
-
   ngOnInit(): void {
 
-    this.userService.getUserName(this.id, this.token);
+    this.userService.getUserName(this.id, this.token).subscribe(
+
+      res => this.myName = res,
+
+      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+    );
 
   }
 
   public logOut(): void {
 
-    this.userService.logOut(this.token);
+    this.userService.logOut(this.token).subscribe
+
+      (
+
+        () => {
+
+          alert("You are log out!\nWe are waiting for next visit");
+          sessionStorage.clear();
+          this.router.navigate(["/login"]);
+
+        },
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
@@ -71,7 +97,15 @@ export class CompanyComponent implements OnInit {
     coupon.price = this.price;
     coupon.image = this.image;
 
-    this.couponService.createCoupon(coupon, this.token);
+    this.couponService.createCoupon(coupon, this.token).subscribe
+
+      (
+
+        () => alert("Your coupon has been created"),
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
@@ -89,7 +123,15 @@ export class CompanyComponent implements OnInit {
     coupon.price = this.price;
     coupon.image = this.image;
 
-    this.couponService.updateCoupon(coupon, this.token);
+    this.couponService.updateCoupon(coupon, this.token).subscribe
+
+      (
+
+        () => alert("Your coupon has been updated"),
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
@@ -104,33 +146,89 @@ export class CompanyComponent implements OnInit {
 
   }
 
-  public deleteCoupon(couponId: number): void {
+  public deleteCoupon(couponId: number, type: string): void {
 
-    this.couponService.deleteCoupon(couponId, this.companyId, this.token);
+    this.couponService.deleteCoupon(couponId, this.companyId, this.token).subscribe
+
+      (
+
+        () => {
+
+          alert("Your coupon has been deleted")
+
+          if (type == "id")
+            this.updateCouponsArray(this.companyCouponsByCompanyId, couponId);
+
+          else if (type == "category")
+            this.updateCouponsArray(this.companyCouponsByCategory, couponId);
+
+          else
+            this.updateCouponsArray(this.companyCouponsByMaxPrice, couponId);
+
+        },
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
   public deleteMyUser(): void {
 
-    this.userService.deleteMyUser(this.id, this.token);
+    this.userService.deleteMyUser(this.id, this.token).subscribe
+
+      (
+
+        () => {
+
+          alert("Your user has been deleted");
+          this.router.navigate(["/login"]);
+
+        },
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
   public getCompany(): void {
 
-    this.companyService.getCompany(this.companyId, this.token);
+    this.companyService.getCompany(this.companyId, this.token).subscribe
+
+      (
+
+        res => this.company = res,
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
   public getUser(): void {
 
-    this.userService.getUser(this.id, this.token);
+    this.userService.getUser(this.id, this.token).subscribe
+
+      (
+
+        res => this.user = res,
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
   public getCompanyCouponsByCompanyId(): void {
 
-    this.couponService.getCompanyCouponsByCompanyId(this.companyId, this.token);
+    this.couponService.getCompanyCouponsByCompanyId(this.companyId, this.token).subscribe
+
+      (
+
+        res => this.companyCouponsByCompanyId = res,
+
+        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+      );
 
   }
 
@@ -138,8 +236,19 @@ export class CompanyComponent implements OnInit {
 
     if (this.category == null)
       alert("Enter category plz");
-    else
-      this.couponService.getCompanyCouponsByCategory(this.companyId, this.category, this.token);
+    else {
+
+      this.couponService.getCompanyCouponsByCategory(this.companyId, this.category, this.token).subscribe
+
+        (
+
+          res => this.companyCouponsByCategory = res,
+
+          err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+        );
+
+    }
 
   }
 
@@ -147,7 +256,50 @@ export class CompanyComponent implements OnInit {
 
     if (this.maxPrice == null)
       alert("Enter max price plz");
-    else this.couponService.getCompanyCouponsByMaxPrice(this.companyId, this.maxPrice, this.token);
+
+    else {
+
+      this.couponService.getCompanyCouponsByMaxPrice(this.companyId, this.maxPrice, this.token).subscribe
+
+        (
+
+          res => this.companyCouponsByMaxPrice = res,
+
+          err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+
+        );
+
+    }
+
+  }
+
+  private updateCouponsArray(array: Coupon[], couponId: number): void {
+
+    // binary search
+    let min: number = 0;
+    let max: number = array.length - 1;
+    let mid: number = Math.floor((max + min) / 2);
+
+    if (array[max].id == couponId) {
+
+      array.splice(max, 1);
+
+    } else {
+      while (min < max) {
+        if (array[mid].id == couponId) {
+          array.splice(mid, 1);
+          break;
+        }
+        else if (array[mid].id > couponId)
+          max = mid;
+
+        else
+          min = mid;
+        mid = Math.floor((max + min) / 2);
+
+      }
+
+    }
 
   }
 

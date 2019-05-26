@@ -1,4 +1,4 @@
-<h2 class="my_name" *ngIf="userService.myName">wellcome back: {{userService.myName.name}}</h2>
+<h2 class="my_name" *ngIf="myName">wellcome back: {{myName.name}}</h2>
 <hr>
 <div>
     <button (click)="logOut()" class="angle">log out</button>
@@ -7,18 +7,18 @@
 <div class="center">
 
     <button (click)="getCompany()">show company info</button>
-    <div *ngIf="companyServiceInstance.company">
-        id: {{companyServiceInstance.company.id}} <br>
-        name: {{companyServiceInstance.company.name}} <br>
-        phone number: {{companyServiceInstance.company.phoneNumber}} <br>
-        email: {{companyServiceInstance.company.email}}<br>
+    <div *ngIf="company">
+        id: {{company.id}} <br>
+        name: {{company.name}} <br>
+        phone number: {{company.phoneNumber}} <br>
+        email: {{company.email}}<br>
     </div>
 
     <button (click)="getUser()">show user info</button>
-    <div *ngIf="userServiceInstance.user">
-        user name: {{userServiceInstance.user.userName}} <br>
-        password: {{userServiceInstance.user.password}} <br>
-        companyId: {{userServiceInstance.user.companyId}} <br>
+    <div *ngIf="user">
+        user name: {{user.userName}} <br>
+        password: {{user.password}} <br>
+        companyId: {{user.companyId}} <br>
     </div>
 
     <div>
@@ -48,7 +48,7 @@
 
         <button (click)="getCompanyCouponsByCompanyId()">get all coupons</button>
 
-        <div *ngIf="couponServiceInstance.getCompanyCouponsByCompanyId">
+        <div *ngIf="companyCouponsByCompanyId">
 
             <table border="1" align="center">
 
@@ -65,7 +65,7 @@
                     <th>delete coupon</th>
                 </tr>
 
-                <tr *ngFor="let coupon of couponServiceInstance.getCompanyCouponsByCompanyId">
+                <tr *ngFor="let coupon of companyCouponsByCompanyId">
                     <td>{{coupon.id}}</td>
                     <td>{{coupon.title}}</td>
                     <td>{{coupon.description}}</td>
@@ -75,7 +75,7 @@
                     <td>{{coupon.amount}}</td>
                     <td>{{coupon.price}}</td>
                     <td>{{coupon.image}}</td>
-                    <td><button (click)="deleteCoupon(coupon.id)" class="angle">delete</button></td>
+                    <td><button (click)="deleteCoupon(coupon.id,'id')" class="angle">delete</button></td>
                 </tr>
 
             </table>
@@ -97,7 +97,7 @@
         </select><br>
         <button (click)="getCompanyCouponsByCategory()">get coupons by category</button>
 
-        <div *ngIf="couponServiceInstance.getCompanyCouponsByCategory">
+        <div *ngIf="companyCouponsByCategory">
 
             <table border="1" align="center">
 
@@ -114,7 +114,7 @@
                     <th>delete coupon</th>
                 </tr>
 
-                <tr *ngFor="let coupon of couponServiceInstance.getCompanyCouponsByCategory">
+                <tr *ngFor="let coupon of companyCouponsByCategory">
                     <td>{{coupon.id}}</td>
                     <td>{{coupon.title}}</td>
                     <td>{{coupon.description}}</td>
@@ -124,7 +124,7 @@
                     <td>{{coupon.amount}}</td>
                     <td>{{coupon.price}}</td>
                     <td>{{coupon.image}}</td>
-                    <td><button (click)="deleteCoupon(coupon.id)" class="angle">delete</button></td>
+                    <td><button (click)="deleteCoupon(coupon.id,'category')" class="angle">delete</button></td>
                 </tr>
 
             </table>
@@ -138,7 +138,7 @@
         <input type="number" [(ngModel)]="maxPrice">
         <button (click)="getCompanyCouponsByMaxPrice()">get coupons by max price</button>
 
-        <div *ngIf="couponServiceInstance.getCompanyCouponsByMaxPrice">
+        <div *ngIf="companyCouponsByMaxPrice">
 
             <table border="1" align="center">
 
@@ -155,7 +155,7 @@
                     <th>delete coupon</th>
                 </tr>
 
-                <tr *ngFor="let coupon of couponServiceInstance.getCompanyCouponsByMaxPrice">
+                <tr *ngFor="let coupon of companyCouponsByMaxPrice">
                     <td>{{coupon.id}}</td>
                     <td>{{coupon.title}}</td>
                     <td>{{coupon.description}}</td>
@@ -165,7 +165,7 @@
                     <td>{{coupon.amount}}</td>
                     <td>{{coupon.price}}</td>
                     <td>{{coupon.image}}</td>
-                    <td><button (click)="deleteCoupon(coupon.id)" class="angle">delete</button></td>
+                    <td><button (click)="deleteCoupon(coupon.id,'maxPrice')" class="angle">delete</button></td>
                 </tr>
 
             </table>
