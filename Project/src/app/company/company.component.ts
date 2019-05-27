@@ -58,7 +58,7 @@ export class CompanyComponent implements OnInit {
 
       res => this.myName = res,
 
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
     );
 
@@ -78,7 +78,7 @@ export class CompanyComponent implements OnInit {
 
         },
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -103,7 +103,7 @@ export class CompanyComponent implements OnInit {
 
         () => alert("Your coupon has been created"),
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -129,7 +129,7 @@ export class CompanyComponent implements OnInit {
 
         () => alert("Your coupon has been updated"),
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -166,7 +166,7 @@ export class CompanyComponent implements OnInit {
             this.updateCouponsArray(this.companyCouponsByMaxPrice, couponId);
 
         },
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -184,7 +184,7 @@ export class CompanyComponent implements OnInit {
           this.router.navigate(["/login"]);
 
         },
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -198,7 +198,7 @@ export class CompanyComponent implements OnInit {
 
         res => this.company = res,
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -212,7 +212,7 @@ export class CompanyComponent implements OnInit {
 
         res => this.user = res,
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -226,7 +226,7 @@ export class CompanyComponent implements OnInit {
 
         res => this.companyCouponsByCompanyId = res,
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -244,7 +244,7 @@ export class CompanyComponent implements OnInit {
 
           res => this.companyCouponsByCategory = res,
 
-          err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
         );
 
@@ -265,7 +265,7 @@ export class CompanyComponent implements OnInit {
 
           res => this.companyCouponsByMaxPrice = res,
 
-          err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
         );
 

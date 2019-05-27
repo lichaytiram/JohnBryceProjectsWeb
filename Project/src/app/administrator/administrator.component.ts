@@ -55,7 +55,7 @@ export class AdministratorComponent implements OnInit {
 
       res => this.myName = res,
 
-      err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+      err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
     );
 
@@ -75,7 +75,7 @@ export class AdministratorComponent implements OnInit {
 
         },
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -94,7 +94,7 @@ export class AdministratorComponent implements OnInit {
 
         () => alert("company has been created"),
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -114,7 +114,7 @@ export class AdministratorComponent implements OnInit {
 
         () => alert("user has been created"),
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -133,7 +133,7 @@ export class AdministratorComponent implements OnInit {
 
         () => alert("Your user has been updated"),
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -153,7 +153,7 @@ export class AdministratorComponent implements OnInit {
 
         () => alert("company has been updated"),
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -171,7 +171,7 @@ export class AdministratorComponent implements OnInit {
           this.router.navigate(["/login"]);
 
         },
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -190,7 +190,7 @@ export class AdministratorComponent implements OnInit {
 
         },
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -209,7 +209,7 @@ export class AdministratorComponent implements OnInit {
 
         },
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -223,7 +223,7 @@ export class AdministratorComponent implements OnInit {
 
         res => this.allCompanies = res,
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -237,7 +237,7 @@ export class AdministratorComponent implements OnInit {
 
         res => this.allCustomers = res,
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -251,7 +251,7 @@ export class AdministratorComponent implements OnInit {
 
         res => this.allPurchases = res,
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -265,7 +265,7 @@ export class AdministratorComponent implements OnInit {
 
         res => this.allUsers = res,
 
-        err => alert("Oh crap !.... Error! Status: " + err.status + ".\nMessage: " + err.error.message)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
