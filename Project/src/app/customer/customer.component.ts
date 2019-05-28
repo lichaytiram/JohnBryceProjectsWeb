@@ -53,6 +53,8 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.getAllCoupon();
+
     this.customerService.getCustomerName(this.id, this.token).subscribe
 
       (
