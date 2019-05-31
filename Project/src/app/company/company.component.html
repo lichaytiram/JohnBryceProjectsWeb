@@ -8,17 +8,21 @@
 
     <button (click)="getCompany()">show company info</button>
     <div *ngIf="company">
+
         id: {{company.id}} <br>
         name: {{company.name}} <br>
         phone number: {{company.phoneNumber}} <br>
         email: {{company.email}}<br>
+
     </div>
 
     <button (click)="getUser()">show user info</button>
     <div *ngIf="user">
+
         user name: {{user.userName}} <br>
         password: {{user.password}} <br>
         companyId: {{user.companyId}} <br>
+
     </div>
 
     <div>
@@ -65,7 +69,7 @@
                     <th>delete coupon</th>
                 </tr>
 
-                <tr *ngFor="let coupon of companyCouponsByCompanyId">
+                <tr *ngFor="let coupon of companyCouponsByCompanyId ; let index = index">
                     <td>{{coupon.id}}</td>
                     <td>{{coupon.title}}</td>
                     <td>{{coupon.description}}</td>
@@ -75,7 +79,7 @@
                     <td>{{coupon.amount}}</td>
                     <td>{{coupon.price}}</td>
                     <td>{{coupon.image}}</td>
-                    <td><button (click)="deleteCoupon(coupon.id,'id')" class="angle">delete</button></td>
+                    <td><button (click)="deleteCoupon(coupon.id,'id',index)" class="angle">delete</button></td>
                 </tr>
 
             </table>
@@ -114,7 +118,7 @@
                     <th>delete coupon</th>
                 </tr>
 
-                <tr *ngFor="let coupon of companyCouponsByCategory">
+                <tr *ngFor="let coupon of companyCouponsByCategory ; let index = index">
                     <td>{{coupon.id}}</td>
                     <td>{{coupon.title}}</td>
                     <td>{{coupon.description}}</td>
@@ -124,7 +128,7 @@
                     <td>{{coupon.amount}}</td>
                     <td>{{coupon.price}}</td>
                     <td>{{coupon.image}}</td>
-                    <td><button (click)="deleteCoupon(coupon.id,'category')" class="angle">delete</button></td>
+                    <td><button (click)="deleteCoupon(coupon.id,'category',index)" class="angle">delete</button></td>
                 </tr>
 
             </table>
@@ -155,7 +159,7 @@
                     <th>delete coupon</th>
                 </tr>
 
-                <tr *ngFor="let coupon of companyCouponsByMaxPrice">
+                <tr *ngFor="let coupon of companyCouponsByMaxPrice ; let index = index">
                     <td>{{coupon.id}}</td>
                     <td>{{coupon.title}}</td>
                     <td>{{coupon.description}}</td>
@@ -165,7 +169,7 @@
                     <td>{{coupon.amount}}</td>
                     <td>{{coupon.price}}</td>
                     <td>{{coupon.image}}</td>
-                    <td><button (click)="deleteCoupon(coupon.id,'maxPrice')" class="angle">delete</button></td>
+                    <td><button (click)="deleteCoupon(coupon.id,'maxPrice',index)" class="angle">delete</button></td>
                 </tr>
 
             </table>

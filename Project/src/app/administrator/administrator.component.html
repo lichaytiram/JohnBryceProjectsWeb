@@ -7,6 +7,14 @@
 
 <div class="center">
 
+    <button (click)="getUser()">show user info</button>
+    <div *ngIf="user">
+
+        user name: {{user.userName}} <br>
+        password: {{user.password}} <br>
+
+    </div>
+
     <div>
 
         <button (click)="createCompany()">create company</button><br>
@@ -62,12 +70,12 @@
                     <th>email</th>
                     <th>delete company</th>
                 </tr>
-                <tr *ngFor="let company of allCompanies">
+                <tr *ngFor="let company of allCompanies ; let index = index">
                     <td>{{company.id}}</td>
                     <td>{{company.name}}</td>
                     <td>{{company.phoneNumber}}</td>
                     <td>{{company.email}}</td>
-                    <td><button (click)="deleteCompany(company.id)" class="angle">delete</button></td>
+                    <td><button (click)="deleteCompany(company.id,index)" class="angle">delete</button></td>
                 </tr>
 
             </table>
@@ -147,13 +155,13 @@
                     <th>company id</th>
                     <th>delete user</th>
                 </tr>
-                <tr *ngFor="let user of allUsers">
+                <tr *ngFor="let user of allUsers ; let index = index">
                     <td>{{user.id}}</td>
                     <td>{{user.userName}}</td>
                     <td>{{user.password}}</td>
                     <td>{{user.type}}</td>
                     <td>{{user.companyId}}</td>
-                    <td><button *ngIf="availableToDelete(user.type,user.id)" (click)="deleteUser(user.id)"
+                    <td><button *ngIf="availableToDelete(user.type,user.id)" (click)="deleteUser(user.id,index)"
                             class="angle">delete</button>
                     </td>
                 </tr>

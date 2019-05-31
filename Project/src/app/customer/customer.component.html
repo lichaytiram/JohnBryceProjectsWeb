@@ -16,8 +16,8 @@
 
 <div class="center">
   <button (click)="getCustomer()">show customer info</button>
-  <div *ngIf="customer">
-    <br>
+  <div *ngIf="customer"><br>
+
     firstName: {{customer.firstName}} <br>
     lastName: {{customer.lastName}} <br>
     phoneNumber: {{customer.phoneNumber}} <br>
@@ -28,6 +28,7 @@
   <button (click)="getUser()">show user info</button>
   <div *ngIf="user">
     <br>
+
     user name: {{user.userName}} <br>
     password: {{user.password}} <br>
 
@@ -43,11 +44,12 @@
         <th>date</th>
         <th>delete purchase</th>
       </tr>
-      <tr *ngFor="let purchase of customerPurchases">
+      <tr *ngFor="let purchase of customerPurchases ; let index = index">
         <td>{{purchase.couponId}}</td>
         <td>{{purchase.amount}}</td>
         <td>{{purchase.date}}</td>
-        <td><button (click)="deletePurchaseById(purchase.id,purchase.amount,'purchase')" class="angle">delete</button>
+        <td><button (click)="deletePurchaseById(purchase.id,purchase.amount,'purchase',index)"
+            class="angle">delete</button>
         </td>
       </tr>
     </table>
@@ -68,14 +70,14 @@
         <th>delete purchase</th>
       </tr>
 
-      <tr *ngFor="let coupon of customerCouponsByCustomerId">
+      <tr *ngFor="let coupon of customerCouponsByCustomerId ; let index = index">
         <td>{{coupon.title}}</td>
         <td>{{coupon.description}}</td>
         <td>{{coupon.category}}</td>
         <td>{{coupon.amount}}</td>
         <td>{{coupon.price}}</td>
         <td>{{coupon.image}}</td>
-        <td><button (click)="deletePurchaseById(coupon.id,coupon.amount,'id')" class="angle">delete</button></td>
+        <td><button (click)="deletePurchaseById(coupon.id,coupon.amount,'id',index)" class="angle">delete</button></td>
       </tr>
     </table>
 
@@ -108,14 +110,15 @@
           <th>delete purchase</th>
         </tr>
 
-        <tr *ngFor="let coupon of customerCouponsByCategory">
+        <tr *ngFor="let coupon of customerCouponsByCategory ; let index = index">
           <td>{{coupon.title}}</td>
           <td>{{coupon.description}}</td>
           <td>{{coupon.category}}</td>
           <td>{{coupon.amount}}</td>
           <td>{{coupon.price}}</td>
           <td>{{coupon.image}}</td>
-          <td><button (click)="deletePurchaseById(coupon.id,coupon.amount,'category')" class="angle">delete</button>
+          <td><button (click)="deletePurchaseById(coupon.id,coupon.amount,'category',index)"
+              class="angle">delete</button>
           </td>
         </tr>
       </table>
@@ -139,14 +142,15 @@
             <th>delete purchase</th>
           </tr>
 
-          <tr *ngFor="let coupon of customerCouponsByMaxPrice">
+          <tr *ngFor="let coupon of customerCouponsByMaxPrice ; let index = index">
             <td>{{coupon.title}}</td>
             <td>{{coupon.description}}</td>
             <td>{{coupon.category}}</td>
             <td>{{coupon.amount}}</td>
             <td>{{coupon.price}}</td>
             <td>{{coupon.image}}</td>
-            <td><button (click)="deletePurchaseById(coupon.id,coupon.amount,'maxPrice')" class="angle">delete</button>
+            <td><button (click)="deletePurchaseById(coupon.id,coupon.amount,'maxPrice',index)"
+                class="angle">delete</button>
             </td>
           </tr>
         </table>
@@ -175,14 +179,14 @@
           <th>purchase</th>
         </tr>
 
-        <tr *ngFor="let coupon of allCoupons">
+        <tr *ngFor="let coupon of allCoupons ; let index = index">
           <td>{{coupon.title}}</td>
           <td>{{coupon.description}}</td>
           <td>{{coupon.category}}</td>
           <td>{{coupon.amount}}</td>
           <td>{{coupon.price}}</td>
           <td>{{coupon.image}}</td>
-          <td> <button (click)="purchaseCoupon(coupon.id)" class="angle">purchse coupon</button></td>
+          <td> <button (click)="purchaseCoupon(coupon.id,index)" class="angle">purchse coupon</button></td>
         </tr>
 
       </table>

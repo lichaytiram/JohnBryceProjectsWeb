@@ -58,7 +58,7 @@ export class CompanyComponent implements OnInit {
 
       res => this.myName = res,
 
-        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+      err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
     );
 
@@ -78,7 +78,7 @@ export class CompanyComponent implements OnInit {
 
         },
 
-          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -103,7 +103,7 @@ export class CompanyComponent implements OnInit {
 
         () => alert("Your coupon has been created"),
 
-          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -129,7 +129,7 @@ export class CompanyComponent implements OnInit {
 
         () => alert("Your coupon has been updated"),
 
-          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -146,7 +146,7 @@ export class CompanyComponent implements OnInit {
 
   }
 
-  public deleteCoupon(couponId: number, type: string): void {
+  public deleteCoupon(couponId: number, type: string, index: number): void {
 
     this.couponService.deleteCoupon(couponId, this.companyId, this.token).subscribe
 
@@ -156,17 +156,17 @@ export class CompanyComponent implements OnInit {
 
           alert("Your coupon has been deleted")
 
-          if (type == "id")
-            this.updateCouponsArray(this.companyCouponsByCompanyId, couponId);
+          if (type === "id")
+            this.updateCouponsArray(this.companyCouponsByCompanyId, index);
 
-          else if (type == "category")
-            this.updateCouponsArray(this.companyCouponsByCategory, couponId);
+          else if (type === "category")
+            this.updateCouponsArray(this.companyCouponsByCategory, index);
 
           else
-            this.updateCouponsArray(this.companyCouponsByMaxPrice, couponId);
+            this.updateCouponsArray(this.companyCouponsByMaxPrice, index);
 
         },
-          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -184,7 +184,7 @@ export class CompanyComponent implements OnInit {
           this.router.navigate(["/login"]);
 
         },
-          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -198,7 +198,7 @@ export class CompanyComponent implements OnInit {
 
         res => this.company = res,
 
-          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -212,7 +212,7 @@ export class CompanyComponent implements OnInit {
 
         res => this.user = res,
 
-          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -226,7 +226,7 @@ export class CompanyComponent implements OnInit {
 
         res => this.companyCouponsByCompanyId = res,
 
-          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
       );
 
@@ -244,7 +244,7 @@ export class CompanyComponent implements OnInit {
 
           res => this.companyCouponsByCategory = res,
 
-        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
         );
 
@@ -265,7 +265,7 @@ export class CompanyComponent implements OnInit {
 
           res => this.companyCouponsByMaxPrice = res,
 
-        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
         );
 
@@ -273,33 +273,9 @@ export class CompanyComponent implements OnInit {
 
   }
 
-  private updateCouponsArray(array: Coupon[], couponId: number): void {
+  private updateCouponsArray(array: Coupon[], indexToDelete: number): void {
 
-    // binary search
-    let min: number = 0;
-    let max: number = array.length - 1;
-    let mid: number = Math.floor((max + min) / 2);
-
-    if (array[max].id == couponId) {
-
-      array.splice(max, 1);
-
-    } else {
-      while (min < max) {
-        if (array[mid].id == couponId) {
-          array.splice(mid, 1);
-          break;
-        }
-        else if (array[mid].id > couponId)
-          max = mid;
-
-        else
-          min = mid;
-        mid = Math.floor((max + min) / 2);
-
-      }
-
-    }
+    array.splice(indexToDelete, 1);
 
   }
 

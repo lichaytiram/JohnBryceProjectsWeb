@@ -13,19 +13,19 @@ import { Router } from '@angular/router';
 })
 export class UserComponent {
 
-  private _userName: string = null;
-  private _password: string = null;
-  private _passwordConfirm: string;
-  private _firstName: string;
-  private _lastName: string;
-  private _phoneNumber: string;
-  private _email: string;
+  private userName: string = null;
+  private password: string = null;
+  private passwordConfirm: string;
+  private firstName: string;
+  private lastName: string;
+  private phoneNumber: string;
+  private email: string;
 
   constructor(private userService: UserService, private customerService: CustomerService, private router: Router) { }
 
   public submit(): void {
 
-    let user: LoginUser = new LoginUser(this._userName, this._password);
+    let user: LoginUser = new LoginUser(this.userName, this.password);
 
     this.userService.login(user).subscribe
 
@@ -60,16 +60,16 @@ export class UserComponent {
     let customer: Customer = new Customer();
     let user: User = new User();
 
-    customer.firstName = this._firstName;
-    customer.lastName = this._lastName;
-    customer.phoneNumber = this._phoneNumber;
-    customer.email = this._email;
-    user.userName = this._userName;
-    user.password = this._password;
+    customer.firstName = this.firstName;
+    customer.lastName = this.lastName;
+    customer.phoneNumber = this.phoneNumber;
+    customer.email = this.email;
+    user.userName = this.userName;
+    user.password = this.password;
     user.type = "Customer";
     customer.user = user;
 
-    if (this._password != this._passwordConfirm)
+    if (this.password != this.passwordConfirm)
       alert("Your password isn't even, please try again!");
 
     else {

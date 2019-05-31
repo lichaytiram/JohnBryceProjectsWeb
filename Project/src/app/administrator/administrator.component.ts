@@ -36,7 +36,7 @@ export class AdministratorComponent implements OnInit {
   private userId: number;
 
   // objects
-  public user: User; // no used yet
+  public user: User;
   public allUsers: User[];
   public allCustomers: Customer[];
   public allPurchases: Purchase[];
@@ -177,7 +177,7 @@ export class AdministratorComponent implements OnInit {
 
   }
 
-  public deleteUser(userId: number): void {
+  public deleteUser(userId: number, index: number): void {
 
     this.userService.deleteUser(userId, this.token).subscribe
 
@@ -186,7 +186,7 @@ export class AdministratorComponent implements OnInit {
         () => {
 
           alert("user has been deleted");
-          this.updateUserArray(this.allUsers, userId);
+          this.updateArray(this.allUsers, index);
 
         },
 
@@ -196,7 +196,7 @@ export class AdministratorComponent implements OnInit {
 
   }
 
-  public deleteCompany(companyId: number): void {
+  public deleteCompany(companyId: number, index: number): void {
 
     this.companyService.deleteCompany(companyId, this.token).subscribe
 
@@ -205,9 +205,23 @@ export class AdministratorComponent implements OnInit {
         () => {
 
           alert("company has been deleted")
-          this.updateCompanyArray(this.allCompanies, companyId);
+          this.updateArray(this.allCompanies, index);
 
         },
+
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+
+      );
+
+  }
+
+  public getUser(): void {
+
+    this.userService.getUser(this.id, this.token).subscribe
+
+      (
+
+        res => this.user = res,
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -271,70 +285,16 @@ export class AdministratorComponent implements OnInit {
 
   }
 
-  private updateUserArray(array: User[], couponId: number): void {
+  private updateArray<T>(array: T[], indexToDelete: number): void {
 
-    // binary search
-    let min: number = 0;
-    let max: number = array.length - 1;
-    let mid: number = Math.floor((max + min) / 2);
-
-    if (array[max].id == couponId) {
-
-      array.splice(max, 1);
-
-    } else {
-      while (min < max) {
-        if (array[mid].id == couponId) {
-          array.splice(mid, 1);
-          break;
-        }
-        else if (array[mid].id > couponId)
-          max = mid;
-
-        else
-          min = mid;
-        mid = Math.floor((max + min) / 2);
-
-      }
-
-    }
+    array.splice(indexToDelete, 1);
 
   }
 
-  private updateCompanyArray(array: Company[], couponId: number): void {
-
-    // binary search
-    let min: number = 0;
-    let max: number = array.length - 1;
-    let mid: number = Math.floor((max + min) / 2);
-
-    if (array[max].id == couponId) {
-
-      array.splice(max, 1);
-
-    } else {
-      while (min < max) {
-        if (array[mid].id == couponId) {
-          array.splice(mid, 1);
-          break;
-        }
-        else if (array[mid].id > couponId)
-          max = mid;
-
-        else
-          min = mid;
-        mid = Math.floor((max + min) / 2);
-
-      }
-
-    }
-
-  }
-
-  // user by html
+  // use by html
   public availableToDelete(type: string, id: number): boolean {
 
-    if (type == "Customer" || id == this.id)
+    if (type === "Customer" || id == this.id)
       return false;
 
     return true;

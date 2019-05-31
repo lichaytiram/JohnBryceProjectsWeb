@@ -97,7 +97,7 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  public purchaseCoupon(couponId: number): void {
+  public purchaseCoupon(couponId: number, index: number): void {
 
     // add updates 2 thinks
     let purchse: Purchase = new Purchase();
@@ -112,31 +112,7 @@ export class CustomerComponent implements OnInit {
         () => {
 
           this.amountCoupons += purchse.amount;
-
-          // binary search
-          let min: number = 0;
-          let max: number = this.allCoupons.length - 1;
-          let mid: number = Math.floor((max + min) / 2);
-
-          if (this.allCoupons[max].id == couponId) {
-
-            this.allCoupons[max].amount -= purchse.amount;
-
-          } else {
-            while (min < max) {
-              if (this.allCoupons[mid].id == couponId) {
-                this.allCoupons[mid].amount -= purchse.amount;
-                break;
-              }
-              else if (this.allCoupons[mid].id > couponId)
-                max = mid;
-
-              else
-                min = mid;
-              mid = Math.floor((max + min) / 2);
-
-            }
-          }
+          this.allCoupons[index].amount -= purchse.amount;
 
           alert("Your purchase has been done");
         },
@@ -193,7 +169,7 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  public deletePurchaseById(purchaseId: number, amount: number, type: string): void {
+  public deletePurchaseById(purchaseId: number, amount: number, type: string, index: number): void {
 
     this.purchaseService.deletePurchaseById(purchaseId, this.token).subscribe
 
@@ -204,14 +180,14 @@ export class CustomerComponent implements OnInit {
           alert("Your purchase has been deleted")
           this.amountCoupons -= amount;
 
-          if (type == "id")
-            this.updateCouponsArray(this.customerCouponsByCustomerId, purchaseId);
-          else if (type == "category")
-            this.updateCouponsArray(this.customerCouponsByCategory, purchaseId);
-          else if (type == "maxPrice")
-            this.updateCouponsArray(this.customerCouponsByMaxPrice, purchaseId);
+          if (type === "id")
+            this.updateArray(this.customerCouponsByCustomerId, index);
+          else if (type === "category")
+            this.updateArray(this.customerCouponsByCategory, index);
+          else if (type === "maxPrice")
+            this.updateArray(this.customerCouponsByMaxPrice, index);
           else
-            this.updatePurchasesArray(this.customerPurchases, purchaseId);
+            this.updateArray(this.customerPurchases, index);
 
         },
 
@@ -332,65 +308,10 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  private updateCouponsArray(array: Coupon[], couponId: number): void {
+  private updateArray<T>(array: T[], indexToDelete: number): void {
 
-    // binary search
-    let min: number = 0;
-    let max: number = array.length - 1;
-    let mid: number = Math.floor((max + min) / 2);
-
-    if (array[max].id == couponId) {
-
-      array.splice(max, 1);
-
-    } else {
-      while (min < max) {
-        if (array[mid].id == couponId) {
-          array.splice(mid, 1);
-          break;
-        }
-        else if (array[mid].id > couponId)
-          max = mid;
-
-        else
-          min = mid;
-        mid = Math.floor((max + min) / 2);
-
-      }
-
-    }
+    array.splice(indexToDelete, 1);
 
   }
-
-  private updatePurchasesArray(array: Purchase[], couponId: number): void {
-
-    // binary search
-    let min: number = 0;
-    let max: number = array.length - 1;
-    let mid: number = Math.floor((max + min) / 2);
-
-    if (array[max].id == couponId) {
-
-      array.splice(max, 1);
-
-    } else {
-      while (min < max) {
-        if (array[mid].id == couponId) {
-          array.splice(mid, 1);
-          break;
-        }
-        else if (array[mid].id > couponId)
-          max = mid;
-
-        else
-          min = mid;
-        mid = Math.floor((max + min) / 2);
-
-      }
-
-    }
-
-  }
-
 
 }
