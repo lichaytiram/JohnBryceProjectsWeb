@@ -80,7 +80,7 @@ export class UserComponent {
 
           () => alert("your user has been created"),
 
-        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+          err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
         );
 
