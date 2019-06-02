@@ -32,7 +32,6 @@ export class CompanyComponent implements OnInit {
 
   private maxPrice: number = null;
 
-
   //update user
   private userName: string = null;
   private password: string = null;
