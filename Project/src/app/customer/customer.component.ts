@@ -30,7 +30,6 @@ export class CustomerComponent implements OnInit {
   // amount of purchase
   private amount: number;
 
-  
   private maxPrice: number;
 
   private category: string;
