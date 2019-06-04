@@ -20,6 +20,7 @@ export class CustomerComponent implements OnInit {
   public token: number;
   public id: number;
 
+  
   private userName: string;
   private password: string;
   private firstName: string;
