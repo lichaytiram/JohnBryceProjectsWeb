@@ -7,7 +7,14 @@
 
 <div class="center">
 
+    <button (click)="createCompany()">create company</button>
+    <button (click)="updateCompany()">update company</button>
+    <button (click)="updateUser()">update user</button>
+    <button (click)="getAllCustomers()">get all customers</button>
     <button (click)="getUser()">show user info</button>
+    <button (click)="getAllPurchases()">get all purchases</button>
+    <button (click)="getAllUsers()">get all users</button>
+    <button (click)="getAllCompanies()">get all companies</button>
     <div *ngIf="user">
 
         user name: {{user.userName}} <br>
@@ -17,7 +24,7 @@
 
     <div>
 
-        <button (click)="createCompany()">create company</button><br>
+
         Enter company name <input type="text" [(ngModel)]="companyName"><br>
         Enter phone number <input type="text" [(ngModel)]="phoneNumber"><br>
         Enter email <input type="text" [(ngModel)]="email"><br>
@@ -26,7 +33,7 @@
 
     <div>
 
-        <button (click)="updateCompany()">update company</button><br>
+
         Enter company id <input type="number" [(ngModel)]="companyId"> <br>
         Enter company name <input type="text" [(ngModel)]="companyName"><br>
         Enter phone number <input type="text" [(ngModel)]="phoneNumber"><br>
@@ -36,7 +43,7 @@
 
     <div>
 
-        <button (click)="createUser()">create user</button><br>
+
         Enter user name <input type="text" [(ngModel)]="userName"><br>
         Enter password <input type="text" [(ngModel)]="password"><br>
         Enter company id <input type="number" [(ngModel)]="companyIdUser"><br>
@@ -49,7 +56,7 @@
 
     <div>
 
-        <button (click)="updateUser()">update user</button><br>
+
         Enter id <input type="number" [(ngModel)]="userId"><br>
         Enter user name <input type="text" [(ngModel)]="userName"><br>
         Enter password <input type="text" [(ngModel)]="password"><br>
@@ -58,7 +65,7 @@
 
     <div>
 
-        <button (click)="getAllCompanies()">get all companies</button>
+
 
         <div *ngIf="allCompanies">
             <table border="1" align="center">
@@ -69,6 +76,7 @@
                     <th>phone number</th>
                     <th>email</th>
                     <th>delete company</th>
+                    <th>create company</th>
                 </tr>
                 <tr *ngFor="let company of allCompanies ; let index = index">
                     <td>{{company.id}}</td>
@@ -76,6 +84,7 @@
                     <td>{{company.phoneNumber}}</td>
                     <td>{{company.email}}</td>
                     <td><button (click)="deleteCompany(company.id,index)" class="angle">delete</button></td>
+                    <td> <button (click)="createUser()">create user</button> </td>
                 </tr>
 
             </table>
@@ -86,7 +95,7 @@
 
     <div>
 
-        <button (click)="getAllCustomers()">get all customers</button>
+
 
         <div *ngIf="allCustomers">
             <table border="1" align="center">
@@ -114,7 +123,7 @@
 
     <div>
 
-        <button (click)="getAllPurchases()">get all purchases</button>
+
 
         <div *ngIf="allPurchases">
             <table border="1" align="center">
@@ -142,7 +151,7 @@
 
     <div>
 
-        <button (click)="getAllUsers()">get all users</button>
+
 
         <div *ngIf="allUsers">
             <table border="1" align="center">
