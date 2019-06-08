@@ -28,7 +28,7 @@ export class PurchaseService {
 
   }
 
-  public getCustomerPurchase(customerId: number, token: number): Observable<Purchase[]> {
+  public getCustomerPurchases(customerId: number, token: number): Observable<Purchase[]> {
 
     return this.http.get<Purchase[]>(`http://localhost:8080/purchases/customer?customerId=${customerId}&token=${token}`);
 

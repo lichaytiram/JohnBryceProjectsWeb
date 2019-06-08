@@ -64,7 +64,7 @@ export class CouponService {
 
   }
 
-  public getAllCoupon(token: number): Observable<Coupon[]> {
+  public getAllCoupons(token: number): Observable<Coupon[]> {
 
     return this.http.get<Coupon[]>(`http://localhost:8080/coupons?token=${token}`);
 

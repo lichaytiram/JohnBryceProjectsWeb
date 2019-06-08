@@ -4,6 +4,7 @@ import { LoginUser } from '../models/LoginUser';
 import { UserDataClient } from '../models/UserDataClient';
 import { User } from '../models/User';
 import { Observable } from 'rxjs';
+import { Name } from '../models/Name';
 
 @Injectable({
   providedIn: 'root'
@@ -48,9 +49,9 @@ export class UserService {
 
   }
 
-  public getUserName(userId: number, token: number): Observable<string> {
+  public getUserName(userId: number, token: number): Observable<Name> {
 
-    return this.http.get<string>(`http://localhost:8080/users/name/${userId}?token=${token}`);
+    return this.http.get<Name>(`http://localhost:8080/users/name/${userId}?token=${token}`);
 
   }
 

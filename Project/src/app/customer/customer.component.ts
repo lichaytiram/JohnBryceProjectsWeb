@@ -20,6 +20,7 @@ export class CustomerComponent implements OnInit {
   public token: number;
   public id: number;
 
+  // update customer
   private userName: string;
   private password: string;
   private firstName: string;
@@ -34,6 +35,16 @@ export class CustomerComponent implements OnInit {
 
   private category: string;
 
+  // toggles
+  public toggleGetCustomer: boolean = false;
+  public toggleGetUser: boolean = false;
+  public toggleUpdateCustomer: boolean = false;
+  public toggleGetCustomerPurchases: boolean = false;
+  public toggleGetAllCoupons: boolean = false;
+  public toggleGetCustomerCouponsByCustomerId: boolean = false;
+  public toggleGetCustomerCouponsByCategory: boolean = false;
+  public toggleGetCustomerCouponsByMaxPrice: boolean = false;
+
   // objects
   public user: User;
   public customer: Customer;
@@ -44,36 +55,20 @@ export class CustomerComponent implements OnInit {
   public customerCouponsByMaxPrice: Coupon[];
   public allCoupons: Coupon[];
 
-  constructor(private customerService: CustomerService, private userService: UserService, private purchaseService: PurchaseService, private couponService: CouponService, private router: Router) {
-
-    this.token = <number><unknown>sessionStorage.getItem("token");
-    this.id = <number><unknown>sessionStorage.getItem("id");
-
-  }
-
+  constructor(private customerService: CustomerService, private userService: UserService, private purchaseService: PurchaseService, private couponService: CouponService, private router: Router) { }
+  
   ngOnInit(): void {
+    
+    this.token = parseInt(sessionStorage.getItem("token"));
+    this.id = parseInt(sessionStorage.getItem("id"));
 
-    this.getAllCoupon();
+    this.userService.getUserName(this.id, this.token).subscribe(
 
-    this.customerService.getCustomerName(this.id, this.token).subscribe
+      res => this.myName = res.name,
 
-      (
+      err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
-        res => this.myName = res,
-
-        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
-
-      );
-
-    this.purchaseService.getAmount(this.id, this.token).subscribe
-
-      (
-
-        res => this.amountCoupons = res,
-
-        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
-
-      );
+    );
 
   }
 
@@ -99,11 +94,7 @@ export class CustomerComponent implements OnInit {
 
   public purchaseCoupon(couponId: number, index: number): void {
 
-    // add updates 2 thinks
-    let purchse: Purchase = new Purchase();
-    purchse.couponId = couponId;
-    purchse.customerId = this.id;
-    purchse.amount = this.amount;
+    let purchse: Purchase = new Purchase(this.id, couponId, this.amount);
 
     this.purchaseService.purchaseCoupon(purchse, this.token).subscribe
 
@@ -125,19 +116,9 @@ export class CustomerComponent implements OnInit {
 
   public updateCustomer(): void {
 
-    let customer: Customer = new Customer();
-    let user: User = new User();
-
-    customer.id = this.id;
-    customer.firstName = this.firstName;
-    customer.lastName = this.lastName;
-    customer.phoneNumber = this.phoneNumber;
-    customer.email = this.email;
-    user.id = this.id;
-    user.userName = this.userName;
-    user.password = this.password;
-    user.type = "Customer";
-    customer.user = user;
+    let type = "Customer";
+    let user: User = new User(this.userName, this.password, this.id, type);
+    let customer: Customer = new Customer(this.firstName, this.lastName, this.phoneNumber, this.email, user, this.id);
 
     this.customerService.updateCustomer(customer, this.token).subscribe
 
@@ -203,7 +184,12 @@ export class CustomerComponent implements OnInit {
 
       (
 
-        res => this.customer = res,
+        res => {
+
+          this.customer = res;
+          this.isToggleGetCustomer();
+
+        },
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -217,7 +203,12 @@ export class CustomerComponent implements OnInit {
 
       (
 
-        res => this.user = res,
+        res => {
+
+          this.user = res;
+          this.isToggleGetUser();
+
+        },
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -225,13 +216,18 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  public getCustomerPurchase(): void {
+  public getCustomerPurchases(): void {
 
-    this.purchaseService.getCustomerPurchase(this.id, this.token).subscribe
+    this.purchaseService.getCustomerPurchases(this.id, this.token).subscribe
 
       (
 
-        res => this.customerPurchases = res,
+        res => {
+
+          this.customerPurchases = res;
+          this.isToggleGetCustomerPurchases();
+
+        },
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -245,7 +241,12 @@ export class CustomerComponent implements OnInit {
 
       (
 
-        res => this.customerCouponsByCustomerId = res,
+        res => {
+
+          this.customerCouponsByCustomerId = res;
+          this.isToggleGetCustomerCouponsByCustomerId();
+
+        },
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -294,13 +295,18 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  public getAllCoupon(): void {
+  public getAllCoupons(): void {
 
-    this.couponService.getAllCoupon(this.token).subscribe
+    this.couponService.getAllCoupons(this.token).subscribe
 
       (
 
-        res => this.allCoupons = res,
+        res => {
+
+          this.allCoupons = res;
+          this.isToggleGetAllCoupons();
+
+        },
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -312,6 +318,110 @@ export class CustomerComponent implements OnInit {
 
     array.splice(indexToDelete, 1);
 
+  }
+
+  public isToggleGetCustomer(): void {
+    this.toggleGetCustomer = true;
+    this.toggleGetUser = false;
+    this.toggleUpdateCustomer = false;
+    this.toggleGetCustomerPurchases = false;
+    this.toggleGetAllCoupons = false;
+    this.toggleGetCustomerCouponsByCustomerId = false;
+    this.toggleGetCustomerCouponsByCategory = false;
+    this.toggleGetCustomerCouponsByMaxPrice = false;
+  }
+
+  public isToggleGetUser(): void {
+    this.toggleGetCustomer = false;
+    this.toggleGetUser = true;
+    this.toggleUpdateCustomer = false;
+    this.toggleGetCustomerPurchases = false;
+    this.toggleGetAllCoupons = false;
+    this.toggleGetCustomerCouponsByCustomerId = false;
+    this.toggleGetCustomerCouponsByCategory = false;
+    this.toggleGetCustomerCouponsByMaxPrice = false;
+  }
+
+  public isToggleUpdateCustomer(): void {
+
+    this.userName = null;
+    this.password = null;
+    this.firstName = null;
+    this.lastName = null;
+    this.phoneNumber = null;
+    this.email = null;
+
+    this.toggleGetCustomer = false;
+    this.toggleGetUser = false;
+    this.toggleUpdateCustomer = true;
+    this.toggleGetCustomerPurchases = false;
+    this.toggleGetAllCoupons = false;
+    this.toggleGetCustomerCouponsByCustomerId = false;
+    this.toggleGetCustomerCouponsByCategory = false;
+    this.toggleGetCustomerCouponsByMaxPrice = false;
+  }
+
+  public isToggleGetCustomerPurchases(): void {
+    this.toggleGetCustomer = false;
+    this.toggleGetUser = false;
+    this.toggleUpdateCustomer = false;
+    this.toggleGetCustomerPurchases = true;
+    this.toggleGetAllCoupons = false;
+    this.toggleGetCustomerCouponsByCustomerId = false;
+    this.toggleGetCustomerCouponsByCategory = false;
+    this.toggleGetCustomerCouponsByMaxPrice = false;
+  }
+
+  public isToggleGetAllCoupons(): void {
+    this.amount = null;
+
+    this.toggleGetCustomer = false;
+    this.toggleGetUser = false;
+    this.toggleUpdateCustomer = false;
+    this.toggleGetCustomerPurchases = false;
+    this.toggleGetAllCoupons = true;
+    this.toggleGetCustomerCouponsByCustomerId = false;
+    this.toggleGetCustomerCouponsByCategory = false;
+    this.toggleGetCustomerCouponsByMaxPrice = false;
+  }
+
+  public isToggleGetCustomerCouponsByCustomerId(): void {
+    this.toggleGetCustomer = false;
+    this.toggleGetUser = false;
+    this.toggleUpdateCustomer = false;
+    this.toggleGetCustomerPurchases = false;
+    this.toggleGetAllCoupons = false;
+    this.toggleGetCustomerCouponsByCustomerId = true;
+    this.toggleGetCustomerCouponsByCategory = false;
+    this.toggleGetCustomerCouponsByMaxPrice = false;
+  }
+
+  public isToggleGetCustomerCouponsByCategory(): void {
+    this.customerCouponsByCategory = null;
+    this.category = null;
+
+    this.toggleGetCustomer = false;
+    this.toggleGetUser = false;
+    this.toggleUpdateCustomer = false;
+    this.toggleGetCustomerPurchases = false;
+    this.toggleGetAllCoupons = false;
+    this.toggleGetCustomerCouponsByCustomerId = false;
+    this.toggleGetCustomerCouponsByCategory = true;
+    this.toggleGetCustomerCouponsByMaxPrice = false;
+  }
+
+  public isToggleGetCustomerCouponsByMaxPrice(): void {
+    this.customerCouponsByMaxPrice = null;
+    this.maxPrice = null;
+
+    this.toggleGetCustomer = false;
+    this.toggleGetUser = false;
+    this.toggleUpdateCustomer = false;
+    this.toggleGetCustomerPurchases = false;
+    this.toggleGetAllCoupons = false;
+    this.toggleGetCustomerCouponsByCustomerId = false;
+    this.toggleGetCustomerCouponsByCategory = false;
+    this.toggleGetCustomerCouponsByMaxPrice = true;
   }
 
 }

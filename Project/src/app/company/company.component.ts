@@ -28,13 +28,22 @@ export class CompanyComponent implements OnInit {
   private endDate: Date = null;
   private amount: number = null;
   private price: number = null;
-  private image: string = null;
 
   private maxPrice: number = null;
 
   //update user
   private userName: string = null;
   private password: string = null;
+
+  // toggles
+  public toggleGetCompany: boolean = false;
+  public toggleGetUser: boolean = false;
+  public toggleCreateCoupon: boolean = false;
+  public toggleGetCompanyCouponsByCompanyId: boolean = false;
+  public toggleGetCompanyCouponsByCategory: boolean = false;
+  public toggleGetCompanyCouponsByMaxPrice: boolean = false;
+  public toggleUpdateUser: boolean = false;
+  public toggleUpdateCoupon: boolean = false;
 
   // objects
   public user: User;
@@ -43,19 +52,17 @@ export class CompanyComponent implements OnInit {
   public companyCouponsByCategory: Coupon[];
   public companyCouponsByMaxPrice: Coupon[];
 
-  constructor(private userService: UserService, private companyService: CompanyService, private couponService: CouponService, private router: Router) {
-
-    this.token = <number><unknown>sessionStorage.getItem("token");
-    this.id = <number><unknown>sessionStorage.getItem("id");
-    this.companyId = <number><unknown>sessionStorage.getItem("company");
-
-  }
+  constructor( private userService: UserService, private companyService: CompanyService, private couponService: CouponService, private router: Router) { }
 
   ngOnInit(): void {
 
+    this.token = parseInt(sessionStorage.getItem("token"));
+    this.id = parseInt(sessionStorage.getItem("id"));
+    this.companyId = parseInt(sessionStorage.getItem("company"));
+
     this.userService.getUserName(this.id, this.token).subscribe(
 
-      res => this.myName = res,
+      res => this.myName = res.name,
 
       err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -85,16 +92,8 @@ export class CompanyComponent implements OnInit {
 
   public createCoupon(): void {
 
-    let coupon: Coupon = new Coupon();
-    coupon.companyId = this.companyId;
-    coupon.title = this.title;
-    coupon.description = this.description;
-    coupon.category = this.category;
-    coupon.startDate = this.startDate;
-    coupon.endDate = this.endDate;
-    coupon.amount = this.amount;
-    coupon.price = this.price;
-    coupon.image = this.image;
+    let image = this.category + ".jpg"
+    let coupon: Coupon = new Coupon(this.companyId, this.title, this.description, this.category, this.startDate, this.endDate, this.amount, this.price, image);
 
     this.couponService.createCoupon(coupon, this.token).subscribe
 
@@ -110,17 +109,8 @@ export class CompanyComponent implements OnInit {
 
   public updateCoupon(): void {
 
-    let coupon: Coupon = new Coupon();
-    coupon.id = this.couponId;
-    coupon.companyId = this.companyId;
-    coupon.title = this.title;
-    coupon.description = this.description;
-    coupon.category = this.category;
-    coupon.startDate = this.startDate;
-    coupon.endDate = this.endDate;
-    coupon.amount = this.amount;
-    coupon.price = this.price;
-    coupon.image = this.image;
+    let image = this.category + ".jpg"
+    let coupon: Coupon = new Coupon(this.companyId, this.title, this.description, this.category, this.startDate, this.endDate, this.amount, this.price, image, this.couponId);
 
     this.couponService.updateCoupon(coupon, this.token).subscribe
 
@@ -136,12 +126,24 @@ export class CompanyComponent implements OnInit {
 
   public updateUser(): void {
 
-    let user: User = new User();
-    user.id = this.id;
-    user.userName = this.userName;
-    user.password = this.password;
+    let type: string = "Company"
+    let user: User = new User(this.userName, this.password, this.id, type);
 
-    this.userService.updateUser(user, this.token);
+    this.userService.updateUser(user, this.token).subscribe
+
+      (
+
+        () => {
+
+          this.myName = user.userName;
+
+          alert("Your user has been update");
+
+        },
+
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+
+      );
 
   }
 
@@ -195,7 +197,12 @@ export class CompanyComponent implements OnInit {
 
       (
 
-        res => this.company = res,
+        res => {
+
+          this.company = res;
+          this.isToggleGetCompany();
+
+        },
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -209,7 +216,12 @@ export class CompanyComponent implements OnInit {
 
       (
 
-        res => this.user = res,
+        res => {
+
+          this.user = res;
+          this.isToggleGetUser();
+
+        },
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -223,7 +235,11 @@ export class CompanyComponent implements OnInit {
 
       (
 
-        res => this.companyCouponsByCompanyId = res,
+        res => {
+          this.companyCouponsByCompanyId = res;
+          this.isToggleGetCompanyCouponsByCompanyId();
+
+        },
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -277,5 +293,124 @@ export class CompanyComponent implements OnInit {
     array.splice(indexToDelete, 1);
 
   }
+
+  public isToggleGetCompany(): void {
+    this.toggleGetCompany = true;
+    this.toggleGetUser = false;
+    this.toggleCreateCoupon = false;
+    this.toggleGetCompanyCouponsByCompanyId = false;
+    this.toggleGetCompanyCouponsByCategory = false;
+    this.toggleGetCompanyCouponsByMaxPrice = false;
+    this.toggleUpdateUser = false;
+    this.toggleUpdateCoupon = false;
+  }
+
+  public isToggleGetUser(): void {
+    this.toggleGetCompany = false;
+    this.toggleGetUser = true;
+    this.toggleCreateCoupon = false;
+    this.toggleGetCompanyCouponsByCompanyId = false;
+    this.toggleGetCompanyCouponsByCategory = false;
+    this.toggleGetCompanyCouponsByMaxPrice = false;
+    this.toggleUpdateUser = false;
+    this.toggleUpdateCoupon = false;
+  }
+
+  public isToggleCreateCoupon(): void {
+
+    this.title = null;
+    this.couponId = null;
+    this.category = null;
+    this.title = null;
+    this.description = null;
+    this.startDate = null;
+    this.endDate = null;
+    this.amount = null;
+    this.price = null;
+
+    this.toggleGetCompany = false;
+    this.toggleGetUser = false;
+    this.toggleCreateCoupon = true;
+    this.toggleGetCompanyCouponsByCompanyId = false;
+    this.toggleGetCompanyCouponsByCategory = false;
+    this.toggleGetCompanyCouponsByMaxPrice = false;
+    this.toggleUpdateUser = false;
+    this.toggleUpdateCoupon = false;
+  }
+
+  public isToggleGetCompanyCouponsByCompanyId(): void {
+    this.toggleGetCompany = false;
+    this.toggleGetUser = false;
+    this.toggleCreateCoupon = false;
+    this.toggleGetCompanyCouponsByCompanyId = true;
+    this.toggleGetCompanyCouponsByCategory = false;
+    this.toggleGetCompanyCouponsByMaxPrice = false;
+    this.toggleUpdateUser = false;
+    this.toggleUpdateCoupon = false;
+  }
+
+  public isToggleGetCompanyCouponsByCategory(): void {
+    this.category = null;
+    this.companyCouponsByCategory = null;
+    this.toggleGetCompany = false;
+    this.toggleGetUser = false;
+    this.toggleCreateCoupon = false;
+    this.toggleGetCompanyCouponsByCompanyId = false;
+    this.toggleGetCompanyCouponsByCategory = true;
+    this.toggleGetCompanyCouponsByMaxPrice = false;
+    this.toggleUpdateUser = false;
+    this.toggleUpdateCoupon = false;
+  }
+
+  public isToggleGetCompanyCouponsByMaxPrice(): void {
+    this.maxPrice = null;
+    this.companyCouponsByMaxPrice = null;
+    this.toggleGetCompany = false;
+    this.toggleGetUser = false;
+    this.toggleCreateCoupon = false;
+    this.toggleGetCompanyCouponsByCompanyId = false;
+    this.toggleGetCompanyCouponsByCategory = false;
+    this.toggleGetCompanyCouponsByMaxPrice = true;
+    this.toggleUpdateUser = false;
+    this.toggleUpdateCoupon = false;
+  }
+
+  public isToggleUpdateUser(): void {
+    this.userName = null;
+    this.password = null;
+    this.toggleGetCompany = false;
+    this.toggleGetUser = false;
+    this.toggleCreateCoupon = false;
+    this.toggleGetCompanyCouponsByCompanyId = false;
+    this.toggleGetCompanyCouponsByCategory = false;
+    this.toggleGetCompanyCouponsByMaxPrice = false;
+    this.toggleUpdateUser = true;
+    this.toggleUpdateCoupon = false;
+  }
+
+  public isToggleUpdateCoupon(couponId: number): void {
+
+    this.title = null;
+    this.couponId = null;
+    this.category = null;
+    this.title = null;
+    this.description = null;
+    this.startDate = null;
+    this.endDate = null;
+    this.amount = null;
+    this.price = null;
+
+    this.couponId = couponId;
+    this.toggleGetCompany = false;
+    this.toggleGetUser = false;
+    this.toggleCreateCoupon = false;
+    this.toggleGetCompanyCouponsByCompanyId = false;
+    this.toggleGetCompanyCouponsByCategory = false;
+    this.toggleGetCompanyCouponsByMaxPrice = false;
+    this.toggleUpdateUser = false;
+    this.toggleUpdateCoupon = true;
+  }
+
+
 
 }

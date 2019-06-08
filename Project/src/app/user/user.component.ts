@@ -15,15 +15,15 @@ export class UserComponent {
 
   private userName: string = null;
   private password: string = null;
-  private passwordConfirm: string;
-  private firstName: string;
-  private lastName: string;
-  private phoneNumber: string;
-  private email: string;
+  private passwordConfirm: string = null;
+  private firstName: string = null;
+  private lastName: string = null;
+  private phoneNumber: string = null;
+  private email: string = null;
 
   constructor(private userService: UserService, private customerService: CustomerService, private router: Router) { }
 
-  public submit(): void {
+  public login(): void {
 
     let user: LoginUser = new LoginUser(this.userName, this.password);
 
@@ -57,17 +57,9 @@ export class UserComponent {
 
   public register(): void {
 
-    let customer: Customer = new Customer();
-    let user: User = new User();
-
-    customer.firstName = this.firstName;
-    customer.lastName = this.lastName;
-    customer.phoneNumber = this.phoneNumber;
-    customer.email = this.email;
-    user.userName = this.userName;
-    user.password = this.password;
-    user.type = "Customer";
-    customer.user = user;
+    let type = "Customer";
+    let user: User = new User(this.userName, this.password, null, type);
+    let customer: Customer = new Customer(this.firstName, this.lastName, this.phoneNumber, this.email, user);
 
     if (this.password != this.passwordConfirm)
       alert("Your password isn't even, please try again!");
@@ -90,6 +82,14 @@ export class UserComponent {
 
   public toggleSignup() {
 
+    this.userName = null;
+    this.password = null;
+    this.passwordConfirm = null;
+    this.firstName = null;
+    this.lastName = null;
+    this.phoneNumber = null;
+    this.email = null;
+
     document.getElementById("login-toggle").style.backgroundColor = "#fff";
     document.getElementById("login-toggle").style.color = "#222";
     document.getElementById("signup-toggle").style.backgroundColor = "#57b846";
@@ -100,6 +100,9 @@ export class UserComponent {
   }
 
   public toggleLogin() {
+
+    this.userName = null;
+    this.password = null;
 
     document.getElementById("login-toggle").style.backgroundColor = "#57B846";
     document.getElementById("login-toggle").style.color = "#fff";

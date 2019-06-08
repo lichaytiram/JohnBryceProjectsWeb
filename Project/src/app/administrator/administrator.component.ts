@@ -20,20 +20,32 @@ export class AdministratorComponent implements OnInit {
   public token: number;
   public id: number;
 
+  // create & update company
   private companyName: string = null;
   private phoneNumber: string = null;
   private email: string = null;
 
   private companyId: number;
 
-  //create user
+  // create user
   private userName: string = null;
   private password: string = null;
   private type: string = null;
-  private companyIdUser: string = null;
+  private companyUserId: string = null;
 
-  //update user
+  // update user
   private userId: number;
+
+  // toggles
+  public toggleGetUser: boolean = false;
+  public toggleUpdateUser: boolean = false;
+  public toggleCreateCompany: boolean = false;
+  public toggleUpdateCompany: boolean = false;
+  public toggleGetAllUsers: boolean = false;
+  public toggleGetAllCompanies: boolean = false;
+  public toggleGetAllCustomers: boolean = false;
+  public toggleGetAllPurchases: boolean = false;
+  public toggleCreateUser: boolean = false;
 
   // objects
   public user: User;
@@ -42,18 +54,16 @@ export class AdministratorComponent implements OnInit {
   public allPurchases: Purchase[];
   public allCompanies: Company[];
 
-  constructor(private userService: UserService, private companyService: CompanyService, private customerService: CustomerService, private purchaseService: PurchaseService, private router: Router) {
-
-    this.token = <number><unknown>sessionStorage.getItem("token");
-    this.id = <number><unknown>sessionStorage.getItem("id");
-
-  }
+  constructor(private userService: UserService, private companyService: CompanyService, private customerService: CustomerService, private purchaseService: PurchaseService, private router: Router) { }
 
   ngOnInit(): void {
 
+    this.token = parseInt(sessionStorage.getItem("token"));
+    this.id = parseInt(sessionStorage.getItem("id"));
+
     this.userService.getUserName(this.id, this.token).subscribe(
 
-      res => this.myName = res,
+      res => this.myName = res.name,
 
       err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -83,16 +93,13 @@ export class AdministratorComponent implements OnInit {
 
   public createCompany(): void {
 
-    let company: Company = new Company();
-    company.name = this.companyName;
-    company.phoneNumber = this.phoneNumber;
-    company.email = this.email;
+    let company: Company = new Company(this.companyName, this.phoneNumber, this.email);
 
     this.companyService.createCompany(company, this.token).subscribe
 
       (
 
-        () => alert("company has been created"),
+        () => alert("Company has been created"),
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -102,17 +109,18 @@ export class AdministratorComponent implements OnInit {
 
   public createUser(): void {
 
-    let user: User = new User();
-    user.userName = this.userName;
-    user.password = this.password;
-    user.type = this.type;
-    user.companyId = this.companyIdUser;
+    let user: User = new User(this.userName, this.password, null, this.type);
+
+    if (this.type === "Company")
+      user.companyId = this.companyUserId;
+    else
+      user.companyId = null;
 
     this.userService.createUser(user, this.token).subscribe
 
       (
 
-        () => alert("user has been created"),
+        () => alert("User has been created"),
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -122,16 +130,19 @@ export class AdministratorComponent implements OnInit {
 
   public updateUser(): void {
 
-    let user: User = new User();
-    user.id = this.userId;
-    user.userName = this.userName;
-    user.password = this.password;
+    let user: User = new User(this.userName, this.password, this.userId);
 
     this.userService.updateUser(user, this.token).subscribe
 
       (
 
-        () => alert("Your user has been updated"),
+        () => {
+
+          alert("user has been updated");
+          if (this.id == user.id)
+            this.myName = user.userName;
+
+        },
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -141,11 +152,7 @@ export class AdministratorComponent implements OnInit {
 
   public updateCompany(): void {
 
-    let company: Company = new Company();
-    company.id = this.companyId;
-    company.name = this.companyName;
-    company.phoneNumber = this.phoneNumber;
-    company.email = this.email;
+    let company: Company = new Company(this.companyName, this.phoneNumber, this.email, this.companyId);
 
     this.companyService.updateCompany(company, this.token).subscribe
 
@@ -221,7 +228,11 @@ export class AdministratorComponent implements OnInit {
 
       (
 
-        res => this.user = res,
+        res => {
+          this.user = res;
+          this.isToggleGetUser();
+
+        },
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -235,7 +246,11 @@ export class AdministratorComponent implements OnInit {
 
       (
 
-        res => this.allCompanies = res,
+        res => {
+          this.allCompanies = res;
+          this.isToggleGetAllCompanies();
+
+        },
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -249,7 +264,11 @@ export class AdministratorComponent implements OnInit {
 
       (
 
-        res => this.allCustomers = res,
+        res => {
+          this.allCustomers = res;
+          this.isToggleGetAllCustomers();
+
+        },
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -263,7 +282,11 @@ export class AdministratorComponent implements OnInit {
 
       (
 
-        res => this.allPurchases = res,
+        res => {
+          this.allPurchases = res;
+          this.isToggleGetAllPurchases();
+
+        },
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -272,12 +295,15 @@ export class AdministratorComponent implements OnInit {
   }
 
   public getAllUsers(): void {
-
     this.userService.getAllUsers(this.token).subscribe
 
       (
 
-        res => this.allUsers = res,
+        res => {
+          this.allUsers = res;
+          this.isToggleGetAllUsers();
+
+        },
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -299,6 +325,135 @@ export class AdministratorComponent implements OnInit {
 
     return true;
 
+  }
+
+  public isToggleGetUser(): void {
+    this.toggleGetUser = true;
+    this.toggleUpdateUser = false;
+    this.toggleCreateCompany = false;
+    this.toggleUpdateCompany = false;
+    this.toggleGetAllUsers = false;
+    this.toggleGetAllCompanies = false;
+    this.toggleGetAllCustomers = false;
+    this.toggleGetAllPurchases = false;
+    this.toggleCreateUser = false;
+  }
+
+  public isToggleUpdateUser(userId: number): void {
+    this.userName = null;
+    this.password = null;
+
+    this.userId = userId;
+    this.toggleGetUser = false;
+    this.toggleUpdateUser = true;
+    this.toggleCreateCompany = false;
+    this.toggleUpdateCompany = false;
+    this.toggleGetAllUsers = false;
+    this.toggleGetAllCompanies = false;
+    this.toggleGetAllCustomers = false;
+    this.toggleGetAllPurchases = false;
+    this.toggleCreateUser = false;
+  }
+
+  public isToggleCreateCompany(): void {
+    this.companyName = null;
+    this.phoneNumber = null;
+    this.email = null;
+
+    this.toggleGetUser = false;
+    this.toggleUpdateUser = false;
+    this.toggleCreateCompany = true;
+    this.toggleUpdateCompany = false;
+    this.toggleGetAllUsers = false;
+    this.toggleGetAllCompanies = false;
+    this.toggleGetAllCustomers = false;
+    this.toggleGetAllPurchases = false;
+    this.toggleCreateUser = false;
+  }
+
+  public isToggleUpdateCompany(companyId: number): void {
+    this.companyName = null;
+    this.phoneNumber = null;
+    this.email = null;
+
+    this.companyId = companyId;
+    this.toggleGetUser = false;
+    this.toggleUpdateUser = false;
+    this.toggleCreateCompany = false;
+    this.toggleUpdateCompany = true;
+    this.toggleGetAllUsers = false;
+    this.toggleGetAllCompanies = false;
+    this.toggleGetAllCustomers = false;
+    this.toggleGetAllPurchases = false;
+    this.toggleCreateUser = false;
+  }
+
+  public isToggleGetAllUsers(): void {
+    this.toggleGetUser = false;
+    this.toggleUpdateUser = false;
+    this.toggleCreateCompany = false;
+    this.toggleUpdateCompany = false;
+    this.toggleGetAllUsers = true;
+    this.toggleGetAllCompanies = false;
+    this.toggleGetAllCustomers = false;
+    this.toggleGetAllPurchases = false;
+    this.toggleCreateUser = false;
+  }
+
+  public isToggleGetAllCompanies(): void {
+    this.toggleGetUser = false;
+    this.toggleUpdateUser = false;
+    this.toggleCreateCompany = false;
+    this.toggleUpdateCompany = false;
+    this.toggleGetAllUsers = false;
+    this.toggleGetAllCompanies = true;
+    this.toggleGetAllCustomers = false;
+    this.toggleGetAllPurchases = false;
+    this.toggleCreateUser = false;
+  }
+
+  public isToggleGetAllCustomers(): void {
+    this.toggleGetUser = false;
+    this.toggleUpdateUser = false;
+    this.toggleCreateCompany = false;
+    this.toggleUpdateCompany = false;
+    this.toggleGetAllUsers = false;
+    this.toggleGetAllCompanies = false;
+    this.toggleGetAllCustomers = true;
+    this.toggleGetAllPurchases = false;
+    this.toggleCreateUser = false;
+  }
+
+  public isToggleGetAllPurchases(): void {
+    this.toggleGetUser = false;
+    this.toggleUpdateUser = false;
+    this.toggleCreateCompany = false;
+    this.toggleUpdateCompany = false;
+    this.toggleGetAllUsers = false;
+    this.toggleGetAllCompanies = false;
+    this.toggleGetAllCustomers = false;
+    this.toggleGetAllPurchases = true;
+    this.toggleCreateUser = false;
+  }
+
+  public isToggleCreateUser(type: string, companyId?: string): void {
+    this.userName = null;
+    this.password = null;
+    this.companyUserId = null;
+    this.type = type;
+
+    if (type === "Company")
+      this.companyUserId = companyId;
+
+    this.toggleGetUser = false;
+    this.toggleUpdateUser = false;
+    this.toggleCreateCompany = false;
+    this.toggleUpdateCompany = false;
+    this.toggleGetAllUsers = false;
+    this.toggleGetAllCompanies = false;
+    this.toggleGetAllCustomers = false;
+    this.toggleGetAllPurchases = false;
+    this.toggleCreateUser = true;
   }
 
 }
