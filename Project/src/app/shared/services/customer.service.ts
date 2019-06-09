@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Customer } from '../models/Customer';
 import { Observable } from 'rxjs';
+import { Name } from '../models/Name';
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +29,9 @@ export class CustomerService {
 
   }
 
-  public getCustomerName(customerId: number, token: number): Observable<string> {
+  public getCustomerName(customerId: number, token: number): Observable<Name> {
 
-    return this.http.get<string>(`http://localhost:8080/customers/name/${customerId}?token=${token}`);
+    return this.http.get<Name>(`http://localhost:8080/customers/name/${customerId}?token=${token}`);
 
   }
 

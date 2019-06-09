@@ -56,19 +56,33 @@ export class CustomerComponent implements OnInit {
   public allCoupons: Coupon[];
 
   constructor(private customerService: CustomerService, private userService: UserService, private purchaseService: PurchaseService, private couponService: CouponService, private router: Router) { }
-  
+
   ngOnInit(): void {
-    
+
     this.token = parseInt(sessionStorage.getItem("token"));
     this.id = parseInt(sessionStorage.getItem("id"));
 
-    this.userService.getUserName(this.id, this.token).subscribe(
+    this.getAllCoupons();
 
-      res => this.myName = res.name,
+    this.customerService.getCustomerName(this.id, this.token).subscribe
 
-      err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+      (
 
-    );
+        res => this.myName = res.name,
+
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+
+      );
+
+    this.purchaseService.getAmount(this.id, this.token).subscribe
+
+      (
+
+        res => this.amountCoupons = res,
+
+        err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
+
+      );
 
   }
 
