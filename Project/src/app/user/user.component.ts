@@ -46,6 +46,8 @@ export class UserComponent {
 
           sessionStorage.setItem("token", res.token + "");
           sessionStorage.setItem("id", res.id + "");
+          this.userName = null;
+          this.password = null;
 
         },
 
