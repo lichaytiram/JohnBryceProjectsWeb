@@ -8,6 +8,7 @@ import { PurchaseService } from '../shared/services/purshase.service';
 import { CouponService } from '../shared/services/coupon.service';
 import { Router } from '@angular/router';
 import { Coupon } from '../shared/models/Coupon';
+import { Category } from '../shared/models/Category';
 
 @Component({
   selector: 'app-customer',
@@ -16,24 +17,24 @@ import { Coupon } from '../shared/models/Coupon';
 })
 export class CustomerComponent implements OnInit {
 
-  public myName: string;
-  public token: number;
-  public id: number;
+  public myName: string = null;
+  public token: number = null;
+  public id: number = null;
 
   // update customer
-  private userName: string;
-  private password: string;
-  private firstName: string;
-  private lastName: string;
-  private phoneNumber: string;
-  private email: string;
+  private userName: string = null;
+  private password: string = null;
+  private firstName: string = null;
+  private lastName: string = null;
+  private phoneNumber: string = null;
+  private email: string = null;
 
   // amount of purchase
-  private amount: number;
+  private amount: number = null;
 
-  private maxPrice: number;
+  private maxPrice: number = null;
 
-  private category: string;
+  private category: string = null;
 
   // toggles
   public toggleGetCustomer: boolean = false;
@@ -46,18 +47,21 @@ export class CustomerComponent implements OnInit {
   public toggleGetCustomerCouponsByMaxPrice: boolean = false;
 
   // objects
-  public user: User;
-  public customer: Customer;
-  public amountCoupons: number;
-  public customerPurchases: Purchase[];
-  public customerCouponsByCustomerId: Coupon[];
-  public customerCouponsByCategory: Coupon[];
-  public customerCouponsByMaxPrice: Coupon[];
-  public allCoupons: Coupon[];
+  public user: User = null;
+  public customer: Customer = null;
+  public amountCoupons: number = null;
+  public customerPurchases: Purchase[] = null;
+  public customerCouponsByCustomerId: Coupon[] = null;
+  public customerCouponsByCategory: Coupon[] = null;
+  public customerCouponsByMaxPrice: Coupon[] = null;
+  public allCoupons: Coupon[] = null;
+  public categories: Category[] = null;
 
   constructor(private customerService: CustomerService, private userService: UserService, private purchaseService: PurchaseService, private couponService: CouponService, private router: Router) { }
 
   ngOnInit(): void {
+
+    this.categories = Object.values(Category).filter(index => (typeof Category[index] === 'number'))
 
     this.token = parseInt(sessionStorage.getItem("token"));
     this.id = parseInt(sessionStorage.getItem("id"));

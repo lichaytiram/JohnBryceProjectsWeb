@@ -17,10 +17,10 @@
 <div class="center">
 
   <br>
-  <button (click)="getAllCoupons()">Show all coupons to buy</button><br>
   <button (click)="getCustomer()">Show customer info</button><span> | </span>
   <button (click)="getUser()">Show user info</button><span> | </span>
-  <button (click)="isToggleUpdateCustomer()">Update your customer</button><br>
+  <button (click)="isToggleUpdateCustomer()">Update your customer</button><span> | </span>
+  <button (click)="getAllCoupons()">Show all coupons to buy</button><br>
   <button (click)="getCustomerPurchases()">Get all purchases</button><span> | </span>
   <button (click)="getCustomerCouponsByCustomerId()">Get my coupons</button> <span> | </span>
   <button (click)="isToggleGetCustomerCouponsByCategory()">Get all coupons by category</button><span> | </span>
@@ -113,13 +113,7 @@
     <br>
     Enter category: <select [(ngModel)]="category">
 
-      <option value="Food">Food</option>
-      <option value="Electricity">Electricity</option>
-      <option value="Restaurant">Restaurant</option>
-      <option value="Vacation">Vacation</option>
-      <option value="Science">Science</option>
-      <option value="Comics">Comics</option>
-      <option value="Paintball">Paintball</option>
+      <option *ngFor="let category of categories" value="{{category}}">{{category}}</option>
 
     </select><br>
 

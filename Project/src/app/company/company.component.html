@@ -43,13 +43,9 @@
     <div *ngIf="toggleCreateCoupon">
 
         Enter category: <select [(ngModel)]="category">
-            <option value="Food">Food</option>
-            <option value="Electricity">Electricity</option>
-            <option value="Restaurant">Restaurant</option>
-            <option value="Vacation">Vacation</option>
-            <option value="Science">Science</option>
-            <option value="Comics">Comics</option>
-            <option value="Paintball">Paintball</option>
+
+            <option *ngFor="let category of categories" value="{{category}}">{{category}}</option>
+
         </select><br>
         Enter title: <input type="text" [(ngModel)]="title"><br>
         Enter description: <input type="text" [(ngModel)]="description"><br>
@@ -105,13 +101,9 @@
     <div *ngIf="toggleGetCompanyCouponsByCategory">
 
         Enter category: <select [(ngModel)]="category">
-            <option value="Food">Food</option>
-            <option value="Electricity">Electricity</option>
-            <option value="Restaurant">Restaurant</option>
-            <option value="Vacation">Vacation</option>
-            <option value="Science">Science</option>
-            <option value="Comics">Comics</option>
-            <option value="Paintball">Paintball</option>
+
+            <option *ngFor="let category of categories" value="{{category}}">{{category}}</option>
+
         </select><br>
         <button (click)="getCompanyCouponsByCategory()">Get coupons by category</button>
 
@@ -199,14 +191,11 @@
     <div *ngIf="toggleUpdateCoupon">
 
         Enter category: <select [(ngModel)]="category">
-            <option value="Food">Food</option>
-            <option value="Electricity">Electricity</option>
-            <option value="Restaurant">Restaurant</option>
-            <option value="Vacation">Vacation</option>
-            <option value="Science">Science</option>
-            <option value="Comics">Comics</option>
-            <option value="Paintball">Paintball</option>
+
+                <option *ngFor="let category of categories" value="{{category}}">{{category}}</option>
+
         </select><br>
+        
         Enter title: <input type="text" [(ngModel)]="title"><br>
         Enter description: <input type="text" [(ngModel)]="description"><br>
         Enter start date: <input type="date" [(ngModel)]="startDate"><br>

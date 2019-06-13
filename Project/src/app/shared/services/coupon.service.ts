@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Coupon } from '../models/Coupon';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Category } from '../models/Category';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class CouponService {
 
   }
 
-  public getCompanyCouponsByCategory(companyId: number, category: string, token: number): Observable<Coupon[]> {
+  public getCompanyCouponsByCategory(companyId: number, category: Category, token: number): Observable<Coupon[]> {
 
     return this.http.get<Coupon[]>(`http://localhost:8080/coupons/company/category?companyId=${companyId}&category=${category}&token=${token}`);
 

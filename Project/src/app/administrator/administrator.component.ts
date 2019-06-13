@@ -16,16 +16,16 @@ import { Purchase } from '../shared/models/Purchase';
 })
 export class AdministratorComponent implements OnInit {
 
-  public myName: string;
-  public token: number;
-  public id: number;
+  public myName: string = null;
+  public token: number = null;
+  public id: number = null;
 
   // create & update company
   private companyName: string = null;
   private phoneNumber: string = null;
   private email: string = null;
 
-  private companyId: number;
+  private companyId: number = null;
 
   // create user
   private userName: string = null;
@@ -34,7 +34,7 @@ export class AdministratorComponent implements OnInit {
   private companyUserId: string = null;
 
   // update user
-  private userId: number;
+  private userId: number = null;
 
   // toggles
   public toggleGetUser: boolean = false;
@@ -48,11 +48,11 @@ export class AdministratorComponent implements OnInit {
   public toggleCreateUser: boolean = false;
 
   // objects
-  public user: User;
-  public allUsers: User[];
-  public allCustomers: Customer[];
-  public allPurchases: Purchase[];
-  public allCompanies: Company[];
+  public user: User = null;
+  public allUsers: User[] = null;
+  public allCustomers: Customer[] = null;
+  public allPurchases: Purchase[] = null;
+  public allCompanies: Company[] = null;
 
   constructor(private userService: UserService, private companyService: CompanyService, private customerService: CustomerService, private purchaseService: PurchaseService, private router: Router) { }
 

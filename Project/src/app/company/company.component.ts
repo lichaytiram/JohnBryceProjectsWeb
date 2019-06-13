@@ -6,6 +6,7 @@ import { CompanyService } from '../shared/services/company.service';
 import { CouponService } from '../shared/services/coupon.service';
 import { Router } from '@angular/router';
 import { Company } from '../shared/models/Company';
+import { Category } from '../shared/models/Category';
 
 @Component({
   selector: 'app-company',
@@ -14,20 +15,21 @@ import { Company } from '../shared/models/Company';
 })
 export class CompanyComponent implements OnInit {
 
-  public myName: string;
-  public token: number;
-  public id: number;
-  public companyId: number;
+  public myName: string = null;
+  public token: number = null;
+  public id: number = null;
+  public companyId: number = null;
 
   //create coupon && update
   private couponId: number = null;
-  private category: string = null;
+  private category: Category = null;
   private title: string = null;
   private description: string = null;
   private startDate: Date = null;
   private endDate: Date = null;
   private amount: number = null;
   private price: number = null;
+
 
   private maxPrice: number = null;
 
@@ -46,15 +48,18 @@ export class CompanyComponent implements OnInit {
   public toggleUpdateCoupon: boolean = false;
 
   // objects
-  public user: User;
-  public company: Company;
-  public companyCouponsByCompanyId: Coupon[];
-  public companyCouponsByCategory: Coupon[];
-  public companyCouponsByMaxPrice: Coupon[];
+  public user: User = null;
+  public company: Company = null;
+  public companyCouponsByCompanyId: Coupon[] = null;
+  public companyCouponsByCategory: Coupon[] = null;
+  public companyCouponsByMaxPrice: Coupon[] = null;
+  public categories: Category[] = null;
 
-  constructor( private userService: UserService, private companyService: CompanyService, private couponService: CouponService, private router: Router) { }
+  constructor(private userService: UserService, private companyService: CompanyService, private couponService: CouponService, private router: Router) { }
 
   ngOnInit(): void {
+
+    this.categories = Object.values(Category).filter(index => (typeof Category[index] === 'number'))
 
     this.token = parseInt(sessionStorage.getItem("token"));
     this.id = parseInt(sessionStorage.getItem("id"));
@@ -93,6 +98,7 @@ export class CompanyComponent implements OnInit {
   public createCoupon(): void {
 
     let image = this.category + ".jpg"
+
     let coupon: Coupon = new Coupon(this.companyId, this.title, this.description, this.category, this.startDate, this.endDate, this.amount, this.price, image);
 
     this.couponService.createCoupon(coupon, this.token).subscribe
