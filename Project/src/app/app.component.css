@@ -27,6 +27,7 @@
 }
 
 .backgroundImage {
+  opacity: 0.6;
   position: absolute;
   z-index: -1;
   width: 100%;
