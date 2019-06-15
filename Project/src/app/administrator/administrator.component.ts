@@ -113,8 +113,6 @@ export class AdministratorComponent implements OnInit {
 
     if (this.type === "Company")
       user.companyId = this.companyUserId;
-    else
-      user.companyId = null;
 
     this.userService.createUser(user, this.token).subscribe
 

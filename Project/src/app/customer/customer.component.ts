@@ -142,7 +142,12 @@ export class CustomerComponent implements OnInit {
 
       (
 
-        () => alert("Your customer has been updated"),
+        () => {
+
+          alert("Your customer has been updated")
+          this.myName = customer.firstName;
+
+        },
 
         err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
