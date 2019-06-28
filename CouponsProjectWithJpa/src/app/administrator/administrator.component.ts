@@ -31,7 +31,7 @@ export class AdministratorComponent implements OnInit {
   private userName: string = null;
   private password: string = null;
   private type: string = null;
-  private companyUserId: string = null;
+  private companyUserId: number = null;
 
   // update user
   private userId: number = null;
@@ -111,8 +111,10 @@ export class AdministratorComponent implements OnInit {
 
     let user: User = new User(this.userName, this.password, null, this.type);
 
-    if (this.type === "Company")
-      user.companyId = this.companyUserId;
+    if (this.type === "Company") {
+      let company: Company = new Company(null, null, null, this.companyUserId);
+      user.company = company;
+    }
 
     this.userService.createUser(user, this.token).subscribe
 
@@ -434,7 +436,7 @@ export class AdministratorComponent implements OnInit {
     this.toggleCreateUser = false;
   }
 
-  public isToggleCreateUser(type: string, companyId?: string): void {
+  public isToggleCreateUser(type: string, companyId?: number): void {
     this.userName = null;
     this.password = null;
     this.companyUserId = null;

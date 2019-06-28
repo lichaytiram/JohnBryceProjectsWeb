@@ -64,7 +64,7 @@
           <th>delete purchase</th>
         </tr>
         <tr *ngFor="let purchase of customerPurchases ; let index = index">
-          <td>{{purchase.couponId}}</td>
+          <td>{{purchase.coupon.id}}</td>
           <td>{{purchase.amount}}</td>
           <td>{{purchase.date}}</td>
           <td><button (click)="deletePurchaseById(purchase.id,purchase.amount,'purchase',index)"

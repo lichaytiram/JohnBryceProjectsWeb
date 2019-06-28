@@ -1,8 +1,9 @@
 import { Category } from './Category';
+import { Company } from './Company';
 
 export class Coupon {
     public constructor(
-        public companyId: number,
+        public company: Company,
         public title: string,
         public description: string,
         public category: Category,

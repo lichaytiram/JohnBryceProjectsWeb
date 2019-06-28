@@ -99,7 +99,8 @@ export class CompanyComponent implements OnInit {
 
     let image = this.category + ".jpg"
 
-    let coupon: Coupon = new Coupon(this.companyId, this.title, this.description, this.category, this.startDate, this.endDate, this.amount, this.price, image);
+    let company: Company = new Company(null, null, null, this.companyId);
+    let coupon: Coupon = new Coupon(company, this.title, this.description, this.category, this.startDate, this.endDate, this.amount, this.price, image);
 
     this.couponService.createCoupon(coupon, this.token).subscribe
 
@@ -116,7 +117,8 @@ export class CompanyComponent implements OnInit {
   public updateCoupon(): void {
 
     let image = this.category + ".jpg"
-    let coupon: Coupon = new Coupon(this.companyId, this.title, this.description, this.category, this.startDate, this.endDate, this.amount, this.price, image, this.couponId);
+    let company: Company = new Company(null, null, null, this.companyId);
+    let coupon: Coupon = new Coupon(company, this.title, this.description, this.category, this.startDate, this.endDate, this.amount, this.price, image, this.couponId);
 
     this.couponService.updateCoupon(coupon, this.token).subscribe
 

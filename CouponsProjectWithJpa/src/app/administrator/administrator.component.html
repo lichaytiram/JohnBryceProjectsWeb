@@ -130,8 +130,8 @@
 
                 <tr *ngFor="let purchase of allPurchases">
                     <td>{{purchase.id}}</td>
-                    <td>{{purchase.customerId}}</td>
-                    <td>{{purchase.couponId}}</td>
+                    <td>{{purchase.customer.id}}</td>
+                    <td>{{purchase.coupon.id}}</td>
                     <td>{{purchase.amount}}</td>
                     <td>{{purchase.date}}</td>
                 </tr>
@@ -161,7 +161,8 @@
                     <td>{{user.userName}}</td>
                     <td>{{user.password}}</td>
                     <td>{{user.type}}</td>
-                    <td>{{user.companyId}}</td>
+                    <td *ngIf="user.company">{{user.company.id}}</td>
+                    <td *ngIf="!user.company"></td>
                     <td> <button (click)="isToggleUpdateUser(user.id)" class="angle">update user</button></td>
                     <td><button *ngIf="availableToDelete(user.type,user.id)" (click)="deleteUser(user.id,index)"
                             class="angle">delete</button></td>
