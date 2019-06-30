@@ -51,9 +51,6 @@ export class CustomerComponent implements OnInit {
   public customer: Customer = null;
   public amountCoupons: number = null;
   public customerPurchases: Purchase[] = null;
-  public customerCouponsByCustomerId: Coupon[] = null;
-  public customerCouponsByCategory: Coupon[] = null;
-  public customerCouponsByMaxPrice: Coupon[] = null;
   public allCoupons: Coupon[] = null;
   public categories: Category[] = null;
 
@@ -175,7 +172,7 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  public deletePurchaseById(purchaseId: number, amount: number, type: string, index: number): void {
+  public deletePurchaseById(purchaseId: number, amount: number, index: number): void {
 
     this.purchaseService.deletePurchaseById(purchaseId, this.token).subscribe
 
@@ -184,16 +181,9 @@ export class CustomerComponent implements OnInit {
         () => {
 
           alert("Your purchase has been deleted")
-          this.amountCoupons -= amount;
 
-          if (type === "id")
-            this.updateArray(this.customerCouponsByCustomerId, index);
-          else if (type === "category")
-            this.updateArray(this.customerCouponsByCategory, index);
-          else if (type === "maxPrice")
-            this.updateArray(this.customerCouponsByMaxPrice, index);
-          else
-            this.updateArray(this.customerPurchases, index);
+          this.amountCoupons -= amount;
+          this.updateArray(this.customerPurchases, index);
 
         },
 
@@ -262,13 +252,13 @@ export class CustomerComponent implements OnInit {
 
   public getCustomerCouponsByCustomerId(): void {
 
-    this.couponService.getCustomerCouponsByCustomerId(this.id, this.token).subscribe
+    this.purchaseService.getCustomerPurchases(this.id, this.token).subscribe
 
       (
 
         res => {
 
-          this.customerCouponsByCustomerId = res;
+          this.customerPurchases = res;
           this.isToggleGetCustomerCouponsByCustomerId();
 
         },
@@ -286,11 +276,11 @@ export class CustomerComponent implements OnInit {
 
     else {
 
-      this.couponService.getCustomerCouponsByCategory(this.id, this.category, this.token).subscribe
+      this.purchaseService.getCustomerCouponsByCategory(this.id, this.category, this.token).subscribe
 
         (
 
-          res => this.customerCouponsByCategory = res,
+          res => this.customerPurchases = res,
 
           err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -306,11 +296,11 @@ export class CustomerComponent implements OnInit {
 
     else {
 
-      this.couponService.getCustomerCouponsByMaxPrice(this.id, this.maxPrice, this.token).subscribe
+      this.purchaseService.getCustomerCouponsByMaxPrice(this.id, this.maxPrice, this.token).subscribe
 
         (
 
-          res => this.customerCouponsByMaxPrice = res,
+          res => this.customerPurchases = res,
 
           err => alert("Oh crap !.... Error! Status: " + err.error.statusCode + ".\nMessage: " + err.error.externalMessage)
 
@@ -339,7 +329,7 @@ export class CustomerComponent implements OnInit {
 
   }
 
-  private updateArray<T>(array: T[], indexToDelete: number): void {
+  private updateArray<Purchase>(array: Purchase[], indexToDelete: number): void {
 
     array.splice(indexToDelete, 1);
 
@@ -422,7 +412,7 @@ export class CustomerComponent implements OnInit {
   }
 
   public isToggleGetCustomerCouponsByCategory(): void {
-    this.customerCouponsByCategory = null;
+    this.customerPurchases = null;
     this.category = null;
 
     this.toggleGetCustomer = false;
@@ -436,7 +426,7 @@ export class CustomerComponent implements OnInit {
   }
 
   public isToggleGetCustomerCouponsByMaxPrice(): void {
-    this.customerCouponsByMaxPrice = null;
+    this.customerPurchases = null;
     this.maxPrice = null;
 
     this.toggleGetCustomer = false;

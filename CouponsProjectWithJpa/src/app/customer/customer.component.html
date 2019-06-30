@@ -67,7 +67,7 @@
           <td>{{purchase.coupon.id}}</td>
           <td>{{purchase.amount}}</td>
           <td>{{purchase.date}}</td>
-          <td><button (click)="deletePurchaseById(purchase.id,purchase.amount,'purchase',index)"
+          <td><button (click)="deletePurchaseById(purchase.id,purchase.amount,index)"
               class="angle">delete</button>
           </td>
         </tr>
@@ -79,7 +79,7 @@
 
   <div *ngIf="toggleGetCustomerCouponsByCustomerId">
 
-    <div *ngIf="customerCouponsByCustomerId">
+    <div *ngIf="customerPurchases">
 
       <table border="1" align="center">
         <tr>
@@ -92,14 +92,14 @@
           <th>delete purchase</th>
         </tr>
 
-        <tr *ngFor="let coupon of customerCouponsByCustomerId ; let index = index">
-          <td>{{coupon.title}}</td>
-          <td>{{coupon.description}}</td>
-          <td>{{coupon.category}}</td>
-          <td>{{coupon.amount}}</td>
-          <td>{{coupon.price}}</td>
-          <td><img src="/assets/pictures/{{coupon.image}}" class="image"></td>
-          <td><button (click)="deletePurchaseById(coupon.id,coupon.amount,'id',index)" class="angle">delete</button>
+        <tr *ngFor="let purchase of customerPurchases ; let index = index">
+          <td>{{purchase.coupon.title}}</td>
+          <td>{{purchase.coupon.description}}</td>
+          <td>{{purchase.coupon.category}}</td>
+          <td>{{purchase.amount}}</td>
+          <td>{{purchase.coupon.price}}</td>
+          <td><img src="/assets/pictures/{{purchase.coupon.image}}" class="image"></td>
+          <td><button (click)="deletePurchaseById(purchase.id,purchase.amount,index)" class="angle">delete</button>
           </td>
         </tr>
       </table>
@@ -119,7 +119,7 @@
 
     <button (click)="getCustomerCouponsByCategory()">Get all coupons by category</button>
 
-    <div *ngIf="customerCouponsByCategory">
+    <div *ngIf="customerPurchases">
 
       <table border="1" align="center">
         <tr>
@@ -132,14 +132,14 @@
           <th>delete purchase</th>
         </tr>
 
-        <tr *ngFor="let coupon of customerCouponsByCategory ; let index = index">
-          <td>{{coupon.title}}</td>
-          <td>{{coupon.description}}</td>
-          <td>{{coupon.category}}</td>
-          <td>{{coupon.amount}}</td>
-          <td>{{coupon.price}}</td>
-          <td><img src="/assets/pictures/{{coupon.image}}" class="image"></td>
-          <td><button (click)="deletePurchaseById(coupon.id,coupon.amount,'category',index)"
+        <tr *ngFor="let purchase of customerPurchases ; let index = index">
+          <td>{{purchase.coupon.title}}</td>
+          <td>{{purchase.coupon.description}}</td>
+          <td>{{purchase.coupon.category}}</td>
+          <td>{{purchase.amount}}</td>
+          <td>{{purchase.coupon.price}}</td>
+          <td><img src="/assets/pictures/{{purchase.coupon.image}}" class="image"></td>
+          <td><button (click)="deletePurchaseById(purchase.id,purchase.amount,index)"
               class="angle">delete</button>
           </td>
         </tr>
@@ -154,7 +154,7 @@
     Enter max price: <input type="number" [(ngModel)]="maxPrice"><br>
     <button (click)="getCustomerCouponsByMaxPrice()">Get all coupons by max price</button>
 
-    <div *ngIf="customerCouponsByMaxPrice">
+    <div *ngIf="customerPurchases">
 
       <table border="1" align="center">
         <tr>
@@ -167,14 +167,14 @@
           <th>delete purchase</th>
         </tr>
 
-        <tr *ngFor="let coupon of customerCouponsByMaxPrice ; let index = index">
-          <td>{{coupon.title}}</td>
-          <td>{{coupon.description}}</td>
-          <td>{{coupon.category}}</td>
-          <td>{{coupon.amount}}</td>
-          <td>{{coupon.price}}</td>
-          <td><img src="/assets/pictures/{{coupon.image}}" class="image"></td>
-          <td><button (click)="deletePurchaseById(coupon.id,coupon.amount,'maxPrice',index)"
+        <tr *ngFor="let purchase of customerPurchases ; let index = index">
+          <td>{{purchase.coupon.title}}</td>
+          <td>{{purchase.coupon.description}}</td>
+          <td>{{purchase.coupon.category}}</td>
+          <td>{{purchase.amount}}</td>
+          <td>{{purchase.coupon.price}}</td>
+          <td><img src="/assets/pictures/{{purchase.coupon.image}}" class="image"></td>
+          <td><button (click)="deletePurchaseById(purchase.id,purchase.amount,index)"
               class="angle">delete</button>
           </td>
         </tr>

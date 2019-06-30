@@ -34,6 +34,18 @@ export class PurchaseService {
 
   }
 
+  public getCustomerCouponsByCategory(customerId: number, category: string, token: number): Observable<Purchase[]> {
+
+    return this.http.get<Purchase[]>(`http://localhost:8080/purchases/customer/category?customerId=${customerId}&category=${category}&token=${token}`);
+
+  }
+
+  public getCustomerCouponsByMaxPrice(customerId: number, maxPrice: number, token: number): Observable<Purchase[]> {
+
+    return this.http.get<Purchase[]>(`http://localhost:8080/purchases/customer/price?customerId=${customerId}&maxPrice=${maxPrice}&token=${token}`);
+
+  }
+
   public getAllPurchases(token: number): Observable<Purchase[]> {
 
     return this.http.get<Purchase[]>(`http://localhost:8080/purchases?token=${token}`);
