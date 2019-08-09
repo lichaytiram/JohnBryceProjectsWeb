@@ -25,5 +25,14 @@ function show() {
     document.write(a);
 }
 
-show();
+// show();
+
+let arr = [5,-1,0,1, 2, 3, 4];
+
+let x = arr.map(function (item) {
+
+    return item;
+});
+
+console.log(x);
 
