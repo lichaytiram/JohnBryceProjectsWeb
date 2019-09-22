@@ -5,4 +5,14 @@
   </h1>
   <h2 [style.color]="hasError ? 'red' : 'blue'">hi</h2>
   <h2 [style.color]="newGreen">hi</h2>
+  <input type="text" #v [value]="myTitle" (keyup)="myTitle=v.value">
+  <input type="text" [(ngModel)]="myTitle">
+  {{myTitle}}
+  <button (click)="clickMe()">click</button>
+
+  <h3 *ngIf="isShow ; else elseBlock">show</h3>
+  <ng-template #elseBlock>
+    <h3>isn't show</h3>
+  </ng-template>
+  
 </div>
