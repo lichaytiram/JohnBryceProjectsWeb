@@ -11,7 +11,7 @@ export class AppComponent {
   public hasError: boolean = true;
   public newGreen: string = "green";
   public myTitle: string = "";
-  public isShow:boolean = false;
+  public isShow: boolean = false;
 
   public clickMe() {
     console.log(`My title is: ${this.myTitle}`);
