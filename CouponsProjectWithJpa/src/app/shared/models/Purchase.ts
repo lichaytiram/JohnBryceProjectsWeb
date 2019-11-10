@@ -7,6 +7,6 @@ export class Purchase {
         public coupon: Coupon,
         public amount: number,
         public date?: string,
-        public id?: number,
+        public id?: number
     ) { }
 }

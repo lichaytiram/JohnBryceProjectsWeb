@@ -1,5 +1,5 @@
 export class Name {
     public constructor(
-        public name: string,
+        public name: string
     ) { }
 }

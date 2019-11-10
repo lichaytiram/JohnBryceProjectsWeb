@@ -12,6 +12,6 @@ export class Coupon {
         public amount: number,
         public price: number,
         public image: string,
-        public id?: number,
+        public id?: number
     ) { }
 }

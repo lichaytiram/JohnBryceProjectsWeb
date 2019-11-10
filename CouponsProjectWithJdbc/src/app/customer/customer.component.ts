@@ -61,7 +61,7 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.categories = Object.values(Category).filter(index => (typeof Category[index] === 'number'))
+    this.categories = Object.values(Category).filter(index => (typeof Category[index] === 'number')) as Array<Category>;
 
     this.token = parseInt(sessionStorage.getItem("token"));
     this.id = parseInt(sessionStorage.getItem("id"));

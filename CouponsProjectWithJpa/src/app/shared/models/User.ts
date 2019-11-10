@@ -6,6 +6,6 @@ export class User {
         public password: string,
         public id?: number,
         public type?: string,
-        public company?: Company,
+        public company?: Company
     ) { }
 }

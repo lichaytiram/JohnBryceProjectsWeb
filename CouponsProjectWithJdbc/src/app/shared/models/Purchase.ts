@@ -4,6 +4,6 @@ export class Purchase {
         public couponId: number,
         public amount: number,
         public date?: string,
-        public id?: number,
+        public id?: number
     ) { }
 }

@@ -3,6 +3,6 @@ export class Company {
         public name: string,
         public phoneNumber: string,
         public email: string,
-        public id?: number,
+        public id?: number
     ) { }
 }

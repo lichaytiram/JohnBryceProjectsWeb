@@ -6,6 +6,6 @@ export enum Category {
     Vacation,
     Science,
     Comics,
-    Paintball,
+    Paintball
 
 }

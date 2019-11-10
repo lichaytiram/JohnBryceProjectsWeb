@@ -7,6 +7,6 @@ export class Customer {
         public phoneNumber: string,
         public email: string,
         public user: User,
-        public id?: number,
+        public id?: number
     ) { }
 }
